@@ -1,0 +1,63 @@
+<%- include('partials/_header') %>
+
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <%- include('partials/_navigation')%>
+        <!-- End Navigation Bar-->
+
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="btn-group pull-right">
+                                <ol class="breadcrumb hide-phone p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="#">Zoter</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Forms</a></li>
+                                    <li class="breadcrumb-item active">Editor</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Editor</h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="mt-0 header-title">Tinymce wysihtml5</h4>
+                                <p class="text-muted mb-4 font-14">Bootstrap-wysihtml5 is a javascript
+                                    plugin that makes it easy to create simple, beautiful wysiwyg editors
+                                    with the help of wysihtml5 and Twitter Bootstrap.</p>
+
+                                <form method="post">
+                                    <textarea id="elm1" name="area"></textarea>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->  
+            </div> <!-- end container -->
+        </div>
+        <!-- end wrapper -->
+
+
+       <!-- Footer -->
+       <%- include('partials/_footer')%>
+       <!-- End Footer -->
+
+        <!--Wysiwig js-->
+        <script src="/plugins/tinymce/tinymce.min.js"></script>
+        <script src="/pages/editor.init.js"></script>
+
+    </body>
+</html>
