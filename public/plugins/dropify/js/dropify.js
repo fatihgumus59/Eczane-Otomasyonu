@@ -46,19 +46,19 @@ function Dropify(element, options) {
         allowedFormats: ['portrait', 'square', 'landscape'],
         allowedFileExtensions: ['*'],
         messages: {
-            'default': 'Drag and drop a file here or click',
-            'replace': 'Drag and drop or click to replace',
-            'remove':  'Remove',
-            'error':   'Ooops, something wrong happended.'
+            'default': 'Bir dosyayı buraya sürükleyip bırakın veya tıklayın',
+            'replace': 'Değiştirmek için sürükleyip bırakın veya tıklayın',
+            'remove':  'Kaldır',
+            'error':   'Hata, yanlış bir şey oldu.'
         },
         error: {
-            'fileSize': 'The file size is too big ({{ value }} max).',
-            'minWidth': 'The image width is too small ({{ value }}}px min).',
-            'maxWidth': 'The image width is too big ({{ value }}}px max).',
-            'minHeight': 'The image height is too small ({{ value }}}px min).',
-            'maxHeight': 'The image height is too big ({{ value }}px max).',
-            'imageFormat': 'The image format is not allowed ({{ value }} only).',
-            'fileExtension': 'The file is not allowed ({{ value }} only).'
+            'fileSize': 'Dosya boyutu çok büyük ({{ value }} max).',
+            'minWidth': 'Görüntü genişliği çok küçük ({{ value }}}px min).',
+            'maxWidth': 'Görüntü genişliği çok büyük ({{ value }}}px max).',
+            'minHeight': 'Görüntü yüksekliği çok küçük ({{ value }}}px min).',
+            'maxHeight': 'Resmin yüksekliği çok büyük({{ value }}px max).',
+            'imageFormat': 'Resim formatına izin verilmiyor ({{ value }} only).',
+            'fileExtension': 'Dosyaya izin verilmiyor ({{ value }} only).'
         },
         tpl: {
             wrap:            '<div class="dropify-wrapper"></div>',

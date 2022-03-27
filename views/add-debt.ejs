@@ -1,0 +1,160 @@
+<%- include('partials/_header') %>
+
+    
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <%- include('partials/_navigation')%>
+
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="btn-group pull-right">
+                                <ol class="breadcrumb hide-phone p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="#">Panel</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
+                                    <li class="breadcrumb-item active">Borç Ekle</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Borç Ekle </h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="mt-0 header-title">Borç Ekle</h4>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    
+                                        <div class="p-20">
+                                            <div class="col-sm-12">
+                                                <div class="col-md-10">
+                                                    <h4 class="mt-4 header-title">İLAÇ</h4>
+                                                    <p class="text-muted  font-14">İlaç adını aşağıdan seçiniz, aradığınız ilaç sistemde yoksa ilaç ekle butonuna tıklayarak ilacı ekleyiniz.</p>
+                                                    <select class="form-control">
+                                                        <option hidden>Select</option>
+                                                        <option>B12</option>
+                                                        <option>Antibiyotik</option>
+                                                    </select>
+                                                    <img src="/images/small/img-2.jpg" width="420" class="img-fluid mt-4" alt="Responsive image">
+                                                    <a class="btn btn-primary waves-effect waves-light mt-4" href="/ilac-ekle" role="button">İlaç Ekle</a>
+                                                </div>
+                                            
+                                                
+                                            </div>  
+                                        </div>
+                                    </div> <!-- end col -->
+
+                                    <div class="col-md-8">
+                                        <div class="p-20">
+                                            <h4 class="mt-0 header-title">Kişi Bilgileri</h4>
+                                            <p class="text-muted mb-4 font-14">Lütfen kişi bilgilerini eksiksiz doldurunuz.</p>
+
+                                            <form class="" action="#">
+                                                <div class="form-group mb-0">
+                                                    <label>T.C Kimlik No</label>
+                                                    <input type="text" placeholder="" data-mask="99999999999" class="form-control">
+                                                    <span class="font-13 text-muted">11 hane</span>
+                                                </div>
+            
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">İsim Soyisim</label>
+                                                    <div>
+                                                        <input type="text" name="isim" class="form-control" required
+                                                                placeholder="İsim Soyisim Giriniz"/>
+                                                    </div>
+                                                </div>
+            
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">Borç</label>
+                                                    <div>
+                                                        <input type="number" name="borc" class="form-control" required
+                                                                placeholder="Borç Tutarı Giriniz"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">Tarih</label>
+                                                    <div>
+                                                        <input type="date" name="tarih" class="form-control" required/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="my-2 py-1">Not</label>
+                                                    <div>
+                                                        <textarea id="textarea" name="not" class="form-control" maxlength="225" rows="3" placeholder="Lütfen kişi hakkındaki notu giriniz"></textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                            Gönder
+                                                        </button>
+                                                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                            İptal
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        
+                                        </div>
+                                    </div> <!-- end col -->
+                                    
+                                </div> <!-- end row -->
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->                            
+            </div> <!-- end container -->
+        </div>
+        <!-- end wrapper -->
+
+   <!-- Footer -->
+   <%- include('partials/_footer')%>
+   <!-- End Footer -->
+
+  
+
+     
+
+      <script src="/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+      <script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+      <script src="/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+
+      <!-- Plugins Init js -->
+      <script src="/pages/form-advanced.js"></script> 
+
+    <!-- Parsley js -->
+    <script type="text/javascript" src="/plugins/parsleyjs/parsley.min.js"></script>
+    <!-- Bootstrap inputmask js -->
+    <script src="/plugins/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('form').parsley();
+        });
+    </script> 
+    
+       
+    </body>
+</html>
+
+
+
+
+
+
+

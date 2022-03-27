@@ -4,8 +4,14 @@ exports.getIndexPage = async (req, res) => {
   });
 };
 
-exports.getBorcPage = async (req, res) => {
-  res.status(200).render('list', {
+exports.getDebtPage = async (req, res) => {
+  res.status(200).render('list-debt', {
+    page_active: 'index',
+  });
+};
+
+exports.getDebtAddPage = async (req, res) => {
+  res.status(200).render('add-debt', {
     page_active: 'index',
   });
 };
