@@ -16,3 +16,9 @@ exports.getDebtAddPage = async (req, res) => {
   });
 };
 
+exports.getMedicineAddPage = async (req, res) => {
+  res.status(200).render('add-medicine', {
+    page_active: 'index',
+  });
+};
+

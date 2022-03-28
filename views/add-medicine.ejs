@@ -1,0 +1,144 @@
+<%- include('partials/_header') %>
+
+    <!-- Dropzone css -->
+    <link href="/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
+    <link href="/plugins/dropify/css/dropify.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <%- include('partials/_navigation')%>
+
+
+        <div class="wrapper">
+            <div class="container-fluid">
+
+                <!-- Page-Title -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="page-title-box">
+                            <div class="btn-group pull-right">
+                                <ol class="breadcrumb hide-phone p-0 m-0">
+                                    <li class="breadcrumb-item"><a href="#">Panel</a></li>
+                                    <li class="breadcrumb-item"><a href="#">İlaçlar</a></li>
+                                    <li class="breadcrumb-item active">İlaç Ekle</li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">İlaç Ekle </h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title end breadcrumb -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <h4 class="mt-0 header-title">İlaç Ekle</h4>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    
+                                        <div class="p-20">
+                                            <div class="col-sm-12">
+                                                <div class="col-md-12">
+                                                   
+                                                    <div class="card-body"> 
+                                                        <p class="text-muted  font-14">İlaç resmini yükleyin.</p>
+                                                        <input type="file" id="input-file-now-custom-3" class="dropify" data-height="335" />
+                                                    </div>
+                                                </div>
+                                            
+                                                
+                                            </div>  
+                                        </div>
+                                    </div> <!-- end col -->
+
+                                    <div class="col-md-8">
+                                        <div class="p-20">
+                                            <h4 class="mt-0 header-title">İlaç Bilgileri</h4>
+                                            <p class="text-muted mb-4 font-14">Lütfen ilaç bilgilerini eksiksiz doldurunuz.</p>
+
+                                            <form class="" action="#">
+                                               
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">İlaç Adı</label>
+                                                    <div>
+                                                        <input type="text" name="isim" class="form-control" required
+                                                                placeholder="İlaç adı giriniz"/>
+                                                    </div>
+                                                </div>
+            
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">İlaç Türü</label>
+                                                    <div>
+                                                        <input type="text" name="tür" class="form-control" required
+                                                                placeholder="Hap/Şurup/Sprey Cinsinden"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group mb-5">
+                                                    <label class="my-2 py-1">Adet - Ml</label>
+                                                    <div>
+                                                        <input placeholder="Tablet sayısı/Ml durumu" type="text" name="adet" class="form-control" required/>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="form-group mb-0">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                            Gönder
+                                                        </button>
+                                                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                            İptal
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        
+                                        </div>
+                                    </div> <!-- end col -->
+                                    
+                                </div> <!-- end row -->
+
+                            </div>
+                        </div>
+                    </div> <!-- end col -->
+                </div> <!-- end row -->                            
+            </div> <!-- end container -->
+        </div>
+        <!-- end wrapper -->
+
+   <!-- Footer -->
+   <%- include('partials/_footer')%>
+   <!-- End Footer -->
+
+  
+
+     
+
+   
+
+    <!-- Dropzone js -->
+    <script src="/plugins/dropzone/dist/dropzone.js"></script>
+    <script src="/plugins/dropify/js/dropify.min.js"></script>
+    <script src="/pages/upload.init.js"></script>
+
+    <!-- Plugins Init js -->
+    <script src="/pages/form-advanced.js"></script> 
+
+   
+    
+
+   
+    
+       
+    </body>
+</html>
+
+
+
+
+
+
+
