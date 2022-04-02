@@ -44,3 +44,25 @@ exports.getAllMedicine = async (req, res) => {
     });
   }
 };
+
+exports.getEditMedicine = async (req, res) => {
+
+  try {
+
+    const medicine = await Medicine.findOne({_id:req.params.id});
+    medicine.name = req.body.name;
+    medicine.medicineType= req.body.medicineType;
+    medicine.description= req.body.description;
+
+    console.log(req.body);
+    medicine.save();
+
+    res.status(200).redirect('/ilaclar');
+
+  }catch (err) {
+    res.status(404).json({
+      status: 'failed',
+      err,
+    });
+  }
+}

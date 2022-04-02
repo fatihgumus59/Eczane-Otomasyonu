@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+var methodOverride = require('method-override')
 
 const pageRoute = require('./routes/pageRoute');
 const medicineRoute = require('./routes/medicineRoute');
@@ -8,7 +9,10 @@ const medicineRoute = require('./routes/medicineRoute');
 const app = express();
 
 //connect db
-mongoose.connect('mongodb://localhost/eczane').then(() => {
+mongoose.connect('mongodb://localhost/eczane', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => {
   console.log('DB Success');
 });
 
@@ -18,9 +22,11 @@ app.set('view engine', 'ejs');
 //middlewares
 app.use(express.static('public'));
 app.use(fileUpload());
+app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
 app.use(express.json())  //req.body'den gelen verileri yakalamak için
 app.use(express.urlencoded({ extended: true })) //req.body'den gelen verileri yakalamak için
+
 
 app.use('/', pageRoute);
 app.use('/ilaclar', medicineRoute);

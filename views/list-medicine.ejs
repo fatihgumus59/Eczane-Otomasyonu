@@ -63,8 +63,8 @@
                                             <td><%= medicine[i].name %></td>
                                             <td><%= medicine[i].medicineType %></td>
                                             <td>
-                                                <button type="button" class="btn btn-lg btn-warning  btn-sm "><i class="fas fa-edit"></i></button>
-                                                <button type="button" class="btn btn-lg btn-danger   btn-sm "><i class="mdi mdi-delete-forever"></i>
+                                                <a href="/ilaclar/edit/<%= medicine[i]._id%>"><button type="button" class="btn btn-lg btn-warning  btn-sm "><i class="fas fa-edit"></i></button></a>
+                                                <a href="/ilaclar/edit/<%= medicine[i]._id %>?_method=DELETE"><button type="button" class="btn btn-lg btn-danger   btn-sm "><i class="mdi mdi-delete-forever"></i></button></a>
                                             </td>
                                         </tr>
 

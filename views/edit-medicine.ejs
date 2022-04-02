@@ -37,7 +37,7 @@
 
                                 <h4 class="mt-0 header-title">İlaç Ekle</h4>
 
-                                <form method="post" action="/ilaclar/ilac-ekle" encType="multipart/form-data">
+                                <form method="post" action="/ilaclar/<%= medicine._id %>?_method=PUT" encType="multipart/form-data">
 
                                     <div class="row">
                                         <div class="col-md-4">
@@ -48,7 +48,7 @@
                                                     
                                                         <div class="card-body"> 
                                                             <p class="text-muted  font-14">İlaç resmini yükleyin.</p>
-                                                            <input name="image" type="file" id="input-file-now-custom-3" class="dropify" data-height="335" required />
+                                                            <input name="image" type="file" id="input-file-now-custom-3" class="dropify" data-height="335" data-default-file="/..<%= medicine.image %>" />
                                                         </div>
                                                     </div>
                                                 
@@ -65,7 +65,7 @@
                                                     <div class="form-group mb-0">
                                                         <label class="my-2 py-1">İlaç Adı</label>
                                                         <div>
-                                                            <input type="text" name="name" class="form-control" required
+                                                            <input type="text" value="<%= medicine.name %>" name="name" class="form-control" required
                                                                     placeholder="İlaç adı giriniz"/>
                                                         </div>
                                                     </div>
@@ -73,14 +73,14 @@
                                                     <div class="form-group mb-0">
                                                         <label class="my-2 py-1">İlaç Türü</label>
                                                         <div>
-                                                            <input type="text" name="medicineType" class="form-control" required
+                                                            <input type="text" name="medicineType" value="<%= medicine.medicineType %>" class="form-control" required
                                                                     placeholder="Hap/Şurup/Sprey Cinsinden"/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group mb-5">
                                                         <label class="my-2 py-1">Açıklama</label>
                                                         <div>
-                                                            <input placeholder="Tablet sayısı/Ml durumu" type="text" name="description" class="form-control" required/>
+                                                            <input placeholder="Tablet sayısı/Ml durumu" value="<%= medicine.description %>" type="text" name="description" class="form-control" required/>
                                                         </div>
                                                     </div>
                                                     
