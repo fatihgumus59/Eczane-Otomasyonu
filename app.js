@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
 
 const pageRoute = require('./routes/pageRoute');
 const medicineRoute = require('./routes/medicineRoute');
@@ -16,6 +17,7 @@ app.set('view engine', 'ejs');
 
 //middlewares
 app.use(express.static('public'));
+app.use(fileUpload());
 
 app.use(express.json())  //req.body'den gelen verileri yakalamak için
 app.use(express.urlencoded({ extended: true })) //req.body'den gelen verileri yakalamak için

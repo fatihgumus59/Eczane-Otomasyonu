@@ -1,10 +1,25 @@
 const Medicine = require('../models/medicine');
+const fs = require('fs');
 
 exports.createMedicine = async (req, res) => {
   try {
-    const medicine = await Medicine.create(req.body);
+    
+    const uploadDir = 'public/uploads';
 
-    res.status(201).redirect('/ilaclar');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir);
+    }
+
+    let uploadeImage = req.files.image;
+    let uploadPath = __dirname + '/../public/uploads/' + uploadeImage.name;
+
+    uploadeImage.mv(uploadPath, async () => {
+      await Medicine.create({
+        ...req.body,
+        image: '/uploads/' + uploadeImage.name,
+      });
+      res.status(201).redirect('/ilaclar');
+    });
 
   } catch (err) {
     res.status(404).json({
@@ -16,12 +31,12 @@ exports.createMedicine = async (req, res) => {
 
 exports.getAllMedicine = async (req, res) => {
   try {
-    const medicine = await Medicine.find()
+    const medicine = await Medicine.find({}).sort('-createdAt');
 
-    res.status(201).render('list-medicine',{
+    res.status(201).render('list-medicine', {
       medicine
     });
-    
+
   } catch (err) {
     res.status(404).json({
       status: 'failed',
