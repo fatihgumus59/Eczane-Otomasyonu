@@ -11,7 +11,6 @@ exports.createMedicine = async (req, res) => {
       fs.mkdirSync(uploadDir);
     }
 
-    console.log(req.file)
     await Medicine.create({
       ...req.body,
       image: '/uploads/' + req.file.filename,
@@ -52,8 +51,9 @@ exports.getEditMedicine = async (req, res) => {
     medicine.name = req.body.name;
     medicine.medicineType = req.body.medicineType;
     medicine.description = req.body.description;
+    medicine.image = '/uploads/'+req.file.filename;
 
-    console.log(req.body);
+    console.log(req.file);
     medicine.save();
 
     res.status(200).redirect('/ilaclar');

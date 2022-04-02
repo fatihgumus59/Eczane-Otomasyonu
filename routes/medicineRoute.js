@@ -1,9 +1,7 @@
 const express = require('express');
 const multer = require('multer')
-const path = require('path');
 
 const imageStorage = multer.diskStorage({
-    // Destination to store image     
     destination: 'public/uploads',
     filename: (req, file, cb) => {
         cb(null, file.originalname)
@@ -28,6 +26,6 @@ router.route('/').get(medicineController.getAllMedicine);
 router.route('/ilac-ekle').get(pageController.getMedicineAddPage);
 router.route('/ilac-ekle').post(imageUpload.single('image'), medicineController.createMedicine);
 router.route('/edit/:id').get(pageController.getEditMedicinePage);
-router.route('/:id').put(medicineController.getEditMedicine);
+router.route('/:id').put(imageUpload.single('image'),medicineController.getEditMedicine);
 
 module.exports = router;

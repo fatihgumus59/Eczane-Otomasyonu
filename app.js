@@ -5,7 +5,6 @@ var methodOverride = require('method-override')
 const pageRoute = require('./routes/pageRoute');
 const medicineRoute = require('./routes/medicineRoute');
 
-
 const app = express();
 
 //connect db
