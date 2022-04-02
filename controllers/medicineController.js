@@ -43,7 +43,7 @@ exports.getAllMedicine = async (req, res) => {
   }
 };
 
-exports.getEditMedicine = async (req, res) => {
+exports.editMedicine = async (req, res) => {
 
   try {
 
@@ -56,6 +56,22 @@ exports.getEditMedicine = async (req, res) => {
     console.log(req.file);
     medicine.save();
 
+    res.status(200).redirect('/ilaclar');
+
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed',
+      err,
+    });
+  }
+}
+
+exports.deleteMedicine = async (req, res) => {
+
+  try {
+
+    const medicine = await Medicine.findOneAndDelete({ _id:req.params.id})
+    
     res.status(200).redirect('/ilaclar');
 
   } catch (err) {
