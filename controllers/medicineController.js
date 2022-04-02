@@ -1,25 +1,24 @@
 const Medicine = require('../models/medicine');
 const fs = require('fs');
 
+
 exports.createMedicine = async (req, res) => {
   try {
-    
+
     const uploadDir = 'public/uploads';
 
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
     }
 
-    let uploadeImage = req.files.image;
-    let uploadPath = __dirname + '/../public/uploads/' + uploadeImage.name;
+    console.log(req.file)
+    await Medicine.create({
+      ...req.body,
+      image: '/uploads/' + req.file.filename,
 
-    uploadeImage.mv(uploadPath, async () => {
-      await Medicine.create({
-        ...req.body,
-        image: '/uploads/' + uploadeImage.name,
-      });
-      res.status(201).redirect('/ilaclar');
     });
+    res.status(201).redirect('/ilaclar');
+
 
   } catch (err) {
     res.status(404).json({
@@ -49,17 +48,17 @@ exports.getEditMedicine = async (req, res) => {
 
   try {
 
-    const medicine = await Medicine.findOne({_id:req.params.id});
+    const medicine = await Medicine.findOne({ _id: req.params.id });
     medicine.name = req.body.name;
-    medicine.medicineType= req.body.medicineType;
-    medicine.description= req.body.description;
+    medicine.medicineType = req.body.medicineType;
+    medicine.description = req.body.description;
 
     console.log(req.body);
     medicine.save();
 
     res.status(200).redirect('/ilaclar');
 
-  }catch (err) {
+  } catch (err) {
     res.status(404).json({
       status: 'failed',
       err,

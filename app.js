@@ -1,10 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const fileUpload = require('express-fileupload');
 var methodOverride = require('method-override')
 
 const pageRoute = require('./routes/pageRoute');
 const medicineRoute = require('./routes/medicineRoute');
+
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 
 //middlewares
 app.use(express.static('public'));
-app.use(fileUpload());
+
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
 app.use(express.json())  //req.body'den gelen verileri yakalamak için
