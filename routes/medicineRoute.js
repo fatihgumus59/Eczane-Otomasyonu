@@ -3,9 +3,10 @@ const multer = require('multer')
 
 const imageStorage = multer.diskStorage({
     destination: 'public/uploads',
-    filename: (req, file, cb) => {
-        cb(null, file.originalname)
-
+    filename: function (req, file, cb) {
+        const fullName =
+            Date.now() + '-' + file.originalname;
+        cb(null, fullName);
     }
 });
 
@@ -26,7 +27,7 @@ router.route('/').get(medicineController.getAllMedicine);
 router.route('/ilac-ekle').get(pageController.getMedicineAddPage);
 router.route('/ilac-ekle').post(imageUpload.single('image'), medicineController.createMedicine);
 router.route('/edit/:id').get(pageController.getEditMedicinePage);
-router.route('/:id').put(imageUpload.single('image'),medicineController.editMedicine);
+router.route('/:id').put(imageUpload.single('image'), medicineController.editMedicine);
 router.route('/:id').delete(medicineController.deleteMedicine);
 
 module.exports = router;

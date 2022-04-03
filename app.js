@@ -4,6 +4,7 @@ var methodOverride = require('method-override')
 
 const pageRoute = require('./routes/pageRoute');
 const medicineRoute = require('./routes/medicineRoute');
+const debtRoute = require('./routes/debtRoute');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(express.urlencoded({ extended: true })) //req.body'den gelen verileri ya
 
 app.use('/', pageRoute);
 app.use('/ilaclar', medicineRoute);
+app.use('/borclular', debtRoute);
 
 const port = 3000;
 
