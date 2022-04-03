@@ -1,16 +1,29 @@
 const Medicine = require('../models/medicine');
 const Status = require('../models/paymentStatus');
+const Debt = require('../models/debt');
 
 exports.getIndexPage = async (req, res) => {
   res.status(200).render('index');
 };
 
-exports.getDebtPage = async (req, res) => {
-  res.status(200).render('list-debt');
+exports.getDebtAddPage = async (req, res) => {
+
+  const medicine = await Medicine.find(req.body);
+
+  res.status(200).render('add-debt', {
+    medicine
+  });
 };
 
-exports.getDebtAddPage = async (req, res) => {
-  res.status(200).render('add-debt');
+exports.getEditDebtPage = async (req, res) => {
+
+  const debt = await Debt.findOne({ _id:req.params.id});
+  const medicine = await Medicine.find({});
+
+  res.status(200).render('edit-debt', {
+    debt,
+    medicine
+  });
 };
 
 exports.getMedicineAddPage = async (req, res) => {

@@ -49,50 +49,33 @@
                                         <th>TC</th>
                                         <th>İsim</th>
                                         <th>Borç Miktarı</th>
+                                        <th>İlaç</th>
                                         <th>İşlem</th>
                                     </tr>
                                     </thead>
                 
                 
                                     <tbody>
-                                    <tr>
-                                        <td>49616059606</td>
-                                        <td>Şafak Kurt</td>
-                                        <td>15₺</td>
-                                        <td>
-                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>49616059606</td>
-                                        <td>Ahmet Furkan Değirmenci</td>
-                                        <td>78₺</td>
-                                        <td>
-                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>49616059606</td>
-                                        <td>Şafak Kurt</td>
-                                        <td>15₺</td>
-                                        <td>
-                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>49616059606</td>
-                                        <td>Şafak Kurt</td>
-                                        <td>15₺</td>
-                                        <td>
-                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                        </td>
-                                    </tr>
-                                    
-                                    
+                                    <% for(let i=0; i< debt.length; i++) {%>
+                                        <tr>
+                                            
+                                            <td><%= debt[i].tc %></td>
+                                            <td><%= debt[i].name %></td>
+                                            <td><%= debt[i].debt %>₺</td>
+                                            <td><%= debt.[i].medicine.name %></td>
+                                            <td>
+                                                <a href="/borclular/edit/<%= debt[i]._id%>">
+                                                    <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                </a>
+                                                <a href="/borclular/<%= debt[i]._id%>?_method=DELETE">
+                                                    <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                </a>
+                                                <a>
+                                                    <button type="button" class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>                                 
+                                    <% } %>
                                     </tbody>
                                 </table>
                             </div>
