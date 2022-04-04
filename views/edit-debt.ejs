@@ -45,9 +45,11 @@
                                                         <p class="text-muted  font-14">İlaç adını aşağıdan seçiniz, aradığınız ilaç sistemde yoksa ilaç ekle butonuna tıklayarak ilacı ekleyiniz.</p>
                                                         
                                                         <select name="medicine" class="form-control">
-                                                            <% for(let i = 0; i < medicine.length; i++) { %>    
-                                                                <option hidden><%= medicine[i].name %></option>
-                                                                <option value="<%= medicine[i]._id %>"><%= medicine[i].name%></option>
+                                                            <% for(let i = 0; i < debt.medicine.length; i++) { %>    
+                                                                <option value="<%= debt.medicine[i]._id %>"><%= debt.medicine[i].name %> - Seçili</option>
+                                                            <% } %>
+                                                            <% for(let i = 0; i < medicine.length; i++) { %>
+                                                                <option value="<%= medicine[i]._id %>"><%= medicine[i].name %></option>
                                                             <% } %>
                                                         </select>
                                                         <img src="/images/small/img-2.jpg" width="420" class="img-fluid mt-4" id="medicine_img" alt="Medicine">
@@ -64,7 +66,15 @@
                                                 <h4 class="mt-0 header-title">Kişi Bilgileri</h4>
                                                 <p class="text-muted mb-4 font-14">Lütfen kişi bilgilerini eksiksiz doldurunuz.</p>
 
-                                                <form class="" action="#">
+                                                    <div class="form-group mb-3">
+                                                        <label>Borç Durumu</label>
+                                                        <select name="status" class="form-control">
+                                                            <option hidden>Select</option>
+                                                            <option value="Ödendi">Ödendi</option>
+                                                            <option value="Ödenmedi">Ödenmedi</option>
+                                                    </select>
+                                                    </div>
+
                                                     <div class="form-group mb-0">
                                                         <label>T.C Kimlik No</label>
                                                         <input type="text" name="tc" value="<%= debt.tc%>" data-mask="99999999999"  class="form-control">
@@ -86,7 +96,7 @@
                                                     <div class="form-group">
                                                         <label class="my-2 py-1">Not</label>
                                                         <div>
-                                                            <textarea id="textarea" name="note" class="form-control" maxlength="225" rows="3" placeholder="<%= debt.note %>"></textarea>
+                                                            <textarea id="textarea" name="note" value="<%= debt.note %>" class="form-control" maxlength="225" rows="3"><%= debt.note %></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="form-group mt-5 mb-0">
@@ -99,7 +109,6 @@
                                                             </button>
                                                         </div>
                                                     </div>
-                                                </form>
                                             
                                             </div>
                                         </div> <!-- end col -->

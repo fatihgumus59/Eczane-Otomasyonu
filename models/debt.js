@@ -19,16 +19,12 @@ const debt = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: 'Medicine',
-      required: true,
     },
   ],
-  status: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Payment',
-      required: true,
-    },
-  ],
+  status: {
+    type: String,
+    required: true,
+  },
   note: {
     type: String,
   },

@@ -1,5 +1,4 @@
 const Debt = require('../models/debt');
-const Medicine = require('../models/medicine');
 
 exports.createDebt = async (req, res) => {
   try {
@@ -19,8 +18,7 @@ exports.createDebt = async (req, res) => {
 
 exports.getAllDebt = async (req, res) => {
   try {
-    const debt = await Debt.find().populate('Medicine');
-    debt.medicine;
+    const debt = await Debt.find();
 
     res.status(200).render('list-debt', {
       debt,
@@ -41,8 +39,8 @@ exports.editDebt = async (req, res) => {
     debt.tc = req.body.tc;
     debt.debt = req.body.debt;
     debt.medicine = req.body.medicine;
+    debt.status = req.body.status;
     debt.note = req.body.note;
-
     debt.save();
 
     res.status(200).redirect('/borclular');
@@ -68,3 +66,4 @@ exports.deleteDebt = async (req, res) => {
     });
   }
 };
+

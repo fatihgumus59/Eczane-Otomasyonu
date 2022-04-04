@@ -4,7 +4,6 @@ const pageController = require('../controllers/pageController');
 const router = express.Router();
 
 router.route('/').get(pageController.getIndexPage);
-router.route('/status').get(pageController.getStatusPage);
-router.route('/status').post(pageController.addStatus);
+
 
 module.exports = router;
