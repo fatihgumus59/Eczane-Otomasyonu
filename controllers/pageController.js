@@ -41,3 +41,7 @@ exports.getStatusPage = async (req, res) => {
   res.status(200).render('index');
 };
 
+exports.getNotesPage = async (req, res) => {
+  res.status(200).render('note');
+};
+

@@ -69,7 +69,7 @@
                                                 <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
                                                     <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                 </a>
-                                                <form method="post" action="/kisiler/<%= debt[i]._id %>?_method=PUT">
+                                                <form style="display: inline" method="post" action="/kisiler/<%= debt[i]._id %>?_method=PUT">
                                                     <input type="hidden" name="tc" value="<%= debt[i].tc%>">
                                                     <input type="hidden" value="<%= debt[i].name %>" name="name" />
                                                     <input type="hidden" value="<%= debt[i].debt %>"  name="debt" />
