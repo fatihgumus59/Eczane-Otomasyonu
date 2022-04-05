@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true })) //req.body'den gelen verileri ya
 
 app.use('/', pageRoute);
 app.use('/ilaclar', medicineRoute);
-app.use('/borclular', debtRoute);
+app.use('/kisiler', debtRoute);
 
 const port = 3000;
 

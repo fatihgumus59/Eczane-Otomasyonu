@@ -5,7 +5,7 @@ exports.createDebt = async (req, res) => {
 
     const debt = await Debt.create(req.body);
 
-    res.status(201).redirect('/borclular');
+    res.status(201).redirect('/kisiler');
 
 
   } catch (err) {
@@ -18,7 +18,7 @@ exports.createDebt = async (req, res) => {
 
 exports.getAllDebt = async (req, res) => {
   try {
-    const debt = await Debt.find();
+    const debt = await Debt.find({});
 
     res.status(200).render('list-debt', {
       debt,
@@ -43,7 +43,8 @@ exports.editDebt = async (req, res) => {
     debt.note = req.body.note;
     debt.save();
 
-    res.status(200).redirect('/borclular');
+
+    res.status(200).redirect('/kisiler');
 
   } catch (err) {
     res.status(404).json({
@@ -57,7 +58,7 @@ exports.deleteDebt = async (req, res) => {
   try {
     const debt = await Debt.findOneAndDelete({ _id: req.params.id });
 
-    res.status(200).redirect('/borclular')
+    res.status(200).redirect('/kisiler')
 
   } catch (err) {
     res.status(404).json({
@@ -67,3 +68,39 @@ exports.deleteDebt = async (req, res) => {
   }
 };
 
+exports.getDebtPaid = async (req, res) => { // ödenmiş
+  try {
+    const status = 'Ödendi'
+    const debt = await Debt.find({status: status});
+
+    res.status(200).render('list-debt-filter', {
+      debt,
+      status,
+    })
+
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed',
+      err,
+    });
+  }
+};
+
+exports.getDebtUnpaid = async (req, res) => { // ödenmiş
+  try {
+
+    const status = 'Ödenmedi'
+    const debt = await Debt.find({status: status});
+
+    res.status(200).render('list-debt-filter', {
+      debt,
+      status,
+    })
+
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed',
+      err,
+    });
+  }
+};

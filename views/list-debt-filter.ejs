@@ -29,10 +29,22 @@
                                 <ol class="breadcrumb hide-phone p-0 m-0">
                                     <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
                                     <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
-                                    <li class="breadcrumb-item active">Kişiler</li>
+                                    <% if(status == 'Ödendi'){%>
+                                        <li class="breadcrumb-item active">Ödenmiş Borçlar</li>
+                                    <% }else{ %>
+                                        <li class="breadcrumb-item active">Ödenmemiş Borçlar</li>
+                                    
+                                    <% } %>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Kişiler</h4>
+                            <% if(status == 'Ödendi'){%>
+                                <h4 class="page-title">Borcu Kapatanlar</h4>
+                            <% }else{ %>
+                                <h4 class="page-title">Borçlular</h4>
+                            
+                            <% } %>
+                            
+
                         </div>
                     </div>
                 </div>
@@ -49,7 +61,6 @@
                                         <th>TC</th>
                                         <th>İsim</th>
                                         <th>Borç Miktarı</th>
-                                        <th>Borç Durumu</th>
                                         <th>İşlem</th>
                                     </tr>
                                     </thead>
@@ -61,7 +72,6 @@
                                             <td><%= debt[i].tc %></td>
                                             <td><%= debt[i].name %></td>
                                             <td><%= debt[i].debt %>₺</td>
-                                            <td><%= debt[i].status %></td>
                                             <td>
                                                 <a href="/kisiler/edit/<%= debt[i]._id%>">
                                                     <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
@@ -69,16 +79,9 @@
                                                 <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
                                                     <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                 </a>
-                                                <form method="post" action="/kisiler/<%= debt[i]._id %>?_method=PUT">
-                                                    <input type="hidden" name="tc" value="<%= debt[i].tc%>">
-                                                    <input type="hidden" value="<%= debt[i].name %>" name="name" />
-                                                    <input type="hidden" value="<%= debt[i].debt %>"  name="debt" />
-                                                    <input type="hidden" value="<%= debt[i].medicine %>"  name="medicine" />
-                                                    <input type="hidden"value="<%= debt[i].note %>" name="note" />
-                                                    <input type="hidden" name="status" value="Ödendi">
-                                                    <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                </form>  
-
+                                                <a>
+                                                    <button type="button" class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                </a>
                                             </td>
                                         </tr>                                 
                                     <% } %>

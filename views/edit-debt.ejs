@@ -20,10 +20,10 @@
                                 <ol class="breadcrumb hide-phone p-0 m-0">
                                     <li class="breadcrumb-item"><a href="#">Panel</a></li>
                                     <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
-                                    <li class="breadcrumb-item active">Borç Ekle</li>
+                                    <li class="breadcrumb-item active">Borç Düzenle</li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Borç Ekle </h4>
+                            <h4 class="page-title">Borç Düzenle </h4>
                         </div>
                     </div>
                 </div>
@@ -33,8 +33,8 @@
                         <div class="card">
                             <div class="card-body">
 
-                                <h4 class="mt-0 header-title">Borç Ekle</h4>
-                                <form method="post" action="/borclular/<%= debt._id %>?_method=PUT">
+                                <h4 class="mt-0 header-title">Borç Düzenle</h4>
+                                <form method="post" action="/kisiler/<%= debt._id %>?_method=PUT">
                                     <div class="row">
                                         <div class="col-md-4">
                                         
@@ -69,10 +69,10 @@
                                                     <div class="form-group mb-3">
                                                         <label>Borç Durumu</label>
                                                         <select name="status" class="form-control">
-                                                            <option hidden>Select</option>
+                                                            <option value="<%= debt.status%>"><%= debt.status%> - Seçili</option>
                                                             <option value="Ödendi">Ödendi</option>
                                                             <option value="Ödenmedi">Ödenmedi</option>
-                                                    </select>
+                                                        </select>
                                                     </div>
 
                                                     <div class="form-group mb-0">
