@@ -2535,7 +2535,7 @@ body {
 }
 
 #topnav .topbar-main .logo-large {
-  height: 18px;
+  height: 50px;
 }
 
 #topnav .topbar-main .logo-small {
@@ -3064,7 +3064,7 @@ body {
     font-size: 24px;
   }
   .logo-large {
-    height: 16px !important;
+    height: 50px !important;
   }
 }
 

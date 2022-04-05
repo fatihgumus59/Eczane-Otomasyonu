@@ -50,3 +50,12 @@ exports.getNotesPage = async (req, res) => {
   });
 };
 
+exports.getProforma = async (req, res) => {
+
+ 
+
+  res.status(200).render('proforma', {
+
+  });
+};
+
