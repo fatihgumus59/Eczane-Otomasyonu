@@ -8,7 +8,7 @@ exports.getIndexPage = async (req, res) => {
 exports.getDebtAddPage = async (req, res) => {
 
   const medicine = await Medicine.find(req.body);
-  
+
   res.status(200).render('add-debt', {
     medicine,
   });
@@ -42,6 +42,11 @@ exports.getStatusPage = async (req, res) => {
 };
 
 exports.getNotesPage = async (req, res) => {
-  res.status(200).render('note');
+
+  const debt = await Debt.find({});
+
+  res.status(200).render('note', {
+    debt,
+  });
 };
 
