@@ -8,6 +8,10 @@ const medicine = new Schema({
         unique: true,
         required: true
     },
+    price:{
+        type: Number,
+        required: true,
+    },
     medicineType: {
         type: String,
         required: true,

@@ -49,11 +49,12 @@ exports.editMedicine = async (req, res) => {
 
     const medicine = await Medicine.findOne({ _id: req.params.id });
     medicine.name = req.body.name;
+    medicine.price = req.body.price;
     medicine.medicineType = req.body.medicineType;
     medicine.description = req.body.description;
     medicine.image = '/uploads/'+req.file.filename;
 
-    console.log(req.file);
+    console.log(req.body);
     medicine.save();
 
     res.status(200).redirect('/ilaclar');

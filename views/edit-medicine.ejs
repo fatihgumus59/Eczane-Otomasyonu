@@ -48,10 +48,9 @@
                                                     
                                                         <div class="card-body"> 
                                                             <p class="text-muted  font-14">İlaç resmini yükleyin.</p>
-                                                            <input name="image" type="file" id="input-file-now-custom-3" class="dropify" data-height="335" data-default-file="/..<%= medicine.image %>" />
+                                                            <input name="image" type="file"  id="input-file-now-custom-3" class="dropify" data-height="335" data-default-file="/..<%= medicine.image %>" />
                                                         </div>
                                                     </div>
-                                                
                                                     
                                                 </div>  
                                             </div>
@@ -65,22 +64,27 @@
                                                     <div class="form-group mb-0">
                                                         <label class="my-2 py-1">İlaç Adı</label>
                                                         <div>
-                                                            <input type="text" value="<%= medicine.name %>" name="name" class="form-control" 
-                                                                    placeholder="İlaç adı giriniz"/>
+                                                            <input type="text" value="<%= medicine.name %>" name="name" class="form-control"/>
                                                         </div>
                                                     </div>
                 
                                                     <div class="form-group mb-0">
+                                                        <label class="my-2 py-1">İlaç Fiyatı</label>
+                                                        <div>
+                                                            <input type="number" value="<%= medicine.price %>" name="price" class="form-control"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group mb-0">
                                                         <label class="my-2 py-1">İlaç Türü</label>
                                                         <div>
-                                                            <input type="text" name="medicineType" value="<%= medicine.medicineType %>" class="form-control" 
-                                                                    placeholder="Hap/Şurup/Sprey Cinsinden"/>
+                                                            <input type="text" name="medicineType" value="<%= medicine.medicineType %>" class="form-control"/>
                                                         </div>
                                                     </div>
                                                     <div class="form-group mb-5">
                                                         <label class="my-2 py-1">Açıklama</label>
                                                         <div>
-                                                            <input placeholder="Tablet sayısı/Ml durumu" value="<%= medicine.description %>" type="text" name="description" class="form-control"/>
+                                                            <input value="<%= medicine.description %>" type="text" name="description" class="form-control"/>
                                                         </div>
                                                     </div>
                                                     
@@ -95,8 +99,8 @@
                                                         </div>
                                                     </div>
                                 
-                                        
-                                        </div>
+
+                                            </div>
                                         </div> <!-- end col -->
                                 
                                     </div> <!-- end row -->
@@ -113,11 +117,6 @@
    <!-- Footer -->
    <%- include('partials/_footer')%>
    <!-- End Footer -->
-
-  
-
-     
-
    
 
     <!-- Dropzone js -->
@@ -127,13 +126,7 @@
 
     <!-- Plugins Init js -->
     <script src="/pages/form-advanced.js"></script> 
-
-   
-    
-
-   
-    
-       
+  
     </body>
 </html>
 

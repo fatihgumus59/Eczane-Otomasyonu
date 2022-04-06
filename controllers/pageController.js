@@ -52,10 +52,10 @@ exports.getNotesPage = async (req, res) => {
 
 exports.getProforma = async (req, res) => {
 
- 
+  const debt = await Debt.findOne({_id: req.params.id}).populate('medicine');
 
-  res.status(200).render('proforma', {
-
+  res.status(200).render('proforma', {  
+    debt,
   });
 };
 

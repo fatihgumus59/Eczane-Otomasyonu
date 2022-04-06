@@ -117,7 +117,7 @@
 		</style>
 	</head>
 
-	<body onload="window.print()">
+	<body >
         
 		<br><br>
 		
@@ -131,13 +131,13 @@
 						<table>
 							<tr>
 								<td class="title">
-									<img src="./images/logo.png" alt="Company logo" style="width: 100%; max-width: 300px" />
+									<img src="/images/logo.png" alt="Company logo" style="width: 100%; max-width: 300px" />
 								</td>
 
 								<td>
 									Fatura : #1<br /> 
 									Yazdırma Tarihi: 06.04.2022<br />
-									Yazdıran Kişi: February 1, 2015
+									Yazdıran Kişi: Mehmet Taş
 								</td>
 							</tr>
 						</table>
@@ -155,9 +155,9 @@
 								</td>
 
 								<td>
-									Namık Kemal<br />
-									Eczanesi<br />
-									info@nkueczanesic.om
+									<%= debt.tc %><br />
+									<%= debt.name %><br />
+									<%= debt.status %>
 								</td>
 							</tr>
 						</table>
@@ -170,18 +170,13 @@
                     <td>Adet - Fiyat</td>
 				</tr>
 
-
+                <%for(let i = 0; i < debt.medicine.length; i++) {%>
                 <tr class="item">
-					<td>Novalgin</td>
-
-					<td>1 - 14.25₺</td>
+					<td><%= debt.medicine[i].name %></td>
+					<td>1 - <%= debt.medicine[i].price %>₺</td>
 				</tr>
 
-				<tr class="item">
-					<td>Nazofix</td>
-
-					<td>1 - 12.75₺</td>
-				</tr>
+				<%}%>
                 
 				<tr  class="heading">
 					<td>Genel</td>
@@ -192,7 +187,7 @@
                 <tr class="item">
 					<td>Toplam</td>
 
-					<td>27.00₺</td>
+					<td><%= debt.debt%>.00₺</td>
 				</tr>
 				<tr class="item last">
 					<td>KDV (%8)</td>
