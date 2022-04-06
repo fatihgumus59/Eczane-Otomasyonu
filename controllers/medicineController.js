@@ -52,7 +52,16 @@ exports.editMedicine = async (req, res) => {
     medicine.price = req.body.price;
     medicine.medicineType = req.body.medicineType;
     medicine.description = req.body.description;
-    medicine.image = '/uploads/'+req.file.filename;
+
+    if (req.body.image) {
+
+      medicine.image = '/uploads/' + req.file.filename;
+
+    } else if (!req.body.image) {
+      medicine.image = '/uploads/' + req.file.filename;
+    }else{
+
+    }
 
     console.log(req.body);
     medicine.save();
@@ -71,8 +80,8 @@ exports.deleteMedicine = async (req, res) => {
 
   try {
 
-    const medicine = await Medicine.findOneAndDelete({ _id:req.params.id})
-    
+    const medicine = await Medicine.findOneAndDelete({ _id: req.params.id })
+
     res.status(200).redirect('/ilaclar');
 
   } catch (err) {
