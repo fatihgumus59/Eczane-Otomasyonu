@@ -53,14 +53,10 @@ exports.editMedicine = async (req, res) => {
     medicine.medicineType = req.body.medicineType;
     medicine.description = req.body.description;
 
-    if (req.body.image) {
-
-      medicine.image = '/uploads/' + req.file.filename;
+    if (!req.file) {
 
     } else if (!req.body.image) {
-      medicine.image = '/uploads/' + req.file.filename;
-    }else{
-
+      medicine.image= '/uploads/' + req.file.filename;
     }
 
     console.log(req.body);
