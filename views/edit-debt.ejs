@@ -1,6 +1,12 @@
 <%- include('partials/_header') %>
 
-    
+    <style>
+        .medicine{
+            width: 100%;
+            height: 470px;
+            overflow: auto;
+        }
+    </style>
     </head>
 
     <body>
@@ -45,18 +51,24 @@
                                                         <h4 class="mt-4 header-title">İLAÇ</h4>
                                                         <p class="text-muted  font-14">İlaç adını aşağıdan seçiniz, aradığınız ilaç sistemde yoksa ilaç ekle butonuna tıklayarak ilacı ekleyiniz.</p>
                                                         
-                                                        <select name="medicine" class="form-control">
+                                                        <div class="medicine">
+                                                            <h5>Seçilmişler</h5>
                                                             <% for(let i = 0; i < debt.medicine.length; i++) { %>    
-                                                                <option value="<%= debt.medicine[i]._id %>"><%= debt.medicine[i].name %> - Seçili</option>
+                                                                <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine" checked value="<%= medicine[i]._id %>">
+                                                                <label for="<%= medicine[i]._id%>"><%= medicine[i].name%> - Seçili</label><br>
                                                             <% } %>
-                                                            <% for(let i = 0; i < medicine.length; i++) { %>
-                                                                <option value="<%= medicine[i]._id %>"><%= medicine[i].name %></option>
+                                                            <hr>
+                                                            <% for(let i=0; i< medicine.length; i++) { %>
+
+                                                                <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine"  value="<%= medicine[i]._id %>">
+                                                                <label for="<%= medicine[i]._id%>"><%= medicine[i].name%></label><br>
+                                                      
                                                             <% } %>
-                                                        </select>
-                                                        <img src="/images/small/img-2.jpg" width="420" class="img-fluid mt-4" id="medicine_img" alt="Medicine">
-                                                        <a class="btn btn-primary waves-effect waves-light mt-4" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
+                                                       
+                                                        </div>
+
+                                                        <a class="btn btn-primary waves-effect waves-light mt-4 mb-4" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
                                                     </div>
-                                                
                                                     
                                                 </div>  
                                             </div>

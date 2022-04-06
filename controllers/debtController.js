@@ -18,7 +18,7 @@ exports.createDebt = async (req, res) => {
 
 exports.getAllDebt = async (req, res) => {
   try {
-    const debt = await Debt.find({});
+    const debt = await Debt.find({}).sort('-createdAt');
 
     res.status(200).render('list-debt', {
       debt,
@@ -38,7 +38,7 @@ exports.editDebt = async (req, res) => {
     debt.name = req.body.name;
     debt.tc = req.body.tc;
     debt.debt = req.body.debt;
-    debt.medicine = req.body.medicine;
+    debt.medicine= req.body.medicine;
     debt.status = req.body.status;
     debt.note = req.body.note;
     debt.save();
@@ -71,7 +71,7 @@ exports.deleteDebt = async (req, res) => {
 exports.getDebtPaid = async (req, res) => { // ödenmiş
   try {
     const status = 'Ödendi'
-    const debt = await Debt.find({status: status});
+    const debt = await Debt.find({ status: status });
 
     res.status(200).render('list-debt-filter', {
       debt,
@@ -90,7 +90,7 @@ exports.getDebtUnpaid = async (req, res) => { // ödenmiş
   try {
 
     const status = 'Ödenmedi'
-    const debt = await Debt.find({status: status});
+    const debt = await Debt.find({ status: status });
 
     res.status(200).render('list-debt-filter', {
       debt,
