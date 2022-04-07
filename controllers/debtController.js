@@ -38,11 +38,11 @@ exports.editDebt = async (req, res) => {
     debt.name = req.body.name;
     debt.tc = req.body.tc;
     debt.debt = req.body.debt;
-    debt.medicine= req.body.medicine;
+    debt.medicine = req.body.medicine;
     debt.status = req.body.status;
     debt.note = req.body.note;
     debt.save();
-
+    
 
     res.status(200).redirect('/kisiler');
 
@@ -96,6 +96,23 @@ exports.getDebtUnpaid = async (req, res) => { // ödenmiş
       debt,
       status,
     })
+
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed',
+      err,
+    });
+  }
+};
+
+exports.debtOk = async (req, res) => {
+  try {
+    const debt = await Debt.findOne({ _id: req.params.id });
+    debt.status = req.body.status;
+    debt.save();
+    console.log(req.body)
+
+    res.status(200).redirect('/kisiler');
 
   } catch (err) {
     res.status(404).json({

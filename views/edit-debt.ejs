@@ -52,10 +52,10 @@
                                                         <p class="text-muted  font-14">İlaç adını aşağıdan seçiniz, aradığınız ilaç sistemde yoksa ilaç ekle butonuna tıklayarak ilacı ekleyiniz.</p>
                                                         
                                                         <div class="medicine">
-                                                            <h5>Seçilmişler</h5>
+                                                            <h5>Seçili</h5>
                                                             <% for(let i = 0; i < debt.medicine.length; i++) { %>    
-                                                                <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine" checked value="<%= medicine[i]._id %>">
-                                                                <label for="<%= medicine[i]._id%>"><%= medicine[i].name%> - Seçili</label><br>
+                                                                <input type="checkbox" id="<%= medicine[i].name%><%= medicine[i]._id%>" name="medicine" checked value="<%= debt.medicine[i]._id %>">
+                                                                <label for="<%= medicine[i].name%><%= medicine[i]._id%>"><%= debt.medicine[i].name%> - Seçili</label><br>
                                                             <% } %>
                                                             <hr>
                                                             <% for(let i=0; i< medicine.length; i++) { %>

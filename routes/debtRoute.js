@@ -12,5 +12,6 @@ router.route('/:id').put(debtController.editDebt);
 router.route('/:id').delete(debtController.deleteDebt);
 router.route('/odenmis').get(debtController.getDebtPaid);
 router.route('/odenmemis').get(debtController.getDebtUnpaid);
+router.route('/debt-ok/:id').put(debtController.debtOk);
 
 module.exports = router;

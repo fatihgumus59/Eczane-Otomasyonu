@@ -60,6 +60,7 @@
                                 <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
                                     <tr>
+                                        <th>Tarih</th>
                                         <th>TC</th>
                                         <th>İsim</th>
                                         <th>İşlem</th>
@@ -70,6 +71,7 @@
                                     <% for(let i=0; i< debt.length; i++) {%>
                                         <tr>
                                             
+                                            <td><%= debt[i].createdAt.toISOString().slice(0,10)  %></td>
                                             <td><%= debt[i].tc %></td>
                                             <td><%= debt[i].name %></td>
                                             <td>
@@ -78,9 +80,6 @@
                                                 </a>
                                                 <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
                                                     <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                </a>
-                                                <a>
-                                                    <button type="button" class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
                                                 </a>
                                             </td>
                                         </tr>                                 
@@ -102,6 +101,7 @@
                                     <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                         <tr>
+                                            <th>Tarih</th>
                                             <th>TC</th>
                                             <th>İsim</th>
                                             <th>Borç Miktarı</th>
@@ -112,7 +112,7 @@
                                         <tbody>
                                         <% for(let i=0; i< debt.length; i++) {%>
                                             <tr>
-                                                
+                                                <td><%= debt[i].createdAt.toISOString().slice(0,10)  %></td>
                                                 <td><%= debt[i].tc %></td>
                                                 <td><%= debt[i].name %></td>
                                                 <td><%= debt[i].debt %>₺</td>
@@ -123,9 +123,10 @@
                                                     <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
                                                         <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                     </a>
-                                                    <a>
-                                                        <button type="button" class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                    </a>
+                                                    <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debt[i]._id %>?_method=PUT">                                                  
+                                                        <input type="hidden" name="status" value="Ödendi">
+                                                        <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                    </form>  
                                                 </td>
                                             </tr>                                 
                                         <% } %>
