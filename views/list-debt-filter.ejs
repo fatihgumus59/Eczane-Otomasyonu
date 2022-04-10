@@ -81,6 +81,9 @@
                                                 <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
                                                     <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                 </a>
+                                                <a target="_blank" href="/yazdir/<%= debt[i]._id%>">
+                                                    <button type="button" class="btn btn-secondary waves-effect"><i class="mdi mdi-printer"></i></button>
+                                                </a>
                                             </td>
                                         </tr>                                 
                                     <% } %>
@@ -115,7 +118,7 @@
                                                 <td><%= debt[i].createdAt.toISOString().slice(0,10)  %></td>
                                                 <td><%= debt[i].tc %></td>
                                                 <td><%= debt[i].name %></td>
-                                                <td><%= debt[i].debt %>₺</td>
+                                                <td><%= debt[i].total %>₺</td>
                                                 <td>
                                                     <a href="/kisiler/edit/<%= debt[i]._id%>">
                                                         <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
@@ -127,6 +130,9 @@
                                                         <input type="hidden" name="status" value="Ödendi">
                                                         <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
                                                     </form>  
+                                                    <a target="_blank" href="/yazdir/<%= debt[i]._id%>">
+                                                        <button type="button" class="btn btn-secondary waves-effect"><i class="mdi mdi-printer"></i></button>
+                                                    </a>
                                                 </td>
                                             </tr>                                 
                                         <% } %>

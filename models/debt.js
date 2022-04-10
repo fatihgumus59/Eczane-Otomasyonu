@@ -11,16 +11,17 @@ const debt = new Schema({
     unique: true,
     required: true,
   },
-  debt: {
-    type: Number,
-    required: true,
-  },
   medicine: [
     {
       type: Schema.Types.ObjectId,
       ref: 'Medicine',
-    },
+      required: true,
+    },  
   ],
+  total:{
+    type: Schema.Types.Decimal128,
+    default:0,
+  },
   status: {
     type: String,
     required: true,
@@ -32,6 +33,7 @@ const debt = new Schema({
     type: Date,
     default: Date.now,
   },
+
 });
 
 const Debt = mongoose.model('Debt', debt);

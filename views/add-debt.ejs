@@ -6,6 +6,7 @@
             height: 470px;
             overflow: auto;
         }
+        
     </style>
     </head>
 
@@ -54,9 +55,11 @@
                                                             
                                                             <% for(let i=0; i< medicine.length; i++) { %>
 
-                                                                <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine"  value="<%= medicine[i]._id %>">
+                                                                <input name="quantity" type="number" value="1">  
+                                                                <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine" value="<%= medicine[i]._id %>">
                                                                 <label for="<%= medicine[i]._id%>"><%= medicine[i].name%></label><br>
-                                                      
+                                                        
+            
                                                             <% } %>
                                                        
                                                         </div>
@@ -83,49 +86,50 @@
                                                     </select>
                                                 </div>
 
-                                                    <div class="form-group mb-0">
-                                                        <label>T.C Kimlik No</label>
-                                                        <input type="text" name="tc" data-mask="99999999999" required class="form-control">
+                                                <div class="form-group mb-0">
+                                                    <label>T.C Kimlik No</label>
+                                                    <input type="text" name="tc" data-mask="99999999999" required class="form-control">
+                                                </div>
+            
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">İsim Soyisim</label>
+                                                    <div>
+                                                        <input type="text" name="name" class="form-control" required
+                                                            placeholder="İsim Soyisim Giriniz"/>
                                                     </div>
-                
-                                                    <div class="form-group mb-0">
-                                                        <label class="my-2 py-1">İsim Soyisim</label>
-                                                        <div>
-                                                            <input type="text" name="name" class="form-control" required
-                                                                placeholder="İsim Soyisim Giriniz"/>
-                                                        </div>
+                                                </div>
+            
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">Borç</label>
+                                                    <div>
+                                                        <input type="number" step="any" name="total" class="form-control" required
+                                                                placeholder="Borç Tutarı Giriniz"/>
                                                     </div>
-                
-                                                    <div class="form-group mb-0">
-                                                        <label class="my-2 py-1">Borç</label>
-                                                        <div>
-                                                            <input type="number" name="debt" class="form-control" required
-                                                                    placeholder="Borç Tutarı Giriniz"/>
-                                                        </div>
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <label class="my-2 py-1">Tarih</label>
+                                                    <div>
+                                                        <input type="date" name="createdAt" class="form-control" required/>
                                                     </div>
-                                                    <div class="form-group mb-0">
-                                                        <label class="my-2 py-1">Tarih</label>
-                                                        <div>
-                                                            <input type="date" name="createdAt" class="form-control" required/>
-                                                        </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="my-2 py-1">Not</label>
+                                                    <div>
+                                                        <textarea id="textarea" name="note" class="form-control" maxlength="225" rows="3" placeholder="Lütfen kişi hakkındaki notu giriniz"></textarea>
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label class="my-2 py-1">Not</label>
-                                                        <div>
-                                                            <textarea id="textarea" name="note" class="form-control" maxlength="225" rows="3" placeholder="Lütfen kişi hakkındaki notu giriniz"></textarea>
-                                                        </div>
+                                                </div>
+                                                <div class="form-group mb-0">
+                                                    <div>
+                                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                            Gönder
+                                                        </button>
+                                                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                            İptal
+                                                        </button>
                                                     </div>
-                                                    <div class="form-group mb-0">
-                                                        <div>
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                                Gönder
-                                                            </button>
-                                                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                                                İptal
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                            
+                                                </div>
+                                                                            
+           
                                             </div>
                                         </div> <!-- end col -->
                                         
@@ -159,6 +163,8 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('form').parsley();
+
+            var i = 0;
         });
 
     </script>

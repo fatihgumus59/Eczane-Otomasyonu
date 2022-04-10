@@ -60,7 +60,7 @@
                                             
                                             <td><%= debt[i].tc %></td>
                                             <td><%= debt[i].name %></td>
-                                            <td><%= debt[i].debt %>₺</td>
+                                            <td><%= debt[i].total %>₺</td>
                                             <td><%= debt[i].status %></td>
                                             <td>
                                                 <a href="/kisiler/edit/<%= debt[i]._id%>">
@@ -72,7 +72,10 @@
                                                 <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debt[i]._id %>?_method=PUT">                                                  
                                                     <input type="hidden" name="status" value="Ödendi">
                                                     <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                </form>  
+                                                </form>
+                                                <a target="_blank" href="/yazdir/<%= debt[i]._id%>">
+                                                    <button type="button" class="btn btn-secondary waves-effect"><i class="mdi mdi-printer"></i></button>
+                                                </a>
 
                                             </td>
                                         </tr>                                 

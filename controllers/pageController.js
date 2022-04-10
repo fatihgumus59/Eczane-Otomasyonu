@@ -2,7 +2,44 @@ const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
 
 exports.getIndexPage = async (req, res) => {
-  res.status(200).render('index');
+
+  const toplam = await Debt.find({}).count();
+  const odenmemis = await Debt.where({ status: 'Ödenmedi' }).count().select('status');
+  const odenmis = await Debt.where({ status: 'Ödendi' }).count().select('status');
+  const notlar = await Debt.find({}).limit(4).sort('-createdAt');
+
+  const odenmisOran = (odenmis * 100) / toplam;
+  const odenmemisOran = (odenmemis * 100) / toplam;
+
+
+  res.status(200).render('index', {
+    toplam,
+    odenmemis,
+    odenmis,
+    odenmisOran,
+    odenmemisOran,
+    notlar,
+    debt: await Debt.aggregate(
+      [
+        {
+          $group: {
+            _id: "$status",
+            total: {
+              $sum: "$total"
+            }
+          }
+        }
+      ],
+      function (err, result) {
+        if (err) {
+          res.send(err);
+        } 
+
+        return result;
+      }
+      
+    ),
+  });
 };
 
 exports.getDebtAddPage = async (req, res) => {
@@ -52,9 +89,9 @@ exports.getNotesPage = async (req, res) => {
 
 exports.getProforma = async (req, res) => {
 
-  const debt = await Debt.findOne({_id: req.params.id}).populate('medicine');
+  const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine');
 
-  res.status(200).render('proforma', {  
+  res.status(200).render('proforma', {
     debt,
   });
 };

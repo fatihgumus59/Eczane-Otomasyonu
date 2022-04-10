@@ -3,7 +3,8 @@ const Debt = require('../models/debt');
 exports.createDebt = async (req, res) => {
   try {
 
-    const debt = await Debt.create(req.body);
+
+    const debt = await Debt.create({...req.body});
 
     res.status(201).redirect('/kisiler');
 
@@ -34,15 +35,16 @@ exports.getAllDebt = async (req, res) => {
 
 exports.editDebt = async (req, res) => {
   try {
-    const debt = await Debt.findOne({ _id: req.params.id });
+    const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine');
     debt.name = req.body.name;
     debt.tc = req.body.tc;
-    debt.debt = req.body.debt;
+    debt.total = req.body.total;
     debt.medicine = req.body.medicine;
     debt.status = req.body.status;
     debt.note = req.body.note;
+
     debt.save();
-    
+
 
     res.status(200).redirect('/kisiler');
 
