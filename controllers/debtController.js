@@ -20,9 +20,9 @@ exports.createDebt = async (req, res) => {
 
 exports.getAllDebt = async (req, res) => {
   try {
-    const debt = await Debt.find({}).sort('-createdAt').populate('medicine.ilac')
+    const debt = await Debt.find({}).populate('medicine.ilac').sort('-createdAt');
 
-    console.log(JSON.stringify(debt[0].medicine[0].ilac.name));
+    console.log(JSON.stringify(debt[0].medicine[0].ilac));
 
     res.status(200).render('list-debt', {
       page_name: "Kişiler",

@@ -4,7 +4,7 @@
   "description": "eczane otomasyonu",
   "main": "app.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app.js"
   },
   "keywords": [
     "eczane"
