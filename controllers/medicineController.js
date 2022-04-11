@@ -32,6 +32,7 @@ exports.getAllMedicine = async (req, res) => {
     const medicine = await Medicine.find({}).sort('-createdAt');
 
     res.status(201).render('list-medicine', {
+      page_name: "İlaçlar",
       medicine
     });
 

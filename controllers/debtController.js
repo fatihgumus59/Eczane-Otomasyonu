@@ -4,8 +4,9 @@ exports.createDebt = async (req, res) => {
   try {
 
 
-    const debt = await Debt.create({...req.body});
+    const debt = await Debt.create(req.body);
 
+    console.log(req.body);
     res.status(201).redirect('/kisiler');
 
 
@@ -19,11 +20,14 @@ exports.createDebt = async (req, res) => {
 
 exports.getAllDebt = async (req, res) => {
   try {
-    const debt = await Debt.find({}).sort('-createdAt');
+    const debt = await Debt.find({}).sort('-createdAt').populate('medicine.ilac')
+
+    console.log(JSON.stringify(debt[0].medicine[0].ilac.name));
 
     res.status(200).render('list-debt', {
+      page_name: "Kişiler",
       debt,
-    })
+    });
 
   } catch (err) {
     res.status(404).json({
@@ -35,7 +39,7 @@ exports.getAllDebt = async (req, res) => {
 
 exports.editDebt = async (req, res) => {
   try {
-    const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine');
+    const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
     debt.name = req.body.name;
     debt.tc = req.body.tc;
     debt.total = req.body.total;
@@ -76,6 +80,7 @@ exports.getDebtPaid = async (req, res) => { // ödenmiş
     const debt = await Debt.find({ status: status });
 
     res.status(200).render('list-debt-filter', {
+      page_name: "Borcu Kapatanlar",
       debt,
       status,
     })
@@ -95,6 +100,7 @@ exports.getDebtUnpaid = async (req, res) => { // ödenmiş
     const debt = await Debt.find({ status: status });
 
     res.status(200).render('list-debt-filter', {
+      page_name: "Borçlular",
       debt,
       status,
     })

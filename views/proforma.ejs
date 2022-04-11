@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title>Invoice - Kişi Adı </title>
+		<title>Invoice - <%= page_name %> </title>
 
 		<!-- Favicon -->
 		<link rel="icon" href="./images/favicon.png" type="image/x-icon" />
@@ -123,85 +123,105 @@
 		
         
 		<p>Eczanemizi tercih ettiğiniz için teşekkür ederiz.</p>
-		
-		<div class="invoice-box">
-			<table>
-				<tr class="top">
-					<td colspan="2">
-						<table>
-							<tr>
-								<td class="title">
-									<img src="/images/logo.png" alt="Company logo" style="width: 100%; max-width: 300px" />
-								</td>
+		<%if(debt){%>
+			<div class="invoice-box">
+				<table>
+					<tr class="top">
+						<td colspan="2">
+							<table>
+								<tr>
+									<td class="title">
+										<img src="/images/logo.png" alt="Company logo" style="width: 100%; max-width: 300px" />
+									</td>
 
-								<td>
-									Fatura : #1<br /> 
-									Yazdırma Tarihi: 06.04.2022<br />
-									Yazdıran Kişi: Mehmet Taş
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
+									<td>
+										Fatura : #1<br /> 
+										Yazdırma Tarihi: 06.04.2022<br />
+										Yazdıran Kişi: Mehmet Taş
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
 
-				<tr class="information">
-					<td colspan="2">
-						<table>
-							<tr>
-								<td>
-                                    Namık Kemal Mahallesi Kampüs<br />
-									Caddesi No:1 <br />
-									Süleymanpaşa-Tekirdağ
-								</td>
+					<tr class="information">
+						<td colspan="2">
+							<table>
+								<tr>
+									<td>
+										Namık Kemal Mahallesi Kampüs<br />
+										Caddesi No:1 <br />
+										Süleymanpaşa-Tekirdağ
+									</td>
 
-								<td>
-									<%= debt.tc %><br />
-									<%= debt.name %><br />
-									<%= debt.status %>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
+									<td>
+										<%= debt.tc %><br />
+										<%= debt.name %><br />
+										<%= debt.status %>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
 
-				<tr class="heading">
-					<td>Alınan İlaçlar</td>
+					<tr class="heading">
+						<td>Alınan İlaçlar</td>
 
-                    <td>Adet - Fiyat</td>
-				</tr>
+						<td>Adet - Fiyat</td>
+					</tr>
 
-                <%for(let i = 0; i < debt.medicine.length; i++) {%>
-                <tr class="item">
-					<td><%= debt.medicine[i].name %></td>
-					<td>1 - <%= debt.medicine[i].price %>₺</td>
-				</tr>
+					<%for(let i = 0; i < debt.medicine.length; i++) {%>
+					<tr class="item">
+						<td><%= debt.medicine[i].name %></td>
+						<td>1 - <%= debt.medicine[i].price %>₺</td>
+					</tr>
 
-				<%}%>
-                
-				<tr  class="heading">
-					<td>Genel</td>
+					<%}%>
+					
+					<tr  class="heading">
+						<td>Genel</td>
 
-					<td>Ücret</td>
-				</tr>
+						<td>Ücret</td>
+					</tr>
 
-                <tr class="item">
-					<td>Toplam</td>
+					<tr class="item">
+						<td>Toplam</td>
 
-					<td><%= debt.debt%>.00₺</td>
-				</tr>
-				<tr class="item last">
-					<td>KDV (%8)</td>
+						<td><%= debt.debt%>.00₺</td>
+					</tr>
+					<tr class="item last">
+						<td>KDV (%8)</td>
 
-					<td>2.16₺</td>
-				</tr>
+						<td>2.16₺</td>
+					</tr>
 
-				<tr class="total">
-					<td></td>
+					<tr class="total">
+						<td></td>
 
-					<td>Toplam: 29.16₺</td>
-				</tr>
-			</table>
-		</div>
+						<td>Toplam: 29.16₺</td>
+					</tr>
+				</table>
+			</div>
+		<%}else{%>
+			<div id="uyari"></div>  
+		<%}%>
         <h4>Sadece bilgilendirme amaçlı verilmiştir, maddi hiçbir değeri yoktur.</h4><br><br>
 	</body>
+
+	<script>
+		function Yonlendir(ID, adres, saniye) {
+			if (saniye == 0) {
+				window.location.href = adres;
+			return;
+			}
+			document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
+			saniye--;
+			setTimeout(function() {
+				Yonlendir(ID, adres, saniye);
+			}, 1000);
+		}
+		</script>
+		<script>
+			Yonlendir("uyari", "/", 10);
+		</script>
 </html>
