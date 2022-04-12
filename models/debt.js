@@ -12,18 +12,15 @@ const debt = new Schema({
     required: true,
   },
   medicine: [{
-
     ilac: {
       type: Schema.Types.ObjectId,
       ref: 'Medicine',
+      required: true,
     },
     quantity: {
       type: Number,
-      default: 1
     }
-  }
-
-  ],
+  }],
   total: {
     type: Schema.Types.Decimal128,
     default: 0,

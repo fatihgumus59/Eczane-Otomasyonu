@@ -3,8 +3,16 @@ const Debt = require('../models/debt');
 exports.createDebt = async (req, res) => {
   try {
 
+    const debt = await Debt.create({
+      ...req.body,
+      medicine: [
+        {
+          "ilac": JSON.parse(req.body.ilac),
+        }
 
-    const debt = await Debt.create(req.body);
+      ]
+
+    });
 
     console.log(req.body);
     res.status(201).redirect('/kisiler');
@@ -13,6 +21,7 @@ exports.createDebt = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: 'error',
+      yazidr: console.log(req.body),
       err,
     });
   }
@@ -21,8 +30,6 @@ exports.createDebt = async (req, res) => {
 exports.getAllDebt = async (req, res) => {
   try {
     const debt = await Debt.find({}).populate('medicine.ilac').sort('-createdAt');
-
-    console.log(JSON.stringify(debt[0].medicine[0].ilac));
 
     res.status(200).render('list-debt', {
       page_name: "Kişiler",
@@ -48,7 +55,6 @@ exports.editDebt = async (req, res) => {
     debt.note = req.body.note;
 
     debt.save();
-
 
     res.status(200).redirect('/kisiler');
 

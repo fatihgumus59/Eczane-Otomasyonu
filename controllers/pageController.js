@@ -7,7 +7,7 @@ exports.getIndexPage = async (req, res) => {
   const odenmemis = await Debt.where({ status: 'Ödenmedi' }).count().select('status');
   const odenmis = await Debt.where({ status: 'Ödendi' }).count().select('status');
   const notlar = await Debt.find({}).limit(4).sort('-createdAt');
-  const list = await Debt.find({}).limit(7).populate('medicine').sort('-createdAt');
+  const list = await Debt.find({}).limit(7).populate('medicine.ilac').sort('-createdAt');
 
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
@@ -57,11 +57,11 @@ exports.getDebtAddPage = async (req, res) => {
 
 exports.getEditDebtPage = async (req, res) => {
 
-  const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine');
+  const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const medicine = await Medicine.find({});
 
   res.status(200).render('edit-debt', {
-    page_name: "Eczane Otomasyonu",
+    page_name: `${debt.name} - Düzenle`,
     debt,
     medicine,
   });
