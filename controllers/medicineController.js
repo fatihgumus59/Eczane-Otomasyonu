@@ -57,7 +57,7 @@ exports.editMedicine = async (req, res) => {
     if (!req.file) {
 
     } else if (!req.body.image) {
-      medicine.image= '/uploads/' + req.file.filename;
+      medicine.image = '/uploads/' + req.file.filename;
     }
 
     console.log(req.body);
@@ -78,6 +78,15 @@ exports.deleteMedicine = async (req, res) => {
   try {
 
     const medicine = await Medicine.findOneAndDelete({ _id: req.params.id })
+    const path = 'public' + medicine.image;
+
+    fs.unlink(path, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      //file removed
+    })
 
     res.status(200).redirect('/ilaclar');
 

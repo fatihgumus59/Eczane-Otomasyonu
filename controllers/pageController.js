@@ -12,7 +12,7 @@ exports.getIndexPage = async (req, res) => {
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
 
-  
+
   res.status(200).render('index', {
     page_name: "Eczane Otomasyonu",
     toplam,
@@ -35,11 +35,11 @@ exports.getIndexPage = async (req, res) => {
       function (err, result) {
         if (err) {
           res.send(err);
-        } 
+        }
 
         return result;
       }
-      
+
     ),
     list,
   });
@@ -50,7 +50,7 @@ exports.getDebtAddPage = async (req, res) => {
   const medicine = await Medicine.find(req.body);
 
   res.status(200).render('add-debt', {
-    page_name: "Eczane Otomasyonu",
+    page_name: "Borçlu Ekle",
     medicine,
   });
 };
@@ -68,7 +68,7 @@ exports.getEditDebtPage = async (req, res) => {
 };
 
 exports.getMedicineAddPage = async (req, res) => {
-  res.status(200).render('add-medicine',{
+  res.status(200).render('add-medicine', {
     page_name: "Eczane Otomasyonu",
   });
 };
@@ -83,7 +83,7 @@ exports.getEditMedicinePage = async (req, res) => {
 };
 
 exports.getStatusPage = async (req, res) => {
-  res.status(200).render('index',{
+  res.status(200).render('index', {
     page_name: "Eczane Otomasyonu",
   });
 };
@@ -100,11 +100,29 @@ exports.getNotesPage = async (req, res) => {
 
 exports.getProforma = async (req, res) => {
 
-  const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine');
+  const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
+  const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
 
   res.status(200).render('proforma', {
     page_name: `${debt.name} `,
     debt,
+    kdv,
+    total: (Number(debt.total) + Number(kdv)).toFixed(2),
   });
 };
+
+exports.getAllMedicineApi = async (req, res) => {
+
+  const medicine = await Medicine.find();
+
+  res.status(200).json(medicine);
+};
+
+exports.getAllDebtApi = async (req, res) => {
+
+  const debt =  await Debt.find();
+
+  res.status(200).json(debt);
+
+}
 

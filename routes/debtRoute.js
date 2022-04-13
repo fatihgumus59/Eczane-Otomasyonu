@@ -5,6 +5,7 @@ const debtController = require('../controllers/debtController');
 const router = express.Router();
 
 router.route('/').get(debtController.getAllDebt);
+router.route('/api').get(pageController.getAllDebtApi);
 router.route('/borc-ekle').get(pageController.getDebtAddPage);
 router.route('/borc-ekle').post(debtController.createDebt);
 router.route('/edit/:id').get(pageController.getEditDebtPage);

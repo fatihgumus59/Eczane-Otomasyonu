@@ -1,22 +1,13 @@
 const Debt = require('../models/debt');
 
 exports.createDebt = async (req, res) => {
-  try {
-
+  try { 
     const debt = await Debt.create({
-      ...req.body,
-      medicine: [
-        {
-          "ilac": JSON.parse(req.body.ilac),
-        }
-
-      ]
-
+      ...req.body.body,
+      medicine: req.body.ilac
     });
 
-    console.log(req.body);
     res.status(201).redirect('/kisiler');
-
 
   } catch (err) {
     res.status(404).json({

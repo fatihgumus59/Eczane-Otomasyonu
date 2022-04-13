@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-		<title>Invoice - <%= page_name %> </title>
+		<title><%= page_name %> - Invoice </title>
 
 		<!-- Favicon -->
 		<link rel="icon" href="./images/favicon.png" type="image/x-icon" />
@@ -135,7 +135,6 @@
 									</td>
 
 									<td>
-										Fatura : #1<br /> 
 										Yazdırma Tarihi: 06.04.2022<br />
 										Yazdıran Kişi: Mehmet Taş
 									</td>
@@ -172,8 +171,8 @@
 
 					<%for(let i = 0; i < debt.medicine.length; i++) {%>
 					<tr class="item">
-						<td><%= debt.medicine[i].name %></td>
-						<td>1 - <%= debt.medicine[i].price %>₺</td>
+						<td><%=  debt.medicine[i].ilac.name %></td>
+						<td> <%=  debt.medicine[i].quantity%> - <%= debt.medicine[i].ilac.price  %>₺</td>
 					</tr>
 
 					<%}%>
@@ -187,18 +186,18 @@
 					<tr class="item">
 						<td>Toplam</td>
 
-						<td><%= debt.debt%>.00₺</td>
+						<td><%= debt.total %>₺</td>
 					</tr>
 					<tr class="item last">
 						<td>KDV (%8)</td>
 
-						<td>2.16₺</td>
+						<td><%= kdv %>₺</td>
 					</tr>
 
 					<tr class="total">
 						<td></td>
 
-						<td>Toplam: 29.16₺</td>
+						<td>Toplam: <%= total %>₺</td>
 					</tr>
 				</table>
 			</div>
