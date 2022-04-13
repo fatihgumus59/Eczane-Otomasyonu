@@ -28,24 +28,29 @@
                 </div>
                 <!-- end page title end breadcrumb -->
          
-                   
+               
                 <div class="row">
 
                     <% for(let i=0; i< debt.length; i++) {%>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <h6 class="card-header mt-0">TC: <%= debt[i].tc %></h6>
-                            <div class="card-body">
-                                <h4 class="card-title font-20 mt-0"><%= debt[i].name %></h4>
-                                <p class="card-text"><%= debt[i].note%></p>
-                                <a href="/kisiler/edit/<%= debt[i]._id%>" class="btn btn-primary">Kişiye Git</a>
+                        <% if(debt[i].status=='Ödenmedi'){ %>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <h6 class="card-header mt-0">TC: <%= debt[i].tc %></h6>
+                                    <div class="card-body">
+                                        <h4 class="card-title font-20 mt-0"><%= debt[i].name %></h4>
+                                        <p class="card-text"><%= debt[i].note%></p>
+                                        <a href="/kisiler/edit/<%= debt[i]._id%>" class="btn btn-primary">Kişiye Git</a>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        <%}else {%>
+                            
+                        <%}%>
                    <%}%>
 
                 </div>
-                    
+                
+            </div>       
              
 
         <!-- end wrapper -->

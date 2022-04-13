@@ -55,8 +55,8 @@
                                                             <div class="medicine">
                                                                 <h5>Seçili</h5>
                                                                 <% for(let i=0; i< debt.medicine.length; i++) { %>
-                                                                    <input name="quantity" type="number" value="<%= debt.medicine[i].quantity  %>">  
-                                                                    <input type="checkbox" id="<%= medicine[i]._id%>" name="ilac"  checked value="<%= debt.medicine[i].ilac._id  %>">
+                                                                    <input name="medicine.quantity" type="number" value="<%= debt.medicine[i].quantity  %>">  
+                                                                    <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine.ilac"  checked value="<%= debt.medicine[i].ilac._id  %>">
                                                                     <label for="<%= medicine[i]._id%>"><%= debt.medicine[i].ilac.name  %> - Seçili %> </label><br>
                                                                 <% } %>
                                                                 <hr>
@@ -68,26 +68,21 @@
                                                         
                                                             </div>
                                                             
-
                                                             <a class="btn btn-primary waves-effect waves-light mt-4 mb-4" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
                                                         </div>
                                                         
                                                     </div>  
                                                 </div>
                                             </div> <!-- end col -->
-
                                             <div class="col-md-8">
                                                 <div class="p-20">
-
                                                     <div class="btn-group pull-right">
                                                         <a target="_blank" href="/yazdir/<%= debt._id%>">
                                                             <button type="button" class="btn btn-primary"><i class="mdi mdi-printer"></i> Yazdır</button>
                                                         </a>
                                                     </div>
-
                                                     <h4 class="mt-0 header-title">Kişi Bilgileri</h4>
                                                     <p class="text-muted mb-4 font-14">Lütfen kişi bilgilerini eksiksiz doldurunuz.</p>
-
                                                         <div class="form-group mb-3">
                                                             <label>Borç Durumu</label>
                                                             <select name="status" class="form-control">
@@ -96,7 +91,6 @@
                                                                 <option value="Ödenmedi">Ödenmedi</option>
                                                             </select>
                                                         </div>
-
                                                         <div class="form-group mb-0">
                                                             <label>T.C Kimlik No</label>
                                                             <input type="text" name="tc" value="<%= debt.tc%>" data-mask="99999999999"  class="form-control">
@@ -185,7 +179,6 @@
         $(document).ready(function() {
             $('form').parsley();
         });
-
     </script>
 
     <script>
@@ -207,10 +200,3 @@
        
     </body>
 </html>
-
-
-
-
-
-
-
