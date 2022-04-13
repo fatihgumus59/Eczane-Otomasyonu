@@ -56,7 +56,7 @@
                                                                 <h5>Seçili</h5>
                                                                 <% for(let i=0; i< debt.medicine.length; i++) { %>
                                                                     <input name="quantity" type="number" value="<%= debt.medicine[i].quantity  %>">  
-                                                                    <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine"  checked value="<%= debt.medicine[i].ilac._id  %>">
+                                                                    <input type="checkbox" id="<%= medicine[i]._id%>" name="ilac"  checked value="<%= debt.medicine[i].ilac._id  %>">
                                                                     <label for="<%= medicine[i]._id%>"><%= debt.medicine[i].ilac.name  %> - Seçili %> </label><br>
                                                                 <% } %>
                                                                 <hr>
@@ -106,13 +106,6 @@
                                                             <label class="my-2 py-1">İsim Soyisim</label>
                                                             <div>
                                                                 <input type="text" value="<%= debt.name %>" name="name" class="form-control" />
-                                                            </div>
-                                                        </div>
-                    
-                                                        <div class="form-group mb-0">
-                                                            <label class="my-2 py-1">Borç</label>
-                                                            <div>
-                                                                <input autofocus type="number" step="any" value="<%= debt.total %>"  name="total" class="form-control" />
                                                             </div>
                                                         </div>
                                                         <div class="form-group">

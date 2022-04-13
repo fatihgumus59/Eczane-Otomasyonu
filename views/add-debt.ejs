@@ -43,19 +43,24 @@
                                     <h4 class="mt-0 header-title">Borç Ekle</h4>
                                     
                                         <div class="row">
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                             
                                                 <div class="p-20">
                                                     <div class="col-sm-12">
-                                                        <div class="col-md-10">
+                                                        <div class="col-md-12">
                                                             <h4 class="mt-4 header-title">İLAÇ</h4>
                                                             <p class="text-muted  font-14">İlaç adını aşağıdan seçiniz, aradığınız ilaç sistemde yoksa ilaç ekle butonuna tıklayarak ilacı ekleyiniz.</p>
 
-                                                            <ul>
-                                                                <li v-for="opt in options">{{opt.name}}<input v-model="opt.quantity" type="number"/></li>
-                                                            </ul>
+                                                            <div class="medicine">
 
-                                                            <a class="btn btn-primary waves-effect waves-light mt-4 mb-4" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
+                                                               <div class="col-md-10">
+                                                          
+                                                                    <li  style="list-style-type:none;" v-for="opt in options">{{opt.name}}<input class="form-control" v-model="opt.quantity" type="number"/></li>
+                                                                 
+                                                               </div>
+                                                                 
+                                                            </div>
+                                                            <a class="btn btn-primary waves-effect waves-light mt-4 mb-4" target="_blank" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
                                                         </div>
                                                     
                                                         
@@ -63,17 +68,17 @@
                                                 </div>
                                             </div> <!-- end col -->
 
-                                            <div class="col-md-8">
+                                            <div class="col-md-9">
                                                 <div class="p-20">
                                                     <h4 class="mt-0 header-title">Kişi Bilgileri</h4>
                                                     <p class="text-muted mb-4 font-14">Lütfen kişi bilgilerini eksiksiz doldurunuz.</p>
 
                                                     <div class="form-group mb-3">
                                                         <label>Borç Durumu</label>
-                                                        <select name="status"  v-model="body.status" class="form-control">
-                                                                <option hidden>Select</option>
-                                                                <option value="Ödendi">Ödendi</option>
-                                                                <option value="Ödenmedi">Ödenmedi</option>
+                                                        <select name="status" v-model="body.status" class="form-control">
+                                                            <option hidden>Select</option>
+                                                            <option value="Ödendi">Ödendi</option>
+                                                            <option value="Ödenmedi">Ödenmedi</option>
                                                         </select>
                                                     </div>
 
@@ -191,7 +196,6 @@
                     let newData={}
                     this.options.forEach((data)=>{
                         
-                        console.log(data)
                         if(data.quantity!=null)
                         {
                             newData = {
@@ -200,9 +204,6 @@
                             ilac.push(newData)
                         }
                     })
-                    console.log(ilac)
-
-                   console.log(this.body)
                     
                     let formData = new FormData();
                     formData.append('ilac',ilac)
@@ -211,11 +212,18 @@
                     axios.post('/kisiler/borc-ekle',{'body':this.body,ilac:ilac})
                     .then((response)=>{
                         if(response.status==200){
-                            alert('ekleme işlemi başarılı')
+                            alert(`${this.body.name} başarıyla eklendi`)
                         }
+                    }).catch((err)=>{
+
+                        if(err){
+                            alert('Aynı bilgileri göndermeye çalışıyorsun.')
+                        }
+                        
                     })
 
                 }
+
             }
         })
 

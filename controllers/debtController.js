@@ -37,16 +37,17 @@ exports.getAllDebt = async (req, res) => {
 
 exports.editDebt = async (req, res) => {
   try {
-    const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
-    debt.name = req.body.name;
-    debt.tc = req.body.tc;
-    debt.total = req.body.total;
-    debt.medicine = req.body.medicine;
-    debt.status = req.body.status;
-    debt.note = req.body.note;
+    await Debt.findOneAndUpdate({ _id: req.params.id },{
+      quantity:req.body.quantity,
+      ilac: req.body.ilac,
+      status: req.body.status,
+      tc: req.body.tc,
+      name: req.body.name,
+      note: req.body.note,
+      
+    }).populate('medicine.ilac');
 
-    debt.save();
-
+    
     res.status(200).redirect('/kisiler');
 
   } catch (err) {
