@@ -92,7 +92,7 @@
                                                             <h5 class="mt-0"><%=  debt[1]._id=='Ödenmedi' &&  debt[1].total || debt[0].total %> ₺</h5>
                                                             <p class="mb-0 text-muted">Ödenmemiş Borç </p>
                                                         </div>
-                                                    </div>                                                                
+                                                    </div>                                                         
                                                 </div>
                                                 <div class="progress mt-3" style="height:3px;">
                                                     <div class="progress-bar bg-danger" role="progressbar" style="width: <%=  
@@ -136,7 +136,6 @@
                                         </div><!--end card-->
                                     </div><!--end col-->
                                 <%}%>
-
                                 <% if(debt[0] && debt[1] ){%>
                                     <div class="col-lg-3">
                                         <div class="card">
@@ -183,12 +182,21 @@
                                                             <i class="mdi mdi-basket-fill"></i>
                                                         </div>
                                                     </div>
+                                                    <%if(debt.total){%>
                                                     <div class="col-9 align-self-center text-right">
                                                         <div class="m-l-10 ">
-                                                            <h5 class="mt-0"><%= debt[0]._id=='Ödendi' &&  debt[0].total || debt[1].total   %>₺</h5>
+                                                            <h5 class="mt-0"><%= debt[0]._id=='Ödendi' &&  debt[0].total || debt[1].total %>₺</h5>
                                                             <p class="mb-0 text-muted">Ödenmiş Borç </p>
                                                         </div>
-                                                    </div>                                                                
+                                                    </div>   
+                                                    <%}else{%>
+                                                        <div class="col-9 align-self-center text-right">
+                                                            <div class="m-l-10 ">
+                                                                <h5 class="mt-0">0 ₺</h5>
+                                                                <p class="mb-0 text-muted">Ödenmiş Borç </p>
+                                                            </div>
+                                                        </div>   
+                                                    <%}%>
                                                 </div>
                                                 <div class="progress mt-3" style="height:3px;">
                                                     <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>

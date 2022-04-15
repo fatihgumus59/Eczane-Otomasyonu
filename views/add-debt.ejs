@@ -181,38 +181,33 @@
                         this.options=res.data
                     })
                 },
-                kaydet(){
-                    selectedData=[]
-                    this.options.forEach((data)=>{
-                        if(data.quantity!=null)
-                        {
-                            selectedData.push(data)
-                        }
-                    })
-                },
                 goster()
                 {
                     ilac=[]
+                    let total =0;
                     let newData={}
                     this.options.forEach((data)=>{
                         
                         if(data.quantity!=null)
                         {
                             newData = {
-                                ilac:data._id,quantity:data.quantity
+                                ilac:data._id,quantity:data.quantity,
                             }
                             ilac.push(newData)
+                            total+= Number(Object.values(data.price)) * Number(data.quantity)
                         }
+                       
                     })
-                    
+                    console.log(this.options)
                     let formData = new FormData();
                     formData.append('ilac',ilac)
                     formData.append('body',this.body)
+                    formData.append('total',total)
 
-                    axios.post('/kisiler/borc-ekle',{'body':this.body,ilac:ilac})
+                    axios.post('/kisiler/borc-ekle',{'body':this.body,ilac:ilac,total:total})
                     .then((response)=>{
                         if(response.status==200){
-                            alert(`${this.body.name} başarıyla eklendi`)
+                            alert(`${this.body.name} başarıyla eklendi`)    
                         }
                     }).catch((err)=>{
 

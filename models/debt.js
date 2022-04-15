@@ -40,19 +40,7 @@ const debt = new Schema({
   },
 });
 
-debt.pre('save', function (next) {
 
-  const debt = this;
-  
-  debt.total = Number(debt.medicine.reduce( 
-    (previousValue, currentValue) =>
-      previousValue + currentValue.quantity *currentValue.ilac.price, 
-
-    0,
-  ))
-
-  next();
-});
 
 const Debt = mongoose.model('Debt', debt);
 module.exports = Debt;

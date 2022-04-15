@@ -55,8 +55,8 @@
                                                             <div class="medicine">
                                                                 <h5>Seçili</h5>
                                                                 <% for(let i=0; i< debt.medicine.length; i++) { %>
-                                                                    <input name="medicine.quantity" type="number" value="<%= debt.medicine[i].quantity  %>">  
-                                                                    <input type="checkbox" id="<%= medicine[i]._id%>" name="medicine.ilac"  checked value="<%= debt.medicine[i].ilac._id  %>">
+                                                                    <input name="quantity" type="number" value="<%= debt.medicine[i].quantity  %>">  
+                                                                    <input type="checkbox" id="<%= medicine[i]._id%>" name="ilac"  checked value="<%= debt.medicine[i].ilac._id  %>">
                                                                     <label for="<%= medicine[i]._id%>"><%= debt.medicine[i].ilac.name  %> - Seçili %> </label><br>
                                                                 <% } %>
                                                                 <hr>

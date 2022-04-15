@@ -1,10 +1,12 @@
 const Debt = require('../models/debt');
+const axios = require('axios');
 
 exports.createDebt = async (req, res) => {
-  try { 
+  try {
     const debt = await Debt.create({
       ...req.body.body,
-      medicine: req.body.ilac
+      medicine: req.body.ilac,
+      total: req.body.total
     });
 
     res.status(201).redirect('/kisiler');
@@ -36,18 +38,17 @@ exports.getAllDebt = async (req, res) => {
 };
 
 exports.editDebt = async (req, res) => {
+
   try {
-    await Debt.findOneAndUpdate({ _id: req.params.id },{
-      quantity:req.body.quantity,
-      ilac: req.body.ilac,
+    await Debt.findOneAndUpdate({ _id: req.params.id }, {
       status: req.body.status,
       tc: req.body.tc,
       name: req.body.name,
       note: req.body.note,
-      
+
     }).populate('medicine.ilac');
 
-    
+
     res.status(200).redirect('/kisiler');
 
   } catch (err) {

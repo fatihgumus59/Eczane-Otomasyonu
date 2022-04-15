@@ -102,12 +102,15 @@ exports.getProforma = async (req, res) => {
 
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
+  const date = new Date();
+  const tarih = date.getDate() +'/'+date.getMonth()+'/'+date.getFullYear();
 
   res.status(200).render('proforma', {
     page_name: `${debt.name} `,
     debt,
     kdv,
     total: (Number(debt.total) + Number(kdv)).toFixed(2),
+    tarih,
   });
 };
 

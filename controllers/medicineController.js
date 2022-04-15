@@ -60,7 +60,6 @@ exports.editMedicine = async (req, res) => {
       medicine.image = '/uploads/' + req.file.filename;
     }
 
-    console.log(req.body);
     medicine.save();
 
     res.status(200).redirect('/ilaclar');
