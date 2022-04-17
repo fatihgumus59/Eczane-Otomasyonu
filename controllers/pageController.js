@@ -59,11 +59,13 @@ exports.getEditDebtPage = async (req, res) => {
 
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const medicine = await Medicine.find({});
+  const id = req.param.id;
 
   res.status(200).render('edit-debt', {
     page_name: `${debt.name} - Düzenle`,
     debt,
     medicine,
+    id,
   });
 };
 
@@ -103,7 +105,7 @@ exports.getProforma = async (req, res) => {
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
   const date = new Date();
-  const tarih = date.getDate() +'/'+date.getMonth()+'/'+date.getFullYear();
+  const tarih = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
 
   res.status(200).render('proforma', {
     page_name: `${debt.name} `,
@@ -123,9 +125,24 @@ exports.getAllMedicineApi = async (req, res) => {
 
 exports.getAllDebtApi = async (req, res) => {
 
-  const debt =  await Debt.find();
+  const debt = await Debt.find();
 
   res.status(200).json(debt);
 
 }
 
+exports.getLoginPage = async (req, res) => {
+
+  res.status(200).render('login',{
+    page_name: 'Giriş Yap - Ezane Otomasyonu',
+  })
+
+}
+
+exports.getRegisterPage = async (req, res) => {
+
+  res.status(200).render('register',{
+    page_name: 'Kayıt Ol - Ezane Otomasyonu',
+  })
+
+}

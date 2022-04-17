@@ -37,6 +37,27 @@ exports.getAllDebt = async (req, res) => {
   }
 };
 
+exports.getEditDebtPageApi = async (req, res) => {
+
+  try {
+    let data
+    data = await Debt.findOneAndUpdate({ _id: req.params.id }, {
+      status: req.body.status,
+      tc: req.body.tc,
+      name: req.body.name,
+      note: req.body.note,
+    }).populate('medicine.ilac');
+
+
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(404).json({
+      status: 'failed',
+      err,
+    });
+  }
+};
+
 exports.editDebt = async (req, res) => {
 
   try {
@@ -45,7 +66,6 @@ exports.editDebt = async (req, res) => {
       tc: req.body.tc,
       name: req.body.name,
       note: req.body.note,
-
     }).populate('medicine.ilac');
 
 

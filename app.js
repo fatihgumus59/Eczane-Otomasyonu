@@ -26,7 +26,6 @@ app.use(express.static('public'));
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
 
-
 app.use(express.json())  //req.body'den gelen verileri yakalamak için
 app.use(express.urlencoded({ extended: true })) //req.body'den gelen verileri yakalamak için
 
