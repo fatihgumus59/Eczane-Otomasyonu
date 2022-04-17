@@ -1,5 +1,6 @@
 const express = require('express');
-const multer = require('multer')
+const multer = require('multer');
+const authMiddleware = require('../middlewares/authMiddleware');
 
 const imageStorage = multer.diskStorage({
     destination: 'public/uploads',
@@ -23,12 +24,12 @@ const pageController = require('../controllers/pageController');
 
 const router = express.Router();
 
-router.route('/').get(medicineController.getAllMedicine);
+router.route('/').get(authMiddleware,medicineController.getAllMedicine);
 router.route('/api').get(pageController.getAllMedicineApi);
-router.route('/ilac-ekle').get(pageController.getMedicineAddPage);
-router.route('/ilac-ekle').post(imageUpload.single('image'), medicineController.createMedicine);
-router.route('/edit/:id').get(pageController.getEditMedicinePage);
-router.route('/:id').put(imageUpload.single('image'), medicineController.editMedicine);
-router.route('/:id').delete(medicineController.deleteMedicine);
+router.route('/ilac-ekle').get(authMiddleware,pageController.getMedicineAddPage);
+router.route('/ilac-ekle').post(authMiddleware,imageUpload.single('image'), medicineController.createMedicine);
+router.route('/edit/:id').get(authMiddleware,pageController.getEditMedicinePage);
+router.route('/:id').put(authMiddleware,imageUpload.single('image'), medicineController.editMedicine);
+router.route('/:id').delete(authMiddleware,medicineController.deleteMedicine);
 
 module.exports = router;

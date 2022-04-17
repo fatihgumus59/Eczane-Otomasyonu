@@ -12,6 +12,7 @@ exports.getIndexPage = async (req, res) => {
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
 
+  console.log(req.session.userID);
 
   res.status(200).render('index', {
     page_name: "Eczane Otomasyonu",
@@ -48,7 +49,6 @@ exports.getIndexPage = async (req, res) => {
 exports.getDebtAddPage = async (req, res) => {
 
   const medicine = await Medicine.find(req.body);
-
   res.status(200).render('add-debt', {
     page_name: "Borçlu Ekle",
     medicine,
@@ -93,7 +93,6 @@ exports.getStatusPage = async (req, res) => {
 exports.getNotesPage = async (req, res) => {
 
   const debt = await Debt.find({});
-
   res.status(200).render('note', {
     page_name: "Notlar",
     debt,
