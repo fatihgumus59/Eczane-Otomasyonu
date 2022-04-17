@@ -14,7 +14,6 @@ exports.createDebt = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: 'error',
-      yazidr: console.log(req.body),
       err,
     });
   }
