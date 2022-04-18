@@ -11,6 +11,7 @@ exports.getIndexPage = async (req, res) => {
 
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
+  const borcAlanOran = ((odenmemis-odenmis)/toplam)*100;
 
   console.log(req.session.userID);
 
@@ -43,6 +44,7 @@ exports.getIndexPage = async (req, res) => {
 
     ),
     list,
+    borcAlanOran : borcAlanOran.toFixed(2),
   });
 };
 

@@ -27,16 +27,16 @@ const UserSchema = new Schema({
     enum: ['user', 'editor', 'super'],
     default: 'user',
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  confirmation: {
+    type: Boolean,
+    default: false,
   },
-});
+}, { versionKey: false, timestamps: true }); // versiyon tutma ama oluşturma tarihi ve update tarihlerini tut dedik.
 
-UserSchema.pre('save',function(next){
+UserSchema.pre('save', function (next) {
   // şifreyi hash ediyoruz.
   const user = this;
-  if(!user.isModified('password')) return next();
+  if (!user.isModified('password')) return next();
   bcrypt.hash(user.password, 10, (err, hash) => {
     // 10 yazan yer  şifrenin zorluğunu arttırıyor.
     user.password = hash;

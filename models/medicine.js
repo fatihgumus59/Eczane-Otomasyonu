@@ -23,11 +23,7 @@ const medicine = new Schema({
   image: {
     type: String,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+}, { versionKey: false, timestamps: true });
 
 const Medicine = mongoose.model('Medicine', medicine);
 module.exports = Medicine;

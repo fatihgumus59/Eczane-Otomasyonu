@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
+const helmet = require('helmet'); // ataklara karşı siteyi korumak için.
 
 
 const pageRoute = require('./routes/pageRoute');
@@ -30,7 +31,7 @@ app.set('view engine', 'ejs');
 
 //middlewares
 app.use(express.static('public'));
-
+app.use(helmet()); // helmet ara katman yazılımıdır.
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
 
@@ -39,18 +40,20 @@ app.use(express.urlencoded({ extended: true })) //req.body'den gelen verileri ya
 
 app.use(
   session({
-    secret: 'eczane-otomasyon', 
+    secret: 'eczane-otomasyon',
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/eczane' })
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
+    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/eczane',clear_interval: 3600 })
   })
 );
 
-app.use('*',(req,res,next)=>{
+app.use('*', (req, res, next) => {
   userIN = req.session.userID;
   userName = req.session.userName;
   next();
 })
+
 
 app.use('/', pageRoute);
 app.use('/ilaclar', medicineRoute);

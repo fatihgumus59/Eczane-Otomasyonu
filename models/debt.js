@@ -34,11 +34,7 @@ const debt = new Schema({
   note: {
     type: String,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+},{ versionKey: false, timestamps: true });
 
 
 

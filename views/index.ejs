@@ -38,12 +38,25 @@
                                                     <i class="mdi mdi-account-multiple"></i>
                                                 </div>
                                             </div>
+                                            <%if(borcAlanOran <= 0){%>
                                             <div class="col-9 align-self-center text-right">
                                                 <div class="m-l-10">
-                                                    <h5 class="mt-0"><%= odenmemis %></h5>
-                                                    <p class="mb-0 text-muted">Borç Alan Kişi <span class="badge bg-soft-success"><i class="mdi mdi-arrow-up"></i>7.35%</span></p>
+                                                    <h5 class="mt-0"><%= odenmemis %></h5>                                         
+                                                    <p class="mb-0 text-muted">Borç Alan Kişi <span class="badge bg-soft-danger">           
+                                                    <i class="mdi mdi-arrow-down"></i><%= borcAlanOran %>%</span></p>     
                                                 </div>
-                                            </div>                                                                                          
+                                            </div>
+                                            <%}else{%>
+                                                <div class="col-9 align-self-center text-right">
+                                                    <div class="m-l-10">
+                                                        <h5 class="mt-0"><%= odenmemis %></h5>                                         
+                                                        <p class="mb-0 text-muted">Borç Alan Kişi <span class="badge bg-soft-success">           
+                                                        <i class="mdi mdi-arrow-up"></i><%= borcAlanOran %>%</span></p>     
+                                                    </div>
+                                                </div>
+
+                                            <%}%>
+
                                         </div>
                                         <div class="progress mt-3" style="height:3px;">
                                             <div class="progress-bar  bg-danger" role="progressbar" style="width: <%= odenmemisOran %>%;" aria-valuenow="<%= odenmemisOran %>" aria-valuemin="0" aria-valuemax="100"></div>
