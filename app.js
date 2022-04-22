@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
-const helmet = require('helmet'); // ataklara karşı siteyi korumak için.
 
 
 const pageRoute = require('./routes/pageRoute');
@@ -31,7 +30,6 @@ app.set('view engine', 'ejs');
 
 //middlewares
 app.use(express.static('public'));
-app.use(helmet()); // helmet ara katman yazılımıdır.
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
 

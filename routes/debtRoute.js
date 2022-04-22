@@ -3,12 +3,13 @@ const pageController = require('../controllers/pageController');
 const debtController = require('../controllers/debtController');
 
 const authMiddleware = require('../middlewares/authMiddleware');
+const roleMiddleware = require('../middlewares/roleMiddleware');
 const router = express.Router();
 
 router.route('/').get(authMiddleware,debtController.getAllDebt);
 router.route('/api').get(pageController.getAllDebtApi);
 router.route('/borc-ekle').get(authMiddleware,pageController.getDebtAddPage);
-router.route('/borc-ekle').post(authMiddleware,debtController.createDebt);
+router.route('/borc-ekle').post(roleMiddleware(['super','editor']) ,authMiddleware,debtController.createDebt); // editor ve super rolüne sahip kişiler ekleyebilecek.
 router.route('/api/edit/:id').get(authMiddleware,debtController.getEditDebtPageApi);
 router.route('/edit/:id').get(authMiddleware,pageController.getEditDebtPage);
 router.route('/:id').put(authMiddleware,debtController.editDebt);

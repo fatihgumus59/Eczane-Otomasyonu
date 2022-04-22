@@ -1,5 +1,7 @@
 const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
+const User = require('../models/user');
+
 
 exports.getIndexPage = async (req, res) => {
 
@@ -50,10 +52,12 @@ exports.getIndexPage = async (req, res) => {
 
 exports.getDebtAddPage = async (req, res) => {
 
+  const user = await User.findById(req.session.userID); 
   const medicine = await Medicine.find(req.body);
   res.status(200).render('add-debt', {
     page_name: "Borçlu Ekle",
     medicine,
+    user,
   });
 };
 
@@ -79,10 +83,9 @@ exports.getMedicineAddPage = async (req, res) => {
 
 exports.getEditMedicinePage = async (req, res) => {
   const medicine = await Medicine.findOne({ _id: req.params.id });
-
   res.status(200).render('edit-medicine', {
     page_name: "Eczane Otomasyonu",
-    medicine
+    medicine,
   });
 };
 

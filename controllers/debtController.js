@@ -1,13 +1,16 @@
 const Debt = require('../models/debt');
-const axios = require('axios');
+const User = require('../models/user');
 
 exports.createDebt = async (req, res) => {
   try {
+    
     const debt = await Debt.create({
       ...req.body.body,
       medicine: req.body.ilac,
-      total: req.body.total
+      total: req.body.total,
+      user:req.session.userID,
     });
+   
 
     res.status(201).redirect('/kisiler');
 

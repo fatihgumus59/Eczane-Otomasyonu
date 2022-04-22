@@ -44,7 +44,7 @@
                                     
                                         <div class="row">
                                             <div class="col-md-3">
-                                            
+
                                                 <div class="p-20">
                                                     <div class="col-sm-12">
                                                         <div class="col-md-12">
@@ -169,7 +169,7 @@
                 value: null,
                 options:[],
                 test:'asdas',
-                body:{}
+                body:{},
             },
             mounted(){
                 this.getData()
@@ -184,6 +184,7 @@
                 goster()
                 {
                     ilac=[]
+                    let role ="<%= user.role %>";
                     let total =0;
                     let newData={}
                     this.options.forEach((data)=>{
@@ -194,17 +195,17 @@
                                 ilac:data._id,quantity:data.quantity,
                             }
                             ilac.push(newData)
-                            total+= Number(Object.values(data.price)) * Number(data.quantity)
+                            total+= Number(Object.values(data.price)) * Number(data.quantity);
                         }
                        
                     })
-                    console.log(this.options)
                     let formData = new FormData();
                     formData.append('ilac',ilac)
                     formData.append('body',this.body)
                     formData.append('total',total)
+                    formData.append('role',role)
 
-                    axios.post('/kisiler/borc-ekle',{'body':this.body,ilac:ilac,total:total})
+                    axios.post('/kisiler/borc-ekle',{'body':this.body,ilac:ilac,total:total,role:role})
                     .then((response)=>{
                         if(response.status==200){
                             alert(`${this.body.name} başarıyla eklendi`)    
