@@ -8,373 +8,454 @@
         <%- include('partials/_navigation')%>
         <!-- End Navigation Bar-->
 
-        <div class="wrapper">
-            <div class="container-fluid">
+        <% if(user && ('role' in user)){ %>
 
-                <!-- Page-Title -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="page-title-box">
-                            <div class="btn-group pull-right">
-                                <ol class="breadcrumb hide-phone p-0 m-0">
-                                    <li class="breadcrumb-item"><a href="#">Otomasyon</a></li>
-                                    <li class="breadcrumb-item active">Panel</li>
-                                </ol>
-                            </div>
-                            <h4 class="page-title">Panel</h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- end page title end breadcrumb -->
-                <div class="row">
-                    <div class="col-xl-12">
+            <%if(user.role=='super' || user.role=='editor'){%>
+                <div class="wrapper">
+                    <div class="container-fluid">
+
+                        <!-- Page-Title -->
                         <div class="row">
-                            <div class="col-lg-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-row">
-                                            <div class="col-3 align-self-center">
-                                                <div class="round">
-                                                    <i class="mdi mdi-account-multiple"></i>
-                                                </div>
-                                            </div>
-                                            <%if(borcAlanOran <= 0){%>
-                                            <div class="col-9 align-self-center text-right">
-                                                <div class="m-l-10">
-                                                    <h5 class="mt-0"><%= odenmemis %></h5>                                         
-                                                    <p class="mb-0 text-muted">Borç Alan Kişi <span class="badge bg-soft-danger">           
-                                                    <i class="mdi mdi-arrow-down"></i><%= borcAlanOran %>%</span></p>     
-                                                </div>
-                                            </div>
-                                            <%}else{%>
-                                                <div class="col-9 align-self-center text-right">
-                                                    <div class="m-l-10">
-                                                        <h5 class="mt-0"><%= odenmemis %></h5>                                         
-                                                        <p class="mb-0 text-muted">Borç Alan Kişi <span class="badge bg-soft-success">           
-                                                        <i class="mdi mdi-arrow-up"></i><%= borcAlanOran %>%</span></p>     
-                                                    </div>
-                                                </div>
-
-                                            <%}%>
-
-                                        </div>
-                                        <div class="progress mt-3" style="height:3px;">
-                                            <div class="progress-bar  bg-danger" role="progressbar" style="width: <%= odenmemisOran %>%;" aria-valuenow="<%= odenmemisOran %>" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div><!--end card-body-->
-                                </div><!--end card-->
-                            </div><!--end col-->
-
-                            <div class="col-lg-3">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="d-flex flex-row">
-                                            <div class="col-3 align-self-center">
-                                                <div class="round">
-                                                    <i class="mdi mdi-account-multiple-plus"></i>
-                                                </div>
-                                            </div>
-                                            <div class="col-9 text-right align-self-center">
-                                                <div class="m-l-10 ">
-                                                    <h5 class="mt-0"><%= odenmis %></h5>
-                                                    <p class="mb-0 text-muted">Borç Ödeyen Kişi</p>
-                                                </div>
-                                            </div>                                                                                                                
-                                        </div>
-                                        <div class="progress mt-3" style="height:3px;">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: <%= odenmisOran %>%;" aria-valuenow="<%= odenmisOran %>" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div><!--end card-body-->
-                                </div><!--end card-->
-                            </div><!--end col-->
-
-                            <%if(debt){%>
-                                <%if(debt[1] && debt[0]  ) {%>
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="btn-group pull-right">
+                                        <ol class="breadcrumb hide-phone p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Otomasyon</a></li>
+                                            <li class="breadcrumb-item active">Panel</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Panel</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title end breadcrumb -->
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="row">
                                     <div class="col-lg-3">
                                         <div class="card">
                                             <div class="card-body">
-                                                <div class="search-type-arrow"></div>
                                                 <div class="d-flex flex-row">
                                                     <div class="col-3 align-self-center">
-                                                        <div class="round ">
-                                                            <i class="mdi mdi-basket-unfill"></i>
+                                                        <div class="round">
+                                                            <i class="mdi mdi-account-multiple"></i>
                                                         </div>
                                                     </div>
+                                                    <%if(borcAlanOran <= 0){%>
                                                     <div class="col-9 align-self-center text-right">
-                                                        <div class="m-l-10 ">
-                                                            <h5 class="mt-0"><%=  debt[1]._id=='Ödenmedi' &&  debt[1].total || debt[0].total %> ₺</h5>
-                                                            <p class="mb-0 text-muted">Ödenmemiş Borç </p>
-                                                        </div>
-                                                    </div>                                                         
-                                                </div>
-                                                <div class="progress mt-3" style="height:3px;">
-                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: <%=  
-                                                    debt[1]._id=='Ödenmedi' &&  (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) || 
-                                                    (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) 
-                                                    
-                                                    %>%;" aria-valuenow="
-                                                    <%=  
-                                                    debt[1]._id=='Ödenmedi' &&  (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) || 
-                                                    (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) 
-                                                    
-                                                    %>
-                                                    
-                                                    " aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div><!--end card-body-->
-                                        </div><!--end card-->
-                                    </div><!--end col-->
-                                <%}else{%>
-                                    <div class="col-lg-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="search-type-arrow"></div>
-                                                <div class="d-flex flex-row">
-                                                    <div class="col-3 align-self-center">
-                                                        <div class="round ">
-                                                            <i class="mdi mdi-basket-unfill"></i>
+                                                        <div class="m-l-10">
+                                                            <h5 class="mt-0"><%= odenmemis %></h5>                                         
+                                                            <p class="mb-0 text-muted">Borç Alan Kişi <span class="badge bg-soft-danger">           
+                                                            <i class="mdi mdi-arrow-down"></i><%= borcAlanOran %>%</span></p>     
                                                         </div>
                                                     </div>
-                                                    <div class="col-9 align-self-center text-right">
-                                                        <div class="m-l-10 ">
-                                                            <h5 class="mt-0">0 ₺</h5>
-                                                            <p class="mb-0 text-muted">Ödenmemiş Borç </p>
-                                                        </div>
-                                                    </div>                                                                
-                                                </div>
-                                                <div class="progress mt-3" style="height:3px;">
-                                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div><!--end card-body-->
-                                        </div><!--end card-->
-                                    </div><!--end col-->
-                                <%}%>
-                                <% if(debt[0] && debt[1] ){%>
-                                    <div class="col-lg-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="search-type-arrow"></div>
-                                                <div class="d-flex flex-row">
-                                                    <div class="col-3 align-self-center">
-                                                        <div class="round ">
-                                                            <i class="mdi mdi-basket-fill"></i>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-9 align-self-center text-right">
-                                                        <div class="m-l-10 ">
-                                                            <h5 class="mt-0"><%= debt[0]._id=='Ödendi' &&  debt[0].total || debt[1].total   %> ₺</h5>
-                                                            <p class="mb-0 text-muted">Ödenmiş Borç </p>
-                                                        </div>
-                                                    </div>                                                                
-                                                </div>
-                                                <div class="progress mt-3" style="height:3px;">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: <%=  
-                                                    debt[0]._id=='Ödendi' &&  (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) || 
-                                                    (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) 
-                                                    
-                                                    %>%;" aria-valuenow="
-                                                    <%=  
-                                                    debt[0]._id=='Ödendi' &&  (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) || 
-                                                    (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) 
-                                                    
-                                                    %>
-                                                    
-                                                    " aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div><!--end card-body-->
-                                        </div><!--end card-->
-                                    </div><!--end col-->  
-                                <%}else{%>
-                                    <div class="col-lg-3">
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <div class="search-type-arrow"></div>
-                                                <div class="d-flex flex-row">
-                                                    <div class="col-3 align-self-center">
-                                                        <div class="round ">
-                                                            <i class="mdi mdi-basket-fill"></i>
-                                                        </div>
-                                                    </div>
-                                                    <%if(debt.total){%>
-                                                    <div class="col-9 align-self-center text-right">
-                                                        <div class="m-l-10 ">
-                                                            <h5 class="mt-0"><%= debt[0]._id=='Ödendi' &&  debt[0].total || debt[1].total %>₺</h5>
-                                                            <p class="mb-0 text-muted">Ödenmiş Borç </p>
-                                                        </div>
-                                                    </div>   
                                                     <%}else{%>
+                                                        <div class="col-9 align-self-center text-right">
+                                                            <div class="m-l-10">
+                                                                <h5 class="mt-0"><%= odenmemis %></h5>                                         
+                                                                <p class="mb-0 text-muted">Borç Alan Kişi <span class="badge bg-soft-success">           
+                                                                <i class="mdi mdi-arrow-up"></i><%= borcAlanOran %>%</span></p>     
+                                                            </div>
+                                                        </div>
+
+                                                    <%}%>
+
+                                                </div>
+                                                <div class="progress mt-3" style="height:3px;">
+                                                    <div class="progress-bar  bg-danger" role="progressbar" style="width: <%= odenmemisOran %>%;" aria-valuenow="<%= odenmemisOran %>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div><!--end card-body-->
+                                        </div><!--end card-->
+                                    </div><!--end col-->
+
+                                    <div class="col-lg-3">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="d-flex flex-row">
+                                                    <div class="col-3 align-self-center">
+                                                        <div class="round">
+                                                            <i class="mdi mdi-account-multiple-plus"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-9 text-right align-self-center">
+                                                        <div class="m-l-10 ">
+                                                            <h5 class="mt-0"><%= odenmis %></h5>
+                                                            <p class="mb-0 text-muted">Borç Ödeyen Kişi</p>
+                                                        </div>
+                                                    </div>                                                                                                                
+                                                </div>
+                                                <div class="progress mt-3" style="height:3px;">
+                                                    <div class="progress-bar bg-success" role="progressbar" style="width: <%= odenmisOran %>%;" aria-valuenow="<%= odenmisOran %>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div><!--end card-body-->
+                                        </div><!--end card-->
+                                    </div><!--end col-->
+
+                                    <%if(debt){%>
+                                        <%if(debt[1] && debt[0]  ) {%>
+                                            <div class="col-lg-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="search-type-arrow"></div>
+                                                        <div class="d-flex flex-row">
+                                                            <div class="col-3 align-self-center">
+                                                                <div class="round ">
+                                                                    <i class="mdi mdi-basket-unfill"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-9 align-self-center text-right">
+                                                                <div class="m-l-10 ">
+                                                                    <h5 class="mt-0"><%=  debt[1]._id=='Ödenmedi' &&  debt[1].total || debt[0].total %> ₺</h5>
+                                                                    <p class="mb-0 text-muted">Ödenmemiş Borç </p>
+                                                                </div>
+                                                            </div>                                                         
+                                                        </div>
+                                                        <div class="progress mt-3" style="height:3px;">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: <%=  
+                                                            debt[1]._id=='Ödenmedi' &&  (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) || 
+                                                            (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) 
+                                                            
+                                                            %>%;" aria-valuenow="
+                                                            <%=  
+                                                            debt[1]._id=='Ödenmedi' &&  (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) || 
+                                                            (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) 
+                                                            
+                                                            %>
+                                                            
+                                                            " aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div><!--end card-body-->
+                                                </div><!--end card-->
+                                            </div><!--end col-->
+                                        <%}else{%>
+                                            <div class="col-lg-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="search-type-arrow"></div>
+                                                        <div class="d-flex flex-row">
+                                                            <div class="col-3 align-self-center">
+                                                                <div class="round ">
+                                                                    <i class="mdi mdi-basket-unfill"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-9 align-self-center text-right">
+                                                                <div class="m-l-10 ">
+                                                                    <h5 class="mt-0">0 ₺</h5>
+                                                                    <p class="mb-0 text-muted">Ödenmemiş Borç </p>
+                                                                </div>
+                                                            </div>                                                                
+                                                        </div>
+                                                        <div class="progress mt-3" style="height:3px;">
+                                                            <div class="progress-bar bg-danger" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div><!--end card-body-->
+                                                </div><!--end card-->
+                                            </div><!--end col-->
+                                        <%}%>
+                                        <% if(debt[0] && debt[1] ){%>
+                                            <div class="col-lg-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="search-type-arrow"></div>
+                                                        <div class="d-flex flex-row">
+                                                            <div class="col-3 align-self-center">
+                                                                <div class="round ">
+                                                                    <i class="mdi mdi-basket-fill"></i>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-9 align-self-center text-right">
+                                                                <div class="m-l-10 ">
+                                                                    <h5 class="mt-0"><%= debt[0]._id=='Ödendi' &&  debt[0].total || debt[1].total   %> ₺</h5>
+                                                                    <p class="mb-0 text-muted">Ödenmiş Borç </p>
+                                                                </div>
+                                                            </div>                                                                
+                                                        </div>
+                                                        <div class="progress mt-3" style="height:3px;">
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: <%=  
+                                                            debt[0]._id=='Ödendi' &&  (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) || 
+                                                            (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) 
+                                                            
+                                                            %>%;" aria-valuenow="
+                                                            <%=  
+                                                            debt[0]._id=='Ödendi' &&  (Number(debt[0].total)*100) / (Number(debt[0].total)+Number(debt[1].total)) || 
+                                                            (Number(debt[1].total)*100) / (Number(debt[1].total)+Number(debt[0].total)) 
+                                                            
+                                                            %>
+                                                            
+                                                            " aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div><!--end card-body-->
+                                                </div><!--end card-->
+                                            </div><!--end col-->  
+                                        <%}else{%>
+                                            <div class="col-lg-3">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="search-type-arrow"></div>
+                                                        <div class="d-flex flex-row">
+                                                            <div class="col-3 align-self-center">
+                                                                <div class="round ">
+                                                                    <i class="mdi mdi-basket-fill"></i>
+                                                                </div>
+                                                            </div>
+                                                            <%if(debt.total){%>
+                                                            <div class="col-9 align-self-center text-right">
+                                                                <div class="m-l-10 ">
+                                                                    <h5 class="mt-0"><%= debt[0]._id=='Ödendi' &&  debt[0].total || debt[1].total %>₺</h5>
+                                                                    <p class="mb-0 text-muted">Ödenmiş Borç </p>
+                                                                </div>
+                                                            </div>   
+                                                            <%}else{%>
+                                                                <div class="col-9 align-self-center text-right">
+                                                                    <div class="m-l-10 ">
+                                                                        <h5 class="mt-0">0 ₺</h5>
+                                                                        <p class="mb-0 text-muted">Ödenmiş Borç </p>
+                                                                    </div>
+                                                                </div>   
+                                                            <%}%>
+                                                        </div>
+                                                        <div class="progress mt-3" style="height:3px;">
+                                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        </div>
+                                                    </div><!--end card-body-->
+                                                </div><!--end card-->
+                                            </div><!--end col-->
+                                        <%}%>
+                                        
+                                    <%}else{%>
+                                        <div class="col-lg-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="search-type-arrow"></div>
+                                                    <div class="d-flex flex-row">
+                                                        <div class="col-3 align-self-center">
+                                                            <div class="round ">
+                                                                <i class="mdi mdi-basket-unfill"></i>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-9 align-self-center text-right">
+                                                            <div class="m-l-10 ">
+                                                                <h5 class="mt-0">0 ₺</h5>
+                                                                <p class="mb-0 text-muted">Ödenmemiş Borç </p>
+                                                            </div>
+                                                        </div>                                                                
+                                                    </div>
+                                                    <div class="progress mt-3" style="height:3px;">
+                                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div><!--end card-body-->
+                                            </div><!--end card-->
+                                        </div><!--end col-->
+            
+                                        <div class="col-lg-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="search-type-arrow"></div>
+                                                    <div class="d-flex flex-row">
+                                                        <div class="col-3 align-self-center">
+                                                            <div class="round ">
+                                                                <i class="mdi mdi-basket-fill"></i>
+                                                            </div>
+                                                        </div>
                                                         <div class="col-9 align-self-center text-right">
                                                             <div class="m-l-10 ">
                                                                 <h5 class="mt-0">0 ₺</h5>
                                                                 <p class="mb-0 text-muted">Ödenmiş Borç </p>
                                                             </div>
-                                                        </div>   
+                                                        </div>                                                                
+                                                    </div>
+                                                    <div class="progress mt-3" style="height:3px;">
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </div><!--end card-body-->
+                                            </div><!--end card-->
+                                        </div><!--end col-->
+                                    <%}%>
+                                </div><!--end row-->
+                            </div><!--end col-->                  
+                        </div> <!-- end row --> 
+
+                        
+                        <div class="row">
+
+                            <%if(debt){%>
+                                <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-body new-user">
+                                            <h5 class="header-title mb-4 mt-0">Borç Listesi (Son Eklenen)</h5>
+                                            <div class="table-responsive">
+                                                <table class="table table-hover mb-0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="border-top-0">T.C</th>
+                                                            <th class="border-top-0">Kişi</th>                               
+                                                            <th class="border-top-0">Borç</th>
+                                                            <th class="border-top-0">İşlem</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <%for(let i =0; i< list.length; i++) {%>
+                                                        <tr>
+                                                            <td>
+                                                                <a><%= list[i].tc %></a>
+                                                            </td>
+                                                            <td>                                                                
+                                                                <a><%= list[i].name%></a>
+                                                            </td>                           
+                                                            <td>
+                                                                <a><%= list[i].total %><span>₺</span></a>
+                                                            </td>
+                                                            <td>
+                                                                <a target="_blank" href="/kisiler/edit/<%= list[i]._id%>">
+                                                                    <button type="button" class="btn btn-lg btn-primary btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                                </a> 
+                                                                <a target="_blank" href="/yazdir/<%= list[i]._id%>">
+                                                                    <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
                                                     <%}%>
-                                                </div>
-                                                <div class="progress mt-3" style="height:3px;">
-                                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div><!--end card-body-->
-                                        </div><!--end card-->
-                                    </div><!--end col-->
-                                <%}%>
-                                
-                            <%}else{%>
-                                <div class="col-lg-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="search-type-arrow"></div>
-                                            <div class="d-flex flex-row">
-                                                <div class="col-3 align-self-center">
-                                                    <div class="round ">
-                                                        <i class="mdi mdi-basket-unfill"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 align-self-center text-right">
-                                                    <div class="m-l-10 ">
-                                                        <h5 class="mt-0">0 ₺</h5>
-                                                        <p class="mb-0 text-muted">Ödenmemiş Borç </p>
-                                                    </div>
-                                                </div>                                                                
-                                            </div>
-                                            <div class="progress mt-3" style="height:3px;">
-                                                <div class="progress-bar bg-danger" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-                                            </div>
-                                        </div><!--end card-body-->
-                                    </div><!--end card-->
-                                </div><!--end col-->
-    
-                                <div class="col-lg-3">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="search-type-arrow"></div>
-                                            <div class="d-flex flex-row">
-                                                <div class="col-3 align-self-center">
-                                                    <div class="round ">
-                                                        <i class="mdi mdi-basket-fill"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 align-self-center text-right">
-                                                    <div class="m-l-10 ">
-                                                        <h5 class="mt-0">0 ₺</h5>
-                                                        <p class="mb-0 text-muted">Ödenmiş Borç </p>
-                                                    </div>
-                                                </div>                                                                
-                                            </div>
-                                            <div class="progress mt-3" style="height:3px;">
-                                                <div class="progress-bar bg-success" role="progressbar" style="width: 0;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </tbody>
+                                                </table>                                                
                                             </div>
                                         </div><!--end card-body-->
                                     </div><!--end card-->
                                 </div><!--end col-->
                             <%}%>
-                        </div><!--end row-->
-                    </div><!--end col-->                  
-                </div> <!-- end row --> 
-
-                
-                <div class="row">
-
-                    <%if(debt){%>
-                        <div class="col-xl-6">
-                            <div class="card">
-                                <div class="card-body new-user">
-                                    <h5 class="header-title mb-4 mt-0">Borç Listesi (Son Eklenen)</h5>
-                                    <div class="table-responsive">
-                                        <table class="table table-hover mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th class="border-top-0">T.C</th>
-                                                    <th class="border-top-0">Kişi</th>                               
-                                                    <th class="border-top-0">Borç</th>
-                                                    <th class="border-top-0">İşlem</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <%for(let i =0; i< list.length; i++) {%>
-                                                <tr>
-                                                    <td>
-                                                        <a><%= list[i].tc %></a>
-                                                    </td>
-                                                    <td>                                                                
-                                                        <a><%= list[i].name%></a>
-                                                    </td>                           
-                                                    <td>
-                                                        <a><%= list[i].total %><span>₺</span></a>
-                                                    </td>
-                                                    <td>
-                                                        <a target="_blank" href="/kisiler/edit/<%= list[i]._id%>">
-                                                            <button type="button" class="btn btn-lg btn-primary btn-sm "><i class="fas fa-user-edit"></i></button>
-                                                        </a> 
-                                                        <a target="_blank" href="/yazdir/<%= list[i]._id%>">
-                                                            <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            <%}%>
-                                            </tbody>
-                                        </table>                                                
-                                    </div>
-                                </div><!--end card-body-->
-                            </div><!--end card-->
-                        </div><!--end col-->
-                    <%}%>
-                
-                    <div class="col-xl-6">
-                            <div class="card">
-                                <div class="card-body new-user">
-                                    <h5 class="header-title mb-4 mt-0">Notlar (Son Eklenen)</h5>
-                                    
+                        
+                            <div class="col-xl-6">
+                                    <div class="card">
+                                        <div class="card-body new-user">
+                                            <h5 class="header-title mb-4 mt-0">Notlar (Son Eklenen)</h5>
+                                            
 
 
-                                        <div class="row">
+                                                <div class="row">
 
-                                            <%for(let i=0; i< notlar.length; i++) {%>
+                                                    <%for(let i=0; i< notlar.length; i++) {%>
 
-                                                <div class="col-lg-6">
-                                                    <div class="card">
-                                                        <h6 class="card-header mt-0">TC: <%= notlar[i].tc %></h6>
-                                                        <div class="card-body">
-                                                            <h4 class="card-title font-20 mt-0"><%= notlar[i].name %></h4>
-                                                            <p class="card-text"><%=notlar[i].note %></p>
-                                                            <a href="/kisiler/edit/<%= notlar[i]._id%>" style="display:inline;" class="btn btn-primary">Kişiye Git</a>
+                                                        <div class="col-lg-6">
+                                                            <div class="card">
+                                                                <h6 class="card-header mt-0">TC: <%= notlar[i].tc %></h6>
+                                                                <div class="card-body">
+                                                                    <h4 class="card-title font-20 mt-0"><%= notlar[i].name %></h4>
+                                                                    <p class="card-text"><%=notlar[i].note %></p>
+                                                                    <a href="/kisiler/edit/<%= notlar[i]._id%>" style="display:inline;" class="btn btn-primary">Kişiye Git</a>
+                                                                </div>
+                                                            </div>
                                                         </div>
+            
+                                                    <% }%>
+                                
+                                                </div>
+
+                                                
+                                                                            
+                                            
+                                        </div><!--end card-body-->
+                                    </div><!--end card-->
+            
+                            </div> <!--end row--> 
+
+                        </div> <!--end row--> 
+                        
+                        
+                    </div> <!-- end container -->
+                </div>
+            <%}else if(user.role=='user'){%>
+                <div class="wrapper">
+                    <div class="container-fluid ">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">            
+                                    <!-- Simple card -->
+                                    <div class="card">
+                                        <img class="card-img-top img-fluid" src="/images/small/img-2.jpg" alt="user image">
+                                        <div class="card-body">
+                                            <div class="card-avatar">
+                                                <a class="card-thumbnail card-inner" href="#">
+                                                    <img class="rounded-circle img-thumbnail img-fluid" src="/images/users/avatar-1.jpg" alt="Teddy Wilson">
+                                                </a>
+                                            </div>
+                                            <h6 class="card-title"><%= user.name %></h6>
+                                            <p class="font-12">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere even longer content than erat a ante.</p>
+                                            <h6 class="font-14 mt-0">Alınan ilaçlar </h6>
+                                            
+                                            <a href="#" class="btn btn-primary btn-sm">HTML</a>
+                                            
+                                            
+                                            
+                                        </div>
+                                    </div>            
+                                </div><!-- end col -->
+                            </div><!--end row-->
+                        </div> <!-- end row -->      
+                    </div>
+                </div>
+
+
+                </div>
+            <%}else{%>
+                <div class="wrapper">
+                    <div class="container-fluid pt-5 pb-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="offset-1 col-md-10">
+                                                <div class="p-20">
+                                                    <div class="ex-page-content text-center">
+                                                        <h1 class="">404!</h1>
+                                                        <h3 class="">Bu alana erişim yetkiniz yok</h3><br>
+                                
+                                                        <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                        
+                                                        <div id="uyari"></div>   
                                                     </div>
                                                 </div>
+                                            </div> <!-- end col -->
+                                            
+                                        </div> <!-- end row --> 
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->   
+                    </div>
+                </div>
+            <%}%>
+        <%}%>
+
+
+    <!-- Footer -->
+    <%- include('partials/_footer')%>
+    <!-- End Footer -->
     
-                                            <% }%>
-                        
-                                        </div>
 
-                                        
-                                                                    
-                                    
-                                </div><!--end card-body-->
-                            </div><!--end card-->
+    <script src="/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
     
-                    </div> <!--end row--> 
-
-                </div> <!--end row--> 
-                
-                
-            </div> <!-- end container -->
-        </div>
-        <!-- end wrapper -->
-
-
-        <!-- Footer -->
-        <%- include('partials/_footer')%>
-        <!-- End Footer -->
-        
-
-        <script src="/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
-        <script src="/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-        
-        <script src="/plugins/skycons/skycons.min.js"></script>
-       
-        <script src="/plugins/raphael/raphael-min.js"></script>
-        <script src="/plugins/morris/morris.min.js"></script> 
-         
+    <script src="/plugins/skycons/skycons.min.js"></script>
+    
+    <script src="/plugins/raphael/raphael-min.js"></script>
+    <script src="/plugins/morris/morris.min.js"></script> 
+    
+    <script>
+        function Yonlendir(ID, adres, saniye) {
+            if (saniye == 0) {
+                window.location.href = adres;
+            return;
+            }
+            document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
+            saniye--;
+            setTimeout(function() {
+                Yonlendir(ID, adres, saniye);
+            }, 1000);
+        }
+        </script>
+        <script>
+            Yonlendir("uyari", "/", 10);
+        </script>
 
     </body>
 </html>

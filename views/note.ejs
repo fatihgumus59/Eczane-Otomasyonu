@@ -9,55 +9,104 @@
         <%- include('partials/_navigation')%>
 
 
-        <div class="wrapper">
-            <div class="container-fluid">
+        <% if(user && ('role' in user)){ %>
 
-                <!-- Page-Title -->
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="page-title-box">
-                            <div class="btn-group pull-right">
-                                <ol class="breadcrumb hide-phone p-0 m-0">
-                                    <li class="breadcrumb-item"><a href="#">Panel</a></li>
-                                    <li class="breadcrumb-item active">Notlar</li>
-                                </ol>
-                            </div>
-                            <h4 class="page-title">Notlar </h4>
-                        </div>
-                    </div>
-                </div>
-                <!-- end page title end breadcrumb -->
-         
-               
-                <div class="row">
+            <%if(user.role=='super' || user.role=='editor'){%>
+                <div class="wrapper">
+                    <div class="container-fluid">
 
-                    <% for(let i=0; i< debt.length; i++) {%>
-                        <% if(debt[i].status=='Ödenmedi'){ %>
-                            <div class="col-lg-4">
-                                <div class="card">
-                                    <h6 class="card-header mt-0">TC: <%= debt[i].tc %></h6>
-                                    <div class="card-body">
-                                        <h4 class="card-title font-20 mt-0"><%= debt[i].name %></h4>
-                                        <p class="card-text"><%= debt[i].note%></p>
-                                        <a href="/kisiler/edit/<%= debt[i]._id%>" class="btn btn-primary">Kişiye Git</a>
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="btn-group pull-right">
+                                        <ol class="breadcrumb hide-phone p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Panel</a></li>
+                                            <li class="breadcrumb-item active">Notlar</li>
+                                        </ol>
                                     </div>
+                                    <h4 class="page-title">Notlar </h4>
                                 </div>
                             </div>
-                        <%}else {%>
-                            
-                        <%}%>
-                   <%}%>
-
-                </div>
+                        </div>
+                        <!-- end page title end breadcrumb -->
                 
-            </div>       
-             
+                    
+                        <div class="row">
 
-        <!-- end wrapper -->
+                            <% for(let i=0; i< debt.length; i++) {%>
+                                <% if(debt[i].status=='Ödenmedi'){ %>
+                                    <div class="col-lg-4">
+                                        <div class="card">
+                                            <h6 class="card-header mt-0">TC: <%= debt[i].tc %></h6>
+                                            <div class="card-body">
+                                                <h4 class="card-title font-20 mt-0"><%= debt[i].name %></h4>
+                                                <p class="card-text"><%= debt[i].note%></p>
+                                                <a href="/kisiler/edit/<%= debt[i]._id%>" class="btn btn-primary">Kişiye Git</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <%}else {%>
+                                    
+                                <%}%>
+                        <%}%>
+
+                        </div>
+                        
+                    </div>    
+                </div>   
+            <%}else{%>
+                <div class="wrapper">
+                    <div class="container-fluid pt-5 pb-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="offset-1 col-md-10">
+                                                <div class="p-20">
+                                                    <div class="ex-page-content text-center">
+                                                        <h1 class="">404!</h1>
+                                                        <h3 class="">Bu alana erişim yetkiniz yok</h3><br>
+                                
+                                                        <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                        
+                                                        <div id="uyari"></div>   
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end col -->
+                                            
+                                        </div> <!-- end row --> 
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->   
+                    </div>
+                </div>
+            <%}%>
+        <%}%>
+
    <!-- Footer -->
    <%- include('partials/_footer')%>
    <!-- End Footer -->
 
+   <script>
+    function Yonlendir(ID, adres, saniye) {
+        if (saniye == 0) {
+            window.location.href = adres;
+        return;
+        }
+        document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
+        saniye--;
+        setTimeout(function() {
+            Yonlendir(ID, adres, saniye);
+        }, 1000);
+    }
+    </script>
+    <script>
+        Yonlendir("uyari", "/", 10);
+    </script>
+    
     </body>
 </html>
 

@@ -10,6 +10,7 @@ exports.getIndexPage = async (req, res) => {
   const odenmis = await Debt.where({ status: 'Ödendi' }).count().select('status');
   const notlar = await Debt.find({}).limit(4).sort('-createdAt');
   const list = await Debt.find({}).limit(7).populate('medicine.ilac').sort('-createdAt');
+  const user = await User.findById(req.session.userID); 
 
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
@@ -47,6 +48,7 @@ exports.getIndexPage = async (req, res) => {
     ),
     list,
     borcAlanOran : borcAlanOran.toFixed(2),
+    user,
   });
 };
 
@@ -63,6 +65,7 @@ exports.getDebtAddPage = async (req, res) => {
 
 exports.getEditDebtPage = async (req, res) => {
 
+  const user = await User.findById(req.session.userID); 
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const medicine = await Medicine.find({});
   const id = req.param.id;
@@ -72,35 +75,36 @@ exports.getEditDebtPage = async (req, res) => {
     debt,
     medicine,
     id,
+    user,
   });
 };
 
 exports.getMedicineAddPage = async (req, res) => {
+  const user = await User.findById(req.session.userID); 
   res.status(200).render('add-medicine', {
     page_name: "Eczane Otomasyonu",
+    user,
   });
 };
 
 exports.getEditMedicinePage = async (req, res) => {
   const medicine = await Medicine.findOne({ _id: req.params.id });
+  const user = await User.findById(req.session.userID); 
   res.status(200).render('edit-medicine', {
     page_name: "Eczane Otomasyonu",
     medicine,
-  });
-};
-
-exports.getStatusPage = async (req, res) => {
-  res.status(200).render('index', {
-    page_name: "Eczane Otomasyonu",
+    user,
   });
 };
 
 exports.getNotesPage = async (req, res) => {
 
   const debt = await Debt.find({});
+  const user = await User.findById(req.session.userID); 
   res.status(200).render('note', {
     page_name: "Notlar",
     debt,
+    user,
   });
 };
 
@@ -110,6 +114,7 @@ exports.getProforma = async (req, res) => {
   const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
   const date = new Date();
   const tarih = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+  const user = await User.findById(req.session.userID); 
 
   res.status(200).render('proforma', {
     page_name: `${debt.name} `,
@@ -117,6 +122,7 @@ exports.getProforma = async (req, res) => {
     kdv,
     total: (Number(debt.total) + Number(kdv)).toFixed(2),
     tarih,
+    user,
   });
 };
 
