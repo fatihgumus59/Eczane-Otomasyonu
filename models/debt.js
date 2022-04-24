@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
 const Schema = mongoose.Schema;
 
 const debt = new Schema({
@@ -10,7 +12,10 @@ const debt = new Schema({
     type: String,
     unique: true,
     required: true,
-  }, 
+  },
+  password: {
+    type: String,
+  },
   medicine: [
     {
       ilac: {
@@ -41,6 +46,17 @@ const debt = new Schema({
 },{ versionKey: false, timestamps: true });
 
 
+debt.pre('save', function (next) {
+  // şifreyi hash ediyoruz.
+  const user = this;
+  if (!user.isModified('password')) return next();
+  bcrypt.hash(user.password, 10, (err, hash) => {
+    // 10 yazan yer  şifrenin zorluğunu arttırıyor.
+    user.password = hash;
+    next();
+  });
+
+})
 
 const Debt = mongoose.model('Debt', debt);
 module.exports = Debt;

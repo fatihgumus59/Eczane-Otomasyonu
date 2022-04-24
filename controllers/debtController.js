@@ -8,11 +8,11 @@ exports.createDebt = async (req, res) => {
       ...req.body.body,
       medicine: req.body.ilac,
       total: req.body.total,
+      password:req.body.body.tc,
       admin:req.session.userID,
     });
-   
-    console.log(req.body.body);
-
+    
+      console.log(req.body.body);
     res.status(201).redirect('/kisiler');
 
   } catch (err) {

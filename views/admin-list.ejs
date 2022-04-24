@@ -23,10 +23,10 @@
                                         <ol class="breadcrumb hide-phone p-0 m-0">
                                             <li class="breadcrumb-item"><a href="/">Panel</a></li>
                                             <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
-                                            <li class="breadcrumb-item active">Kullanıcılar</li>
+                                            <li class="breadcrumb-item active">Adminler</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">Kullanıcılar </h4>
+                                    <h4 class="page-title">Adminler </h4>
                                 </div>
                             </div>
                         </div>
@@ -40,10 +40,11 @@
                                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                             <tr>
-                                                <th>TC</th>
-                                                <th>İsim</th>
-                                                <th>Borç Miktarı</th>
-                                                <th>Ekleyen</th>
+                                                <th>Kullanıcı Adı</th>
+                                                <th>Ad Soyad</th>
+                                                <th>E-Mail</th>
+                                                <th>Yetki</th>
+                                                <th>Onay Durumu</th>
                                                 <th>İşlem</th>
                                             </tr>
                                             </thead>
@@ -52,15 +53,32 @@
                                                 <%for(let i =0; i< user.length; i++){%>
                                                 <tr>
                                                     
-                                                    <td><%= user[i].tc %></td>
+                                                    <td><%= user[i].username %></td>
                                                     <td><%= user[i].name %></td>
-                                                    <td><%= user[i].tc %></td>
-                                                    <td><%= user[i].admin.name %></td>
+                                                    <td><%= user[i].email %></td>
+
+                                                    <% if(user[i].role=='super'){%>
+                                                        <td>Full Access</td>
+                                                    <%}else if(user[i].role=='editor'){%>
+                                                        <td>Editor</td>
+                                                    <%}else{%>
+                                                        <td>Yetkisiz</td>
+                                                    <%}%>
+
+                                                    <% if(user[i].confirmation==true){%>
+                                                        <td>Onaylı</td>
+                                                    <%}else{%>
+                                                        <td>Onaysız</td>
+                                                    <%}%>
                                                     <td>
-                                                        <a href="/kullanicilar/edit/<%= user[i]._id %>">
+                                                        <a href="/auth/edit/<%= user[i]._id %>">
                                                             <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
                                                         </a>
-                                                        <a href="/kullanicilar/edit/<%= user[i]._id%>?_method=DELETE">
+                                                        <form style="display: inline" method="post" action="/auth/admin-ok/<%= user[i]._id %>?_method=PUT">                                                  
+                                                            <input type="hidden" name="confirmation" value="true">
+                                                            <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                        </form>
+                                                        <a href="/auth/edit/<%= user[i]._id%>?_method=DELETE">
                                                             <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                         </a>
                                                     </td>

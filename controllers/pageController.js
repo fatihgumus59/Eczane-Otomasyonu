@@ -1,8 +1,6 @@
 const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
 const Admin = require('../models/administration');
-const User = require('../models/user');
-
 
 exports.getIndexPage = async (req, res) => {
 
@@ -163,38 +161,38 @@ exports.getRegisterPage = async (req, res) => {
 
 }
 
-exports.getAllUserPage = async (req, res) => {
+exports.getAllAdmin = async (req, res) => {
 
-  const admin = await Admin.findById(req.session.userID); 
-  const user = await User.find({}).populate('admin');
-  res.status(200).render('user-list',{
-    page_name: 'Kullanıcılar',
+  const admin = await Admin.findById(req.session.userID);
+  const user = await Admin.find({});
+
+  res.status(200).render('admin-list',{
+    page_name: 'Tüm Adminler',
     admin,
     user,
   })
 
 }
 
-exports.getUserAddPage = async (req, res) => {
+exports.getAdminAddPage = async (req, res) => {
 
   const admin = await Admin.findById(req.session.userID); 
-  res.status(200).render('user-add',{
-    page_name: 'Kullanıcı Ekle',
+  res.status(200).render('admin-add',{
+    page_name: 'Admin Ekle',
     admin,
   })
 
 }
 
-exports.getEditUserPage = async (req, res) => {
+exports.getEditAdminPage = async (req, res) => {
 
   const admin = await Admin.findById(req.session.userID); 
-  const user = await User.findOne({_id:req.params.id});
+  const user = await Admin.findOne({_id:req.params.id});
+
   res.status(200).render('user-edit',{
-    page_name: 'Kullanıcılar',
+    page_name: 'Adminler',
     admin,
     user,
   })
 
 }
-
-
