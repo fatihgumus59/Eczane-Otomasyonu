@@ -1,14 +1,22 @@
 const express = require('express');
-const authController = require('../controllers/authController');
+const pageController = require('../controllers/pageController');
+const userController = require('../controllers/userController');
 const authMiddleware = require('../middlewares/authMiddleware');
-
-const authValidation = require('../validations/authValidation'); // validasyon işlemi için schema
-const validateMiddleware = require('../middlewares/validateMiddleware'); // validasyon middleware
 
 const router = express.Router();
 
-router.route('/register').post(validateMiddleware(authValidation.createUserValidation),authController.createUser);
-router.route('/login').post(authController.loginUser);
-router.route('/logout').get(authMiddleware,authController.logoutUser);
+//get
+router.route('/').get(authMiddleware,pageController.getAllUserPage);
+router.route('/kullanici-ekle').get(authMiddleware,pageController.getUserAddPage);
+router.route('/edit/:id').get(authMiddleware,pageController.getEditUserPage);
+
+//post
+router.route('/kullanici-ekle').post(authMiddleware,userController.createUser);
+
+//update
+router.route('/edit/:id').put(authMiddleware,userController.editUser);
+
+//delete
+router.route('/edit/:id').delete(authMiddleware,userController.deleteUser);
 
 module.exports = router;

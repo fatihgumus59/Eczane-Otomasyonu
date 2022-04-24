@@ -1,8 +1,8 @@
-const User = require('../models/user');
+const Admin = require('../models/administration');
 
 module.exports = (req,res,next)=>{
 
-    User.findById(req.session.userID,(err,user)=>{
+    Admin.findById(req.session.userID,(err,user)=>{
         if(err || !user){
             return res.redirect('/login');
         }

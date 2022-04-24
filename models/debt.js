@@ -34,9 +34,9 @@ const debt = new Schema({
   note: {
     type: String,
   },
-  user:{
+  admin:{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: 'Admin',
   },
 },{ versionKey: false, timestamps: true });
 

@@ -10,9 +10,9 @@
         <!-- Navigation Bar-->
         <%- include('partials/_navigation')%>
 
-        <% if(user && ('role' in user)){ %>
+        <% if(admin && ('role' in admin)){ %>
 
-            <%if(user.role=='super' || user.role=='editor'){%>
+            <%if(admin.role=='super' || admin.role=='editor'){%>
 
                 <div class="wrapper">
                     <div class="container-fluid">

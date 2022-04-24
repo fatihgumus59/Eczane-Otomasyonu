@@ -1,5 +1,6 @@
 const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
+const Admin = require('../models/administration');
 const User = require('../models/user');
 
 
@@ -10,7 +11,7 @@ exports.getIndexPage = async (req, res) => {
   const odenmis = await Debt.where({ status: 'Ödendi' }).count().select('status');
   const notlar = await Debt.find({}).limit(4).sort('-createdAt');
   const list = await Debt.find({}).limit(7).populate('medicine.ilac').sort('-createdAt');
-  const user = await User.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID);
 
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
@@ -48,24 +49,24 @@ exports.getIndexPage = async (req, res) => {
     ),
     list,
     borcAlanOran : borcAlanOran.toFixed(2),
-    user,
+    admin,
   });
 };
 
 exports.getDebtAddPage = async (req, res) => {
 
-  const user = await User.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID); 
   const medicine = await Medicine.find(req.body);
   res.status(200).render('add-debt', {
     page_name: "Borçlu Ekle",
     medicine,
-    user,
+    admin,
   });
 };
 
 exports.getEditDebtPage = async (req, res) => {
 
-  const user = await User.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID); 
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const medicine = await Medicine.find({});
   const id = req.param.id;
@@ -75,36 +76,36 @@ exports.getEditDebtPage = async (req, res) => {
     debt,
     medicine,
     id,
-    user,
+    admin,
   });
 };
 
 exports.getMedicineAddPage = async (req, res) => {
-  const user = await User.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID); 
   res.status(200).render('add-medicine', {
     page_name: "Eczane Otomasyonu",
-    user,
+    admin,
   });
 };
 
 exports.getEditMedicinePage = async (req, res) => {
   const medicine = await Medicine.findOne({ _id: req.params.id });
-  const user = await User.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID); 
   res.status(200).render('edit-medicine', {
     page_name: "Eczane Otomasyonu",
     medicine,
-    user,
+    admin,
   });
 };
 
 exports.getNotesPage = async (req, res) => {
 
   const debt = await Debt.find({});
-  const user = await User.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID); 
   res.status(200).render('note', {
     page_name: "Notlar",
     debt,
-    user,
+    admin,
   });
 };
 
@@ -114,7 +115,7 @@ exports.getProforma = async (req, res) => {
   const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
   const date = new Date();
   const tarih = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-  const user = await User.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID); 
 
   res.status(200).render('proforma', {
     page_name: `${debt.name} `,
@@ -122,7 +123,7 @@ exports.getProforma = async (req, res) => {
     kdv,
     total: (Number(debt.total) + Number(kdv)).toFixed(2),
     tarih,
-    user,
+    admin,
   });
 };
 
@@ -143,8 +144,13 @@ exports.getAllDebtApi = async (req, res) => {
 
 exports.getLoginPage = async (req, res) => {
 
+  const authControl = req.query.auth; //search alanında parametre vereceğim eğer user gelirse user'a özel login açılmasını sağlayacağım
+  // eğer ?auth=admin vb bir şey gelirse admine özel login açılacak.
+  
+
   res.status(200).render('login',{
     page_name: 'Giriş Yap - Ezane Otomasyonu',
+    authControl,
   })
 
 }
@@ -156,3 +162,39 @@ exports.getRegisterPage = async (req, res) => {
   })
 
 }
+
+exports.getAllUserPage = async (req, res) => {
+
+  const admin = await Admin.findById(req.session.userID); 
+  const user = await User.find({}).populate('admin');
+  res.status(200).render('user-list',{
+    page_name: 'Kullanıcılar',
+    admin,
+    user,
+  })
+
+}
+
+exports.getUserAddPage = async (req, res) => {
+
+  const admin = await Admin.findById(req.session.userID); 
+  res.status(200).render('user-add',{
+    page_name: 'Kullanıcı Ekle',
+    admin,
+  })
+
+}
+
+exports.getEditUserPage = async (req, res) => {
+
+  const admin = await Admin.findById(req.session.userID); 
+  const user = await User.findOne({_id:req.params.id});
+  res.status(200).render('user-edit',{
+    page_name: 'Kullanıcılar',
+    admin,
+    user,
+  })
+
+}
+
+

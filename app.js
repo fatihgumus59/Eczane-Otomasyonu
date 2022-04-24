@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo');
 const pageRoute = require('./routes/pageRoute');
 const medicineRoute = require('./routes/medicineRoute');
 const debtRoute = require('./routes/debtRoute');
+const adminRoute = require('./routes/administrationRoute');
 const userRoute = require('./routes/userRoute');
 
 const app = express();
@@ -56,7 +57,8 @@ app.use('*', (req, res, next) => {
 app.use('/', pageRoute);
 app.use('/ilaclar', medicineRoute);
 app.use('/kisiler', debtRoute);
-app.use('/auth', userRoute);
+app.use('/auth', adminRoute);
+app.use('/kullanicilar', userRoute);
 
 const port = process.env.PORT || 3000;
 

@@ -15,9 +15,9 @@
         <!-- Navigation Bar-->
         <%- include('partials/_navigation')%>
 
-        <% if(user && ('role' in user)){ %>
+        <% if(admin && ('role' in admin)){ %>
 
-            <%if(user.role=='super' || user.role=='editor'){%>
+            <%if(admin.role=='super' || admin.role=='editor'){%>
                 <div id="app">
                     <div class="wrapper">
                         <div class="container-fluid">
@@ -56,11 +56,11 @@
 
                                                                     <div class="medicine">
 
-                                                                    <div class="col-md-10">
-                                                                
+                                                                        <div class="col-md-10">
+                                                                    
                                                                             <li  style="list-style-type:none;" v-for="opt in options">{{opt.name}}<input class="form-control" v-model="opt.quantity" type="number"/></li>
-                                                                        
-                                                                    </div>
+                                                                            
+                                                                        </div>
                                                                         
                                                                     </div>
                                                                     <a class="btn btn-primary waves-effect waves-light mt-4 mb-4" target="_blank" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
@@ -219,7 +219,7 @@
                 goster()
                 {
                     ilac=[]
-                    let role ="<%= user.role %>";
+                    let role ="<%= admin.role %>";
                     let total =0;
                     let newData={}
                     this.options.forEach((data)=>{

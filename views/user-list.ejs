@@ -1,15 +1,6 @@
 <%- include('partials/_header') %>
 
-        <!-- DataTables -->
-        <link href="/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <link href="/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <!-- Responsive datatable examples -->
-        <link href="/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" /> 
-
-        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="/css/icons.css" rel="stylesheet" type="text/css">
-        <link href="/css/style.css" rel="stylesheet" type="text/css">
-
+    
     </head>
 
     <body>
@@ -17,10 +8,10 @@
         <!-- Navigation Bar-->
         <%- include('partials/_navigation')%>
 
+
         <% if(admin && ('role' in admin)){ %>
 
             <%if(admin.role=='super' || admin.role=='editor'){%>
-
                 <div class="wrapper">
                     <div class="container-fluid">
 
@@ -30,59 +21,59 @@
                                 <div class="page-title-box">
                                     <div class="btn-group pull-right">
                                         <ol class="breadcrumb hide-phone p-0 m-0">
-                                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
-                                            <li class="breadcrumb-item"><a href="#">İlaçlar</a></li>
+                                            <li class="breadcrumb-item"><a href="/">Panel</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
+                                            <li class="breadcrumb-item active">Kullanıcılar</li>
                                         </ol>
                                     </div>
-                                    <h4 class="page-title">İlaçlar</h4>
+                                    <h4 class="page-title">Kullanıcılar </h4>
                                 </div>
                             </div>
                         </div>
                         <!-- end page title end breadcrumb -->
-
+                           
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
-                                    <div class="card-body">     
+                                    <div class="card-body">
 
                                         <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                             <thead>
                                             <tr>
-                                                <th>İlaç Resmi</th>
-                                                <th>İlaç Adı</th>
-                                                <th>İlaç Özellikleri</th>
-                                                <th>İlaç Fiyatı</th>
+                                                <th>TC</th>
+                                                <th>İsim</th>
+                                                <th>Borç Miktarı</th>
+                                                <th>Ekleyen</th>
                                                 <th>İşlem</th>
                                             </tr>
                                             </thead>
-                        
-                        
+
                                             <tbody>
-
-                                            <% for(let i=0; i< medicine.length; i++) {%>
+                                                <%for(let i =0; i< user.length; i++){%>
                                                 <tr>
-                                                    <td align="center">
-                                                        <img  src="<%= medicine[i].image %>" alt="user" width="75">
-                                                    </td>
-                                                    <td><%= medicine[i].name %></td>
-                                                    <td><%= medicine[i].medicineType %></td>
-                                                    <td><%= medicine[i].price %></td>
+                                                    
+                                                    <td><%= user[i].tc %></td>
+                                                    <td><%= user[i].name %></td>
+                                                    <td><%= user[i].tc %></td>
+                                                    <td><%= user[i].admin.name %></td>
                                                     <td>
-                                                        <a href="/ilaclar/edit/<%= medicine[i]._id%>"><button type="button" class="btn btn-lg btn-warning  btn-sm "><i class="fas fa-edit"></i></button></a>
-                                                        <a href="/ilaclar/<%= medicine[i]._id %>?_method=DELETE"><button type="button" class="btn btn-lg btn-danger   btn-sm "><i class="mdi mdi-delete-forever"></i></button></a>
+                                                        <a href="/kullanicilar/edit/<%= user[i]._id %>">
+                                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                        </a>
+                                                        <a href="/kullanicilar/edit/<%= user[i]._id%>?_method=DELETE">
+                                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                        </a>
                                                     </td>
-                                                </tr>
-
-                                            <% } %>
-                                            
+                                                </tr>                                 
+                                                <%}%>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div> <!-- end col -->
                         </div> <!-- end row -->
-                    </div> <!-- end container -->
-                </div>
+                    </div>    
+                </div>   
             <%}else{%>
                 <div class="wrapper">
                     <div class="container-fluid pt-5 pb-5">
@@ -137,29 +128,23 @@
     <!-- Datatable init js -->
     <script src="/pages/datatables.init.js"></script> 
 
-    <script>
-        $(document).ready(function() {
-            $('#datatable2').DataTable();  
-        } );
-    </script>
-
-    <script>
-        function Yonlendir(ID, adres, saniye) {
-            if (saniye == 0) {
-                window.location.href = adres;
-            return;
-            }
-            document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
-            saniye--;
-            setTimeout(function() {
-                Yonlendir(ID, adres, saniye);
-            }, 1000);
+   <script>
+    function Yonlendir(ID, adres, saniye) {
+        if (saniye == 0) {
+            window.location.href = adres;
+        return;
         }
+        document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
+        saniye--;
+        setTimeout(function() {
+            Yonlendir(ID, adres, saniye);
+        }, 1000);
+    }
     </script>
     <script>
         Yonlendir("uyari", "/", 10);
     </script>
-
+    
     </body>
 </html>
 

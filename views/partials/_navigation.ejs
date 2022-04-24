@@ -2,9 +2,9 @@
     <div class="topbar-main">
         <div class="container-fluid">
 
-        <% if(user && ('role' in user)){ %>
+        <% if(admin && ('role' in admin)){ %>
 
-            <%if(user.role=='super' || user.role=='editor'){%>
+            <%if(admin.role=='super' || admin.role=='editor'){%>
                     <!-- Logo container-->
                     <div class="logo">
                         <!-- Image Logo -->
@@ -77,7 +77,7 @@
                             </li>
 
                             <li class="has-submenu">
-                                <a href="#"><i class="fas fa-heartbeat"></i>İlaçlar</a>
+                                <a href="/ilaclar"><i class="fas fa-heartbeat"></i>İlaç İşlemleri</a>
                                 <ul class="submenu">
                                     <li><a href="/ilaclar">İlaçlar</a></li>
                                     <li><a href="/ilaclar/ilac-ekle">İlaç Ekle</a></li>
@@ -86,6 +86,15 @@
 
                             <li class="has-submenu">
                                 <a href="/notlar"><i class="fas fa-sticky-note"></i>Notlar</a>
+                            </li>
+                            <li class="has-submenu">
+                                <a href="/kullanicilar"><i class="fas fa-user-cog"></i>Kullanıcı İşlemleri</a>
+                                <ul class="submenu">
+                                    <li><a href="/kullanicilar">Kullanıcılar</a></li>
+                                    <li><a href="/kullanicilar/kullanici-ekle">Kullanıcı Ekle</a></li>
+                                    <li><a href="/kullanicilar/onay-bekleyenler">Onay Bekleyenler </a></li>
+                                    <li><a href="/kullanicilar/onaylananlar">Onaylananlar </a></li>
+                                </ul>
                             </li>
                         </ul>
                         

@@ -1,5 +1,5 @@
 const Medicine = require('../models/medicine');
-const User = require('../models/user');
+const Admin = require('../models/administration');
 const fs = require('fs');
 
 
@@ -31,12 +31,12 @@ exports.createMedicine = async (req, res) => {
 exports.getAllMedicine = async (req, res) => {
   try {
     const medicine = await Medicine.find({}).sort('-createdAt');
-    const user = await User.findById(req.session.userID); 
+    const admin = await Admin.findById(req.session.userID); 
 
     res.status(201).render('list-medicine', {
       page_name: "İlaçlar",
       medicine,
-      user,
+      admin,
     });
 
   } catch (err) {

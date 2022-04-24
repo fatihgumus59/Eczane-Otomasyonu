@@ -1,9 +1,9 @@
-const User = require('../models/user');
+const Admin = require('../models/administration');
 const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
   try {
-    const user = await User.create(req.body);
+    const admin = await Admin.create(req.body);
     res.status(201).redirect('/');
   } catch (error) {
     res.status(404).json({
@@ -15,8 +15,25 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
+
+    // if(req.query.auth=='user'){
+    //   const { tc, sifre } = req.body;
+    //   const kullanici = User.findOne({ tc }, (err, user) => {
+    //     if (user) {
+    //       bcrypt.compare(sifre, user.password, (err, same) => {
+    //         if (same) {
+    //           //veriler eşleşiyor ise
+    //           req.session.userID = user._id;
+    //           req.session.userName = user.name;
+    //           res.status(200).redirect('/');
+    //         }
+    //       });
+    //   }
+    // });
+    // }
+
     const { username, password } = req.body;
-    const user = User.findOne({ username }, (err, user) => {
+    const admin = Admin.findOne({ username }, (err, user) => {
       if (user) {
         bcrypt.compare(password, user.password, (err, same) => {
           if (same) {
@@ -28,6 +45,8 @@ exports.loginUser = async (req, res) => {
         });
       }
     });
+
+
   } catch (error) {
     res.status(404).json({
       status: 'error',
