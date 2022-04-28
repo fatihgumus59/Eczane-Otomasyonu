@@ -11,7 +11,7 @@
 
         <% if(admin && ('role' in admin)){ %>
 
-            <%if(admin.role=='super' || admin.role=='editor'){%>
+            <%if(admin.role=='super'){%>
                 <div class="wrapper">
                     <div class="container-fluid">
         
@@ -37,17 +37,43 @@
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-body">
-                                            <form method="post" action="/kullanicilar/edit/<%= user._id %>?_method=PUT">
+                                            <form method="post" action="/auth/edit/<%= user._id %>?_method=PUT">
                                                 <div class="row">
                                                     <div class="offset-1 col-md-10">
                                                         <div class="p-20">
                                                             
                                                             <h4 class="mt-0 header-title">Kişi Bilgileri</h4>
-                                                            <p class="text-muted mb-4 font-14">Lütfen kişi bilgilerini eksiksiz doldurunuz.</p> 
+                                                            <p class="text-muted mb-4 font-14">Lütfen kişi bilgilerini eksiksiz doldurunuz.</p>
+
                                                                 <div class="form-group mb-0">
-                                                                    <label>T.C Kimlik No</label>
-                                                                    <input type="text" name="tc" disabled value="<%= user.tc %>" class="form-control">
-                                                                    <p class="text-muted font-14">Kimlik numarası değiştirilemez.</p> 
+                                                                    <label>Kullanıcı Rolü</label>
+                                                                    <select name="role" class="form-control">
+                                                                        <option value="<%= user.role %>"><%if(user.role=='super'){%>
+                                                                            Yönetici
+                                                                        <%}else if(user.role=='editor') {%>
+                                                                            Editör
+                                                                        <%}else{%>
+                                                                            Yetkisiz
+                                                                        <%}%>
+                                                                        </option>
+
+                                                                        <%if(user.role=='super'){%>
+                                                                            <option value="editor">Editör</option>
+                                                                            <option value="pending">Yetkisiz</option>
+                                                                        <%}else if(user.role=='editor'){%>
+                                                                            <option value="super">Yönetici</option>
+                                                                            <option value="pending">Yetkisiz</option>
+                                                                        <%}else{%>
+                                                                            <option value="super">Yönetici</option>
+                                                                            <option value="editor">Editör</option>
+                                                                        <%}%>
+
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-group mb-0">
+                                                                    <label>Kullanıcı adı</label>
+                                                                    <input type="text" name="username" value="<%= user.username %>" class="form-control">
                                                                 </div>
                             
                                                                 <div class="form-group mb-0">
@@ -56,6 +82,17 @@
                                                                         <input type="text" name="name" value="<%= user.name %>" class="form-control" />
                                                                     </div>
                                                                 </div>
+                                                                <div class="form-group mb-0">
+                                                                    <label class="my-2 py-1">E-Mail</label>
+                                                                    <div>
+                                                                        <input type="text" name="email" value="<%= user.email %>" class="form-control" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mb-0">
+                                                                    <label class="my-2 py-1 mr-5">Kayıt Tarihi<p><%= user.createdAt.toISOString().slice(0,10)  %></p></label>
+                                                                    <label class="my-2 py-1">Güncellenme Tarihi <p><%= user.updatedAt.toISOString().slice(0,10)  %></p></label>
+                                                                </div>
+                                                                
                                                                 <div class="form-group mt-5 mb-0">
                                                                     <div >
                                                                         <button type="submit" class="btn btn-primary waves-effect waves-light">

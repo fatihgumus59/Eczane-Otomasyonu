@@ -18,7 +18,7 @@ router.route('/manager/add').get(authMiddleware,pageController.getAdminAddPage);
 router.route('/edit/:id').get(authMiddleware,pageController.getEditAdminPage);
 
 //post admin
-router.route('/manager/add').post(authMiddleware,authController.createUser);
+router.route('/manager/add').post(authMiddleware,authController.addAdmin);
 router.route('/admin-ok/:id').put(authMiddleware,authController.adminOk); // confirmation true yapacak.
 
 //update admin

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 exports.createUser = async (req, res) => {
   try {
     const admin = await Admin.create(req.body);
+
     res.status(201).redirect('/');
   } catch (error) {
     res.status(404).json({
@@ -50,11 +51,27 @@ exports.editAdmin = async (req, res) => {
 
     const user = await Admin.findByIdAndUpdate({ _id: req.params.id }, {
       name: req.body.name,
-      tc: req.body.tc,
+      username: req.body.username,
+      email: req.body.email,
+      role:req.body.role
     });
 
 
-    res.status(200).redirect('/kullanicilar');
+    res.status(200).redirect('/auth/manager');
+  } catch (error) {
+    res.status(404).json({
+      status: 'error',
+      error: error.message,
+    });
+  }
+};
+
+exports.addAdmin = async (req, res) => {
+  try {
+
+    const user = await Admin.create(req.body);
+
+    res.status(200).redirect('/auth/manager');
   } catch (error) {
     res.status(404).json({
       status: 'error',

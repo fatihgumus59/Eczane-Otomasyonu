@@ -163,13 +163,19 @@ exports.getRegisterPage = async (req, res) => {
 
 exports.getAllAdmin = async (req, res) => {
 
+  const status = req.query.status;
   const admin = await Admin.findById(req.session.userID);
   const user = await Admin.find({});
+  const onaysiz = await Admin.where({confirmation:false});
+  const onayli = await Admin.where({confirmation:true});
 
   res.status(200).render('admin-list',{
     page_name: 'Tüm Adminler',
     admin,
     user,
+    status,
+    onaysiz,
+    onayli,
   })
 
 }
@@ -177,7 +183,8 @@ exports.getAllAdmin = async (req, res) => {
 exports.getAdminAddPage = async (req, res) => {
 
   const admin = await Admin.findById(req.session.userID); 
-  res.status(200).render('admin-add',{
+  
+  res.status(200).render('user-add',{
     page_name: 'Admin Ekle',
     admin,
   })

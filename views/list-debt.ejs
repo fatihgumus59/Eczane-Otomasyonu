@@ -18,7 +18,6 @@
         <%- include('partials/_navigation')%>
 
         <% if(admin && ('role' in admin)){ %>
-
             <%if(admin.role=='super' || admin.role=='editor'){%>
                 <div class="wrapper">
                     <div class="container-fluid">
@@ -118,8 +117,9 @@
                         </div> <!-- end row -->   
                     </div>
                 </div>
-            <%}%>
+            <%}%>          
         <%}%>
+
 
    <!-- Footer -->
    <%- include('partials/_footer')%>
