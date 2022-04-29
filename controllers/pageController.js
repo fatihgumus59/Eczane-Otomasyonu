@@ -1,7 +1,7 @@
+const QRCode = require('qrcode');
 const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
 const Admin = require('../models/administration');
-
 exports.getIndexPage = async (req, res) => {
 
   const toplam = await Debt.find({}).count();
@@ -13,7 +13,7 @@ exports.getIndexPage = async (req, res) => {
 
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
-  const borcAlanOran = ((odenmemis-odenmis)/toplam)*100;
+  const borcAlanOran = ((odenmemis - odenmis) / toplam) * 100;
 
   console.log(req.session.userID);
 
@@ -46,14 +46,14 @@ exports.getIndexPage = async (req, res) => {
 
     ),
     list,
-    borcAlanOran : borcAlanOran.toFixed(2),
+    borcAlanOran: borcAlanOran.toFixed(2),
     admin,
   });
 };
 
 exports.getDebtAddPage = async (req, res) => {
 
-  const admin = await Admin.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID);
   const medicine = await Medicine.find(req.body);
   res.status(200).render('add-debt', {
     page_name: "Borçlu Ekle",
@@ -64,7 +64,7 @@ exports.getDebtAddPage = async (req, res) => {
 
 exports.getEditDebtPage = async (req, res) => {
 
-  const admin = await Admin.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID);
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const medicine = await Medicine.find({});
   const id = req.param.id;
@@ -79,7 +79,7 @@ exports.getEditDebtPage = async (req, res) => {
 };
 
 exports.getMedicineAddPage = async (req, res) => {
-  const admin = await Admin.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID);
   res.status(200).render('add-medicine', {
     page_name: "Eczane Otomasyonu",
     admin,
@@ -88,7 +88,7 @@ exports.getMedicineAddPage = async (req, res) => {
 
 exports.getEditMedicinePage = async (req, res) => {
   const medicine = await Medicine.findOne({ _id: req.params.id });
-  const admin = await Admin.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID);
   res.status(200).render('edit-medicine', {
     page_name: "Eczane Otomasyonu",
     medicine,
@@ -99,7 +99,7 @@ exports.getEditMedicinePage = async (req, res) => {
 exports.getNotesPage = async (req, res) => {
 
   const debt = await Debt.find({});
-  const admin = await Admin.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID);
   res.status(200).render('note', {
     page_name: "Notlar",
     debt,
@@ -113,7 +113,19 @@ exports.getProforma = async (req, res) => {
   const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
   const date = new Date();
   const tarih = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-  const admin = await Admin.findById(req.session.userID); 
+  const admin = await Admin.findById(req.session.userID);
+
+
+  const url = req.protocol + '://' + req.get('host') +'/invoice/'+ req.params.id;
+  if (url == 0) return res.send('Url adresi bulunamadı.');
+
+  console.log(url);
+  const qrOption = {
+    margin: 0,
+    width: 100
+  };
+
+  const qrcode = await QRCode.toDataURL(url, qrOption);
 
   res.status(200).render('proforma', {
     page_name: `${debt.name} `,
@@ -122,6 +134,7 @@ exports.getProforma = async (req, res) => {
     total: (Number(debt.total) + Number(kdv)).toFixed(2),
     tarih,
     admin,
+    qr: qrcode,
   });
 };
 
@@ -144,9 +157,9 @@ exports.getLoginPage = async (req, res) => {
 
   const authControl = req.query.auth; //search alanında parametre vereceğim eğer user gelirse user'a özel login açılmasını sağlayacağım
   // eğer ?auth=admin vb bir şey gelirse admine özel login açılacak.
-  
 
-  res.status(200).render('login',{
+
+  res.status(200).render('login', {
     page_name: 'Giriş Yap - Ezane Otomasyonu',
     authControl,
   })
@@ -155,7 +168,7 @@ exports.getLoginPage = async (req, res) => {
 
 exports.getRegisterPage = async (req, res) => {
 
-  res.status(200).render('register',{
+  res.status(200).render('register', {
     page_name: 'Kayıt Ol - Ezane Otomasyonu',
   })
 
@@ -166,10 +179,10 @@ exports.getAllAdmin = async (req, res) => {
   const status = req.query.status;
   const admin = await Admin.findById(req.session.userID);
   const user = await Admin.find({});
-  const onaysiz = await Admin.where({confirmation:false});
-  const onayli = await Admin.where({confirmation:true});
+  const onaysiz = await Admin.where({ confirmation: false });
+  const onayli = await Admin.where({ confirmation: true });
 
-  res.status(200).render('admin-list',{
+  res.status(200).render('admin-list', {
     page_name: 'Tüm Adminler',
     admin,
     user,
@@ -182,9 +195,9 @@ exports.getAllAdmin = async (req, res) => {
 
 exports.getAdminAddPage = async (req, res) => {
 
-  const admin = await Admin.findById(req.session.userID); 
-  
-  res.status(200).render('user-add',{
+  const admin = await Admin.findById(req.session.userID);
+
+  res.status(200).render('user-add', {
     page_name: 'Admin Ekle',
     admin,
   })
@@ -193,13 +206,14 @@ exports.getAdminAddPage = async (req, res) => {
 
 exports.getEditAdminPage = async (req, res) => {
 
-  const admin = await Admin.findById(req.session.userID); 
-  const user = await Admin.findOne({_id:req.params.id});
+  const admin = await Admin.findById(req.session.userID);
+  const user = await Admin.findOne({ _id: req.params.id });
 
-  res.status(200).render('user-edit',{
+  res.status(200).render('user-edit', {
     page_name: 'Adminler',
     admin,
     user,
   })
 
 }
+

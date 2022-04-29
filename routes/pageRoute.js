@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.route('/').get(authMiddleware,pageController.getIndexPage);
 router.route('/notlar').get(authMiddleware,pageController.getNotesPage);
-router.route('/yazdir/:id').get(authMiddleware,pageController.getProforma);
+router.route('/invoice/:id').get(authMiddleware,pageController.getProforma); // sadece yöneticilere açık fatura
 router.route('/login').get(redirectMiddleware,pageController.getLoginPage);
 router.route('/register').get(redirectMiddleware,pageController.getRegisterPage);
 

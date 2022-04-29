@@ -100,6 +100,17 @@
 				border-top: 2px solid #eee;
 				font-weight: bold;
 			}
+			.watermark-image :after{
+				content: "DRAdwqwqwqwqwqwqwqwqwqwqwqwqFT";
+    color: steelblue;
+    font-size: 120px;
+    /* text-align: center; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity:0.1
+			}
 
 			@media only screen and (max-width: 600px) {
 				.invoice-box table tr.top table td {
@@ -118,22 +129,33 @@
 	</head>
 
 	<body onload="window.print()" >
+
+		<%if( debt.status =='Ödenmedi'){%>
+			<div style="border-width: 6px;border-style: solid; border-color: #e70707;border-radius: 8px; color: #e70707; opacity:0.2; position: absolute; z-index: 1; left:25%; top:40%; font-size: 60pt;-webkit-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg); font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+				<%= debt.status %> </div>
+			<br><br>
+
+		<%}else{%>
+			<div style="border-width: 6px;border-style: solid; border-color: #008000;border-radius: 8px; color: #008000; opacity:0.2; position: absolute; z-index: 1; left:35%; top:40%; font-size: 60pt;-webkit-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg); font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
+				<%= debt.status %> </div>
+			<br><br>
+		<%}%>
         
-		<br><br>
 		     
 		<p>Eczanemizi tercih ettiğiniz için teşekkür ederiz.</p>
 		<%if(debt){%>
-			<div class="invoice-box">
+			<div class="invoice-box">	
 				<table>
 					<tr class="top">
 						<td colspan="2">
 							<table>
-								<tr>
+								<tr>	
 									<td class="title">
 										<img src="/images/logo.png" alt="Company logo" style="width: 100%; max-width: 300px" />
 									</td>
-
+									
 									<td>
+										<img style="float: right;" src="<%= qr %>" style="width: 100%; max-width: 500px" /><br><br><br><br><br>
 										Yazdırma Tarihi: <%= tarih%><br />
 										Yazdıran Kişi: <%= userName %> <!-- buradaki userName globalden geliyor.-->
 									</td>
@@ -141,7 +163,7 @@
 							</table>
 						</td>
 					</tr>
-
+					
 					<tr class="information">
 						<td colspan="2">
 							<table>
@@ -151,11 +173,9 @@
 										Caddesi No:1 <br />
 										Süleymanpaşa-Tekirdağ
 									</td>
-
 									<td>
 										<%= debt.tc %><br />
 										<%= debt.name %><br />
-										<%= debt.status %>
 									</td>
 								</tr>
 							</table>
@@ -187,16 +207,26 @@
 
 						<td><%= debt.total %>₺</td>
 					</tr>
-					<tr class="item last">
+					<tr class="item ">
 						<td>KDV (%8)</td>
 
 						<td><%= kdv %>₺</td>
 					</tr>
 
+					<tr class="item last">
+						<td>Toplam Borç</td>
+
+						<td><%= total %>₺</td>
+					</tr>
 					<tr class="total">
 						<td></td>
 
-						<td>Toplam: <%= total %>₺</td>
+						<%if( debt.status =='Ödenmedi'){%>
+							<td>Ödenecek Tutar: <%= total %>₺</td>
+						<%}else{%>
+							<td>Ödenecek Tutar: 0₺</td>
+						<%}%>
+						
 					</tr>
 				</table>
 			</div>
