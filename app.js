@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
+require('dotenv').config();
 
 
 const pageRoute = require('./routes/pageRoute');
@@ -58,7 +59,7 @@ app.use('/ilaclar', medicineRoute);
 app.use('/kisiler', debtRoute);
 app.use('/auth', adminRoute);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log(`Sunucu ${port} numaralı portta başlatıldı.`);
