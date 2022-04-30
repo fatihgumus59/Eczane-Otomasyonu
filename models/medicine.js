@@ -23,6 +23,10 @@ const medicine = new Schema({
   image: {
     type: String,
   },
+  admin:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin',
+  },
 }, { versionKey: false, timestamps: true });
 
 const Medicine = mongoose.model('Medicine', medicine);

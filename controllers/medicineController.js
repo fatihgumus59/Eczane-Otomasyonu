@@ -15,6 +15,7 @@ exports.createMedicine = async (req, res) => {
     await Medicine.create({
       ...req.body,
       image: '/uploads/' + req.file.filename,
+      admin:req.session.userID,
 
     });
     res.status(201).redirect('/ilaclar');
@@ -30,13 +31,17 @@ exports.createMedicine = async (req, res) => {
 
 exports.getAllMedicine = async (req, res) => {
   try {
-    const medicine = await Medicine.find({}).sort('-createdAt');
-    const admin = await Admin.findById(req.session.userID); 
+    const medicine = await Medicine.find({}).sort('-createdAt').populate('admin');
+    const admin = await Admin.findById(req.session.userID);
+    const medicineEditor = await Medicine.find({admin:req.session.userID}).sort('-createdAt');
+    const query = req.query.medicine;
 
     res.status(201).render('list-medicine', {
       page_name: "İlaçlar",
       medicine,
       admin,
+      query,
+      medicineEditor
     });
 
   } catch (err) {

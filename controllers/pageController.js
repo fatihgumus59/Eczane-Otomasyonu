@@ -2,20 +2,34 @@ const QRCode = require('qrcode');
 const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
 const Admin = require('../models/administration');
+
+
 exports.getIndexPage = async (req, res) => {
 
-  const toplam = await Debt.find({}).count();
-  const odenmemis = await Debt.where({ status: 'Ödenmedi' }).count().select('status');
-  const odenmis = await Debt.where({ status: 'Ödendi' }).count().select('status');
-  const notlar = await Debt.find({}).limit(4).sort('-createdAt');
-  const list = await Debt.find({}).limit(7).populate('medicine.ilac').sort('-createdAt');
+  // admin tüm detaylara hakim olabilecek
+  const notlarAdmin = await Debt.find({}).limit(4).sort('-createdAt'); // admin tüm notları görebilecek.
+  const listAdmin = await Debt.find({}).limit(7).populate('medicine.ilac').sort('-createdAt'); // admin tüm borçluları görebilecek.
+  const toplamAdmin = await Debt.find({}).count();
+  const odenmemisAdmin = await Debt.where({ status: 'Ödenmedi' }).count().select('status');
+  const odenmisAdmin = await Debt.where({ status: 'Ödendi' }).count().select('status');
   const admin = await Admin.findById(req.session.userID);
+
+  const odenmisOranAdmin = (odenmisAdmin * 100) / toplamAdmin;
+  const odenmemisOranAdmin = (odenmemisAdmin * 100) / toplamAdmin;
+  const borcAlanOranAdmin = ((odenmemisAdmin - odenmisAdmin) / toplamAdmin) * 100;
+
+  //editörde sadece kendi eklediklerini görebilecek.
+  const toplam = await Debt.find({ admin: req.session.userID }).count();
+  const odenmemis = await Debt.where({ status: 'Ödenmedi', admin: req.session.userID }).count().select('status');
+  const odenmis = await Debt.where({ status: 'Ödendi', admin: req.session.userID }).count().select('status');
+  const notlar = await Debt.find({ admin: req.session.userID }).limit(4).sort('-createdAt');
+  const list = await Debt.find({ admin: req.session.userID }).limit(7).populate('medicine.ilac').sort('-createdAt');
 
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
   const borcAlanOran = ((odenmemis - odenmis) / toplam) * 100;
 
-  console.log(req.session.userID);
+  const user = req.session.userID;
 
   res.status(200).render('index', {
     page_name: "Eczane Otomasyonu",
@@ -25,7 +39,18 @@ exports.getIndexPage = async (req, res) => {
     odenmisOran,
     odenmemisOran,
     notlar,
-    debt: await Debt.aggregate(
+    list,
+    borcAlanOran: borcAlanOran.toFixed(2),
+    admin,
+    listAdmin,
+    notlarAdmin,
+    toplamAdmin,
+    odenmemisAdmin,
+    odenmisAdmin,
+    odenmisOranAdmin,
+    odenmemisOranAdmin,
+    borcAlanOranAdmin,
+    debtAdmin: await Debt.aggregate(
       [
         {
           $group: {
@@ -45,9 +70,8 @@ exports.getIndexPage = async (req, res) => {
       }
 
     ),
-    list,
-    borcAlanOran: borcAlanOran.toFixed(2),
-    admin,
+    borcAlanOranAdmin: borcAlanOranAdmin.toFixed(2),
+
   });
 };
 
@@ -98,12 +122,15 @@ exports.getEditMedicinePage = async (req, res) => {
 
 exports.getNotesPage = async (req, res) => {
 
-  const debt = await Debt.find({});
+  const debt = await Debt.find({admin: req.session.userID});
   const admin = await Admin.findById(req.session.userID);
+  const debtAdmin = await Debt.find({});
+
   res.status(200).render('note', {
     page_name: "Notlar",
     debt,
     admin,
+    debtAdmin,
   });
 };
 
@@ -116,7 +143,7 @@ exports.getProforma = async (req, res) => {
   const admin = await Admin.findById(req.session.userID);
 
 
-  const url = req.protocol + '://' + req.get('host') +'/invoice/'+ req.params.id;
+  const url = req.protocol + '://' + req.get('host') + '/invoice/' + req.params.id;
   if (url == 0) return res.send('Url adresi bulunamadı.');
 
   console.log(url);

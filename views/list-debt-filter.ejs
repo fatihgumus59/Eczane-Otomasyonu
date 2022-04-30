@@ -19,7 +19,137 @@
 
         <% if(admin && ('role' in admin)){ %>
 
-            <%if(admin.role=='super' || admin.role=='editor'){%>
+            <%if(admin.role=='super'){%>
+
+                <div class="wrapper">
+                    <div class="container-fluid">
+        
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="btn-group pull-right">
+                                        <ol class="breadcrumb hide-phone p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
+                                            <% if(status == 'Ödendi'){%>
+                                                <li class="breadcrumb-item active">Ödenmiş Borçlar</li>
+                                            <% }else{ %>
+                                                <li class="breadcrumb-item active">Ödenmemiş Borçlar</li>
+                                            
+                                            <% } %>
+                                        </ol>
+                                    </div>
+                                    <% if(status == 'Ödendi'){%>
+                                        <h4 class="page-title">Borcu Kapatanlar</h4>
+                                    <% }else{ %>
+                                        <h4 class="page-title">Borçlular</h4>
+                                    
+                                    <% } %>
+                                    
+        
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title end breadcrumb -->
+        
+        
+                        <%if(status == 'Ödendi') {%>  <!-- borcu ödeyenler için ayrı görünüm -->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+        
+                                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>Tarih</th>
+                                                <th>TC</th>
+                                                <th>İsim</th>
+                                                <th>İşlem</th>
+                                            </tr>
+                                            </thead>
+        
+                                            <tbody>
+                                            <% for(let i=0; i< debtAdmin.length; i++) {%>
+                                                <tr>
+                                                    
+                                                    <td><%= debtAdmin[i].createdAt.toISOString().slice(0,10)  %></td>
+                                                    <td><%= debtAdmin[i].tc %></td>
+                                                    <td><%= debtAdmin[i].name %></td>
+                                                    <td>
+                                                        <a href="/kisiler/edit/<%= debtAdmin[i]._id%>">
+                                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                        </a>
+                                                        <a href="/kisiler/<%= debtAdmin[i]._id%>?_method=DELETE">
+                                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                        </a>
+                                                        <a target="_blank" href="/invoice/<%= debtAdmin[i]._id%>">
+                                                            <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
+                                                        </a>
+                                                    </td>
+                                                </tr>                                 
+                                            <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                        <% } %>
+        
+                        <%if(status == 'Ödenmedi') {%> <!-- borcu ödemeyenler için ayrı görünüm -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+            
+                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <thead>
+                                                <tr>
+                                                    <th>Tarih</th>
+                                                    <th>TC</th>
+                                                    <th>İsim</th>
+                                                    <th>Borç Miktarı</th>
+                                                    <th>İşlem</th>
+                                                </tr>
+                                                </thead>
+            
+                                                <tbody>
+                                                <% for(let i=0; i< debtAdmin.length; i++) {%>
+                                                    <tr>
+                                                        <td><%= debtAdmin[i].createdAt.toISOString().slice(0,10)  %></td>
+                                                        <td><%= debtAdmin[i].tc %></td>
+                                                        <td><%= debtAdmin[i].name %></td>
+                                                        <td><%= debtAdmin[i].total %>₺</td>
+                                                        <td>
+                                                            <a href="/kisiler/edit/<%= debtAdmin[i]._id%>">
+                                                                <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                            </a>
+                                                            <a href="/kisiler/<%= debtAdmin[i]._id%>?_method=DELETE">
+                                                                <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                            </a>
+                                                            <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debtAdmin[i]._id %>?_method=PUT">                                                  
+                                                                <input type="hidden" name="status" value="Ödendi">
+                                                                <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                            </form>  
+                                                            <a target="_blank" href="/invoice/<%= debtAdmin[i]._id%>">
+                                                                <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
+                                                            </a>
+                                                        </td>
+                                                    </tr>                                 
+                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                            <% } %>
+                    </div> <!-- end container -->
+                </div>
+
+            <%}else if(admin.role=='editor'){%>
 
                 <div class="wrapper">
                     <div class="container-fluid">
@@ -81,11 +211,8 @@
                                                         <a href="/kisiler/edit/<%= debt[i]._id%>">
                                                             <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
                                                         </a>
-                                                        <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
-                                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                        </a>
                                                         <a target="_blank" href="/invoice/<%= debt[i]._id%>">
-                                                            <button type="button" class="btn btn-secondary waves-effect"><i class="mdi mdi-printer"></i></button>
+                                                            <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
                                                         </a>
                                                     </td>
                                                 </tr>                                 
@@ -126,15 +253,12 @@
                                                             <a href="/kisiler/edit/<%= debt[i]._id%>">
                                                                 <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
                                                             </a>
-                                                            <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
-                                                                <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                            </a>
                                                             <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debt[i]._id %>?_method=PUT">                                                  
                                                                 <input type="hidden" name="status" value="Ödendi">
                                                                 <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
                                                             </form>  
                                                             <a target="_blank" href="/invoice/<%= debt[i]._id%>">
-                                                                <button type="button" class="btn btn-secondary waves-effect"><i class="mdi mdi-printer"></i></button>
+                                                                <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
                                                             </a>
                                                         </td>
                                                     </tr>                                 
@@ -148,7 +272,6 @@
                             <% } %>
                     </div> <!-- end container -->
                 </div>
-
             <%}else{%>
                 <div class="wrapper">
                     <div class="container-fluid pt-5 pb-5">

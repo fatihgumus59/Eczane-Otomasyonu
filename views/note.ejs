@@ -11,7 +11,7 @@
 
         <% if(admin && ('role' in admin)){ %>
 
-            <%if(admin.role=='super' || admin.role=='editor'){%>
+            <%if(admin.role=='super'){%>
                 <div class="wrapper">
                     <div class="container-fluid">
 
@@ -34,22 +34,77 @@
                     
                         <div class="row">
 
-                            <% for(let i=0; i< debt.length; i++) {%>
-                                <% if(debt[i].status=='Ödenmedi'){ %>
-                                    <div class="col-lg-4">
-                                        <div class="card">
-                                            <h6 class="card-header mt-0">TC: <%= debt[i].tc %></h6>
-                                            <div class="card-body">
-                                                <h4 class="card-title font-20 mt-0"><%= debt[i].name %></h4>
-                                                <p class="card-text"><%= debt[i].note%></p>
-                                                <a href="/kisiler/edit/<%= debt[i]._id%>" class="btn btn-primary">Kişiye Git</a>
+                            <% if(debtAdmin){ %>
+
+                                <% for(let i=0; i< debtAdmin.length; i++) {%>
+
+                                    <% if(debtAdmin[i].status=='Ödenmedi'){ %>
+                                        <div class="col-lg-4">
+                                            <div class="card">
+                                                <h6 class="card-header mt-0">TC: <%= debtAdmin[i].tc %></h6>
+                                                <div class="card-body">
+                                                    <h4 class="card-title font-20 mt-0"><%= debtAdmin[i].name %></h4>
+                                                    <p class="card-text"><%= debtAdmin[i].note%></p>
+                                                    <a href="/kisiler/edit/<%= debtAdmin[i]._id%>" class="btn btn-primary">Kişiye Git</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                <%}else {%>
-                                    
+                                    <%}else {%>
+                                        <!-- boş kalacak-->
+                                    <%}%>
+
                                 <%}%>
-                        <%}%>
+
+                            <%}%>
+
+                        </div>
+                        
+                    </div>    
+                </div>
+            <%}else if( admin.role=='editor'){%>
+                <div class="wrapper">
+                    <div class="container-fluid">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="btn-group pull-right">
+                                        <ol class="breadcrumb hide-phone p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Panel</a></li>
+                                            <li class="breadcrumb-item active">Notlar</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Notlar </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title end breadcrumb -->
+                
+                    
+                        <div class="row">
+                            <% if(debt){ %>
+
+                                <% for(let i=0; i< debt.length; i++) {%>
+
+                                    <% if(debt[i].status=='Ödenmedi'){ %>
+                                        <div class="col-lg-4">
+                                            <div class="card">
+                                                <h6 class="card-header mt-0">TC: <%= debt[i].tc %></h6>
+                                                <div class="card-body">
+                                                    <h4 class="card-title font-20 mt-0"><%= debt[i].name %></h4>
+                                                    <p class="card-text"><%= debt[i].note%></p>
+                                                    <a href="/kisiler/edit/<%= debt[i]._id%>" class="btn btn-primary">Kişiye Git</a>
+                                                </div>
+                                            </div>
+                                        </div>
+    
+                                    <%}else{%>
+                                        <!--boş kalacak-->
+                                    <%}%>
+                                <%}%>
+
+                            <%}%>
 
                         </div>
                         

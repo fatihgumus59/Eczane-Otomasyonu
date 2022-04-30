@@ -18,7 +18,80 @@
         <%- include('partials/_navigation')%>
 
         <% if(admin && ('role' in admin)){ %>
-            <%if(admin.role=='super' || admin.role=='editor'){%>
+
+            <%if(admin.role=='super'){%>
+                <div class="wrapper">
+                    <div class="container-fluid">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="btn-group pull-right">
+                                        <ol class="breadcrumb hide-phone p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                                            <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
+                                            <li class="breadcrumb-item active">Kişiler</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Kişiler</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end page title end breadcrumb -->
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                            <thead>
+                                            <tr>
+                                                <th>TC</th>
+                                                <th>İsim</th>
+                                                <th>Borç Miktarı</th>
+                                                <th>Borç Durumu</th>
+                                                <th>İşlem</th>
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                            <% for(let i=0; i< debtAdmin.length; i++) {%>
+                                                <tr>
+                                                    
+                                                    <td><%= debtAdmin[i].tc %></td>
+                                                    <td><%= debtAdmin[i].name %></td>
+                                                    <td><%= debtAdmin[i].total %>₺</td>
+                                                    <td><%= debtAdmin[i].status %></td>
+                                                    <td>
+                                                        <a href="/kisiler/edit/<%= debtAdmin[i]._id%>">
+                                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                        </a>
+                                                        <a href="/kisiler/<%= debtAdmin[i]._id%>?_method=DELETE">
+                                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                        </a>
+                                                        <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debtAdmin[i]._id %>?_method=PUT">                                                  
+                                                            <input type="hidden" name="status" value="Ödendi">
+                                                            <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                        </form>
+                                                        <a target="_blank" href="/invoice/<%= debtAdmin[i]._id%>">
+                                                            <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
+                                                        </a>
+
+                                                    </td>
+                                                </tr>                                 
+                                            <% } %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->
+                    </div> <!-- end container -->
+                </div>
+
+            <%}else if(admin.role=='editor'){%>
                 <div class="wrapper">
                     <div class="container-fluid">
 
@@ -67,9 +140,6 @@
                                                         <a href="/kisiler/edit/<%= debt[i]._id%>">
                                                             <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
                                                         </a>
-                                                        <a href="/kisiler/<%= debt[i]._id%>?_method=DELETE">
-                                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                        </a>
                                                         <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debt[i]._id %>?_method=PUT">                                                  
                                                             <input type="hidden" name="status" value="Ödendi">
                                                             <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
@@ -117,7 +187,8 @@
                         </div> <!-- end row -->   
                     </div>
                 </div>
-            <%}%>          
+            <%}%> 
+
         <%}%>
 
 

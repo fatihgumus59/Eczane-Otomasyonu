@@ -25,13 +25,15 @@ exports.createDebt = async (req, res) => {
 
 exports.getAllDebt = async (req, res) => {
   try {
-    const debt = await Debt.find({}).populate('medicine.ilac').sort('-createdAt');
+    const debt = await Debt.find({admin:req.session.userID}).populate('medicine.ilac').sort('-createdAt');
     const admin = await Admin.findById(req.session.userID); 
+    const debtAdmin = await Debt.find({}).populate('medicine.ilac').sort('-createdAt');
 
     res.status(200).render('list-debt', {
       page_name: "Kişiler",
       debt,
       admin,
+      debtAdmin,
     });
 
   } catch (err) {
@@ -45,7 +47,6 @@ exports.getAllDebt = async (req, res) => {
 exports.getEditDebtPageApi = async (req, res) => {
 
   try {
-    let data
     data = await Debt.findOneAndUpdate({ _id: req.params.id }, {
       status: req.body.status,
       tc: req.body.tc,
@@ -101,14 +102,16 @@ exports.deleteDebt = async (req, res) => {
 exports.getDebtPaid = async (req, res) => { // ödenmiş
   try {
     const status = 'Ödendi'
-    const debt = await Debt.find({ status: status });
+    const debt = await Debt.find({ status: status,admin:req.session.userID }); // statüsü hem ödenmiş hemde giriş yapan adminin eklediklerini listele dedik.
     const admin = await Admin.findById(req.session.userID); 
+    const debtAdmin = await Debt.find({status: status});
 
     res.status(200).render('list-debt-filter', {
       page_name: "Borcu Kapatanlar",
       debt,
       status,
       admin,
+      debtAdmin,
     })
 
   } catch (err) {
@@ -123,14 +126,16 @@ exports.getDebtUnpaid = async (req, res) => { // ödenmiş
   try {
 
     const status = 'Ödenmedi'
-    const debt = await Debt.find({ status: status });
-    const admin = await Admin.findById(req.session.userID); 
+    const debt = await Debt.find({ status: status,admin:req.session.userID }); // statüsü hem ödenmeyen hemde giriş yapan adminin eklediklerini listele dedik.
+    const admin = await Admin.findById(req.session.userID);
+    const debtAdmin = await Debt.find({status: status});
 
     res.status(200).render('list-debt-filter', {
       page_name: "Borçlular",
       debt,
       status,
       admin,
+      debtAdmin,
     })
 
   } catch (err) {

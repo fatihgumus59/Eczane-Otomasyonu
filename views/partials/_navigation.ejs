@@ -4,7 +4,7 @@
 
         <% if(admin && ('role' in admin)){ %>
 
-            <%if(admin.role=='super' || admin.role=='editor'){%>
+            <%if(admin.role=='super'){%>
                     <!-- Logo container-->
                     <div class="logo">
                         <!-- Image Logo -->
@@ -53,103 +53,193 @@
                     <div class="clearfix"></div>
 
                 </div> <!-- end container -->
-            </div>
-            <!-- end topbar-main -->
-            <!-- MENU Start -->
-            <div class="navbar-custom">
-                <div class="container-fluid">
-                    <div id="navigation">
-                        <!-- Navigation Menu-->
-                        <ul class="navigation-menu text-center">
+                </div>
+                <!-- end topbar-main -->
+                <!-- MENU Start -->
+                <div class="navbar-custom">
+                    <div class="container-fluid">
+                        <div id="navigation">
+                            <!-- Navigation Menu-->
+                            <ul class="navigation-menu text-center">
 
-                            <li class="has-submenu ">
-                                <a href="/"><i class="fas fa-home"></i>Panel</a>
-                            </li>
+                                <li class="has-submenu ">
+                                    <a href="/"><i class="fas fa-home"></i>Panel</a>
+                                </li>
 
-                            <li class="has-submenu ">
-                                <a href="#"><i class="mdi mdi-layers"></i>Sayfalar</a>
-                                <ul class="submenu">
-                                    <li><a href="/kisiler">Kişiler</a></li>
-                                    <li><a href="/kisiler/odenmis">Ödenmiş Borçlar</a></li>
-                                    <li><a href="/kisiler/odenmemis">Ödenmemiş Borçlar</a></li>
-                                    <li><a href="/kisiler/borc-ekle">Borç Ekle</a></li>
-                                </ul>
-                            </li>
+                                <li class="has-submenu ">
+                                    <a href="#"><i class="mdi mdi-layers"></i>Sayfalar</a>
+                                    <ul class="submenu">
+                                        <li><a href="/kisiler">Kişiler</a></li>
+                                        <li><a href="/kisiler/odenmis">Ödenmiş Borçlar</a></li>
+                                        <li><a href="/kisiler/odenmemis">Ödenmemiş Borçlar</a></li>
+                                        <li><a href="/kisiler/borc-ekle">Borç Ekle</a></li>
+                                    </ul>
+                                </li>
 
-                            <li class="has-submenu">
-                                <a href="/ilaclar"><i class="fas fa-heartbeat"></i>İlaç İşlemleri</a>
-                                <ul class="submenu">
-                                    <li><a href="/ilaclar">İlaçlar</a></li>
-                                    <li><a href="/ilaclar/ilac-ekle">İlaç Ekle</a></li>
-                                </ul>
-                            </li>
+                                <li class="has-submenu">
+                                    <a href="/ilaclar"><i class="fas fa-heartbeat"></i>İlaç İşlemleri</a>
+                                    <ul class="submenu">
+                                        <li><a href="/ilaclar">İlaçlar</a></li>
+                                        <li><a href="/ilaclar/ilac-ekle">İlaç Ekle</a></li>
+                                        <li><a href="/ilaclar?medicine=eklediklerim">Eklediğim İlaçlar</a></li>
+                                    </ul>
+                                </li>
 
-                            <li class="has-submenu">
-                                <a href="/notlar"><i class="fas fa-sticky-note"></i>Notlar</a>
-                            </li>
-                            <li class="has-submenu">
-                                <a href="/auth/manager"><i class="fas fa-user-cog"></i>Kullanıcı İşlemleri</a>
-                                <ul class="submenu">
-                                    <li><a href="/auth/manager">Tüm Adminler</a></li>
-                                    <li><a href="/auth/manager?status=onaylanmadi">Onay Bekleyenler </a></li>
-                                    <li><a href="/auth/manager?status=onayli">Onaylananlar </a></li>
-                                    <li><a href="/auth/manager/add">Admin Ekle </a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                        
-                        
-                        <!-- End navigation menu -->
-                    </div> <!-- end #navigation -->
-                </div> <!-- end container -->
-            </div> <!-- end navbar-custom -->
-        <%}else{%>
+                                <li class="has-submenu">
+                                    <a href="/notlar"><i class="fas fa-sticky-note"></i>Notlar</a>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="/auth/manager"><i class="fas fa-user-cog"></i>Kullanıcı İşlemleri</a>
+                                    <ul class="submenu">
+                                        <li><a href="/auth/manager">Tüm Adminler</a></li>
+                                        <li><a href="/auth/manager?status=onaylanmadi">Onay Bekleyenler </a></li>
+                                        <li><a href="/auth/manager?status=onayli">Onaylananlar </a></li>
+                                        <li><a href="/auth/manager/add">Admin Ekle </a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            
+                            
+                            <!-- End navigation menu -->
+                        </div> <!-- end #navigation -->
+                    </div> <!-- end container -->
+                </div> <!-- end navbar-custom -->
+            <%}else if(admin.role=='editor'){%>
 
-            <!-- Logo container-->
-            <div class="logo">
+                <!-- Logo container-->
+                <div class="logo">
                 <!-- Image Logo -->
                 <a href="/" class="logo">
                     <img src="/images/logo.png" alt="Eczane Otomasyonu" class="logo-large">
                 </a>
-            </div>
-            
-            <!-- End Logo container-->
-            <div class="menu-extras topbar-custom">
 
-                <ul class="list-inline float-right  mb-0">
-                    <!-- User-->
-                    <li class="list-inline-item dropdown notification-list">
-                        <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
-                        aria-haspopup="false" aria-expanded="false">
-                            <img src="/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                            <a class="dropdown-item" href="/auth/logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış Yap</a>
-                        </div>
-                    </li>
-                    <li class="menu-item list-inline-item">
-                        <!-- Mobile menu toggle-->
-                        <a class="navbar-toggle nav-link">
-                            <div class="lines">
-                                <span></span>
-                                <span></span>
-                                <span></span>
+                </div>
+
+                <div class="menu-extras topbar-custom">
+
+                    <ul class="list-inline float-right mb-0">
+                        <!-- User-->
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="false" aria-expanded="false">
+                                <img src="/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                <!-- item-->
+                                <a class="dropdown-item" href="#"><i class="mdi mdi-account-circle m-r-5 text-muted"></i> Profil</a>
+                                <a class="dropdown-item" href="#"><i class="mdi mdi-settings m-r-5 text-muted"></i> Ayarlar</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/auth/logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış Yap</a>
                             </div>
-                        </a>
-                        <!-- End mobile menu toggle-->
-                    </li>
+                        </li>
+                        <li class="menu-item list-inline-item">
+                            <!-- Mobile menu toggle-->
+                            <a class="navbar-toggle nav-link">
+                                <div class="lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>
 
-                </ul>
+                    </ul>
+                    
+                </div>
+
+                <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+                </div>
+                <!-- end topbar-main -->
+                <!-- MENU Start -->
+                <div class="navbar-custom">
+                    <div class="container-fluid">
+                        <div id="navigation">
+                            <!-- Navigation Menu-->
+                            <ul class="navigation-menu text-center">
+
+                                <li class="has-submenu ">
+                                    <a href="/"><i class="fas fa-home"></i>Panel</a>
+                                </li>
+
+                                <li class="has-submenu ">
+                                    <a href="#"><i class="mdi mdi-layers"></i>Sayfalar</a>
+                                    <ul class="submenu">
+                                        <li><a href="/kisiler">Kişiler</a></li>
+                                        <li><a href="/kisiler/odenmis">Ödenmiş Borçlar</a></li>
+                                        <li><a href="/kisiler/odenmemis">Ödenmemiş Borçlar</a></li>
+                                        <li><a href="/kisiler/borc-ekle">Borç Ekle</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="has-submenu">
+                                    <a href="/ilaclar"><i class="fas fa-heartbeat"></i>İlaç İşlemleri</a>
+                                    <ul class="submenu">
+                                        <li><a href="/ilaclar">İlaçlar</a></li>
+                                        <li><a href="/ilaclar/ilac-ekle">İlaç Ekle</a></li>
+                                        <li><a href="/ilaclar?medicine=eklediklerim">Eklediğim İlaçlar</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="has-submenu">
+                                    <a href="/notlar"><i class="fas fa-sticky-note"></i>Notlar</a>
+                                </li>
+                            </ul>
+                            
+                            
+                            <!-- End navigation menu -->
+                        </div> <!-- end #navigation -->
+                    </div> <!-- end container -->
+                </div> <!-- end navbar-custom -->
+            <%}else{%>
+
+                <!-- Logo container-->
+                <div class="logo">
+                    <!-- Image Logo -->
+                    <a href="/" class="logo">
+                        <img src="/images/logo.png" alt="Eczane Otomasyonu" class="logo-large">
+                    </a>
+                </div>
                 
-            </div>
-            <!-- end menu-extras -->
+                <!-- End Logo container-->
+                <div class="menu-extras topbar-custom">
 
-            <div class="clearfix"></div>
+                    <ul class="list-inline float-right  mb-0">
+                        <!-- User-->
+                        <li class="list-inline-item dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none waves-effect nav-user" data-toggle="dropdown" href="#" role="button"
+                            aria-haspopup="false" aria-expanded="false">
+                                <img src="/images/users/avatar-1.jpg" alt="user" class="rounded-circle">
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                <a class="dropdown-item" href="/auth/logout"><i class="mdi mdi-logout m-r-5 text-muted"></i> Çıkış Yap</a>
+                            </div>
+                        </li>
+                        <li class="menu-item list-inline-item">
+                            <!-- Mobile menu toggle-->
+                            <a class="navbar-toggle nav-link">
+                                <div class="lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </a>
+                            <!-- End mobile menu toggle-->
+                        </li>
 
-        </div> <!-- end container -->
-        </div>
-            <!-- end topbar-main -->
+                    </ul>
+                    
+                </div>
+                <!-- end menu-extras -->
 
+                <div class="clearfix"></div>
+
+                </div> <!-- end container -->
+                </div>
+                <!-- end topbar-main -->
+
+            <%}%>
         <%}%>
-    <%}%>
 </header>

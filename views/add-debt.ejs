@@ -18,6 +18,9 @@
         <% if(admin && ('role' in admin)){ %>
 
             <%if(admin.role=='super' || admin.role=='editor'){%>
+
+                <%if(admin.confirmation==true){%>    
+                             
                 <div id="app">
                     <div class="wrapper">
                         <div class="container-fluid">
@@ -132,7 +135,38 @@
                         </div> <!-- end container -->
                     </div>
                     <!-- end wrapper -->
-                </div>   
+                </div>  
+
+                <%}else{%>
+                    <div class="wrapper">
+                        <div class="container-fluid pt-5 pb-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="offset-1 col-md-10">
+                                                    <div class="p-20">
+                                                        <div class="ex-page-content text-center">
+                                                            <h1 class="">Onaysız Hesap</h1>
+                                                            <h3 class="">Bu alana erişimek için yönetici tarafından hesabınızın onaylanması gerekiyor.</h3><br>
+                                    
+                                                            <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                            
+                                                            <div id="uyari"></div>   
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                                
+                                            </div> <!-- end row --> 
+                                        </div>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->   
+                        </div>
+                    </div>
+                <%}%> 
+
             <%}else{%>
 
                 <div class="wrapper">
