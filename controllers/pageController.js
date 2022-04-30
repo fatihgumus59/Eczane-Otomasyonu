@@ -146,7 +146,6 @@ exports.getProforma = async (req, res) => {
   const url = req.protocol + '://' + req.get('host') + '/invoice/' + req.params.id;
   if (url == 0) return res.send('Url adresi bulunamadı.');
 
-  console.log(url);
   const qrOption = {
     margin: 0,
     width: 100
@@ -243,4 +242,36 @@ exports.getEditAdminPage = async (req, res) => {
   })
 
 }
+
+exports.getPublicProforma = async (req, res) => {
+
+  const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
+  const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
+  const date = new Date();
+  const tarih = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
+  const admin = await Admin.findById(req.session.userID);
+  const tc =  debt.tc.replace(debt.tc.substring(4,9),"*****"); // kimlik numarasını sansürledik.
+
+
+  const url = req.protocol + '://' + req.get('host') + '/invoice/' + req.params.id;
+  if (url == 0) return res.send('Url adresi bulunamadı.');
+
+  const qrOption = {
+    margin: 0,
+    width: 100
+  };
+
+  const qrcode = await QRCode.toDataURL(url, qrOption);
+
+  res.status(200).render('public-proforma', {
+    page_name: `${debt.name} `,
+    debt,
+    kdv,
+    total: (Number(debt.total) + Number(kdv)).toFixed(2),
+    tarih,
+    admin,
+    qr: qrcode,
+    tc,
+  });
+};
 
