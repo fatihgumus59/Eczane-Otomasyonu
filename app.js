@@ -21,6 +21,7 @@ mongoose.connect('mongodb://localhost/eczane', {
   console.log('DB Success');
 });
 
+
 // kullanıcının giriş yapıp yapmadığını global tanımladık.
 global.userIN = null;
 // kullanıcı giriş yapmış ise ismi her sayfadan erişilebilir durumda.

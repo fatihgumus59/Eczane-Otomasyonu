@@ -1,0 +1,606 @@
+<%- include('partials/_header') %>
+
+    
+    </head>
+
+    <body>
+
+        <!-- Navigation Bar-->
+        <%- include('partials/_navigation')%>
+
+
+        <% if(admin && ('role' in admin)){ %>
+
+            <%if(admin.role=='super'){%>
+                <div class="wrapper">
+                    <div class="container-fluid">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                        <div class="col-sm-12">
+                            <div class="page-title-box">
+                                <div class="btn-group pull-right">
+                                    <ol class="breadcrumb hide-phone p-0 m-0">
+                                        <li class="breadcrumb-item"><a href="#">Panel</a></li>
+                                        <li class="breadcrumb-item active">Profil</li>
+                                    </ol>
+                                </div>
+                                <h4 class="page-title">Profil </h4>
+                            </div>
+                        </div>
+                        </div> 
+                        <!-- end page title end breadcrumb -->  
+
+                        <!-- admin alanı -->  
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">            
+                                    <!-- Simple card -->
+                                    <div class="card">
+                                        <img class="card-img-top img-fluid" src="/images/small/img-2.jpg" alt="user image">
+                                        <div class="card-body">
+                                            <div class="card-avatar">
+                                                <a class="card-thumbnail card-inner">
+                                                    <img class="rounded-circle img-thumbnail img-fluid" src="/images/users/avatar-1.jpg" alt="Teddy Wilson">
+                                                </a>
+                                            </div>
+                                            <h6 class="card-title"><%= admin.name  %></h6>
+
+                                            <%if(admin.role == 'super'){%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Tam yetkiye sahipsiniz</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylandığınzda tam yetkiye sahip olacaksınız.</p>
+                                                <%}%>
+
+                                            <%}else if(admin.role =='editor'){%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Editör yetkisine sahipsiniz</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylandığınzda editör yetkisine sahip olacaksınız.</p>
+                                                <%}%>
+                                               
+                                            <%}else{%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Hesabınız henüz yetkilendirilmemiş</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylanmamış ve herhangi bir yetkiye sahip değilsiniz</p>
+                                                <%}%>
+                                               
+                                            <%}%>
+
+                                            <%if(admin.confirmation == true){%>
+                                                <form method="post" action="/auth/profile?_method=PUT">
+                                                    <div class="row">
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Kullanıcı Rolü</label>
+                                                                <%if(admin.role == 'super'){%>
+                                                                    <input type="text"  value="Full Access" disabled class="form-control">
+                                                                <%}else if(admin.role =='editor'){%>
+                                                                    <input type="text"  value="Editör" disabled class="form-control">
+                                                                <%}else{%>
+                                                                    <input type="text"  value="Yetkisiz" disabled class="form-control">
+                                                                <%}%>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Onay Durumu</label>
+                                                                <%if(admin.confirmation == true){%>
+                                                                    <input type="text" value="Onaylı" disabled class="form-control">
+                                                                <%}else{%>
+                                                                    <input type="text" value="Onaysız" disabled class="form-control">
+                                                                <%}%>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Kullanıcı Adı</label>
+                                                                <input type="text" value="<%= admin.username%>" name="username" placeholder="Kullanıcı adı giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Ad Soyad</label>
+                                                                <input type="text" value="<%= admin.name%>" name="name" placeholder="Ad soyad giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">E-Mail</label>
+                                                                <input type="text" value="<%= admin.email%>" name="email" placeholder="E-Mail adresi giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div style="text-align: center" class="form-group mb-0 mt-5">
+                                                        <div class="">
+                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                                Gönder
+                                                            </button>
+                                                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                                İptal
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            <%}else{%>
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Rolü</label>
+                                                            <%if(admin.role == 'super'){%>
+                                                                <input type="text"  value="Full Access" disabled class="form-control">
+                                                            <%}else if(admin.role =='editor'){%>
+                                                                <input type="text"  value="Editör" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text"  value="Yetkisiz" disabled class="form-control">
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Onay Durumu</label>
+                                                            <%if(admin.confirmation == true){%>
+                                                                <input type="text" value="Onaylı" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text" value="Onaysız" disabled class="form-control">
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Adı</label>
+                                                            <input type="text" value="<%= admin.username%>" disabled placeholder="Kullanıcı adı giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Ad Soyad</label>
+                                                            <input type="text" value="<%= admin.name%>" disabled  placeholder="Ad soyad giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">E-Mail</label>
+                                                            <input type="text" value="<%= admin.email%>" disabled placeholder="E-Mail adresi giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                </div> 
+                                                <p class="font-16 mt-3">Hesabınız onaylı olmadığı için bilgilerinizi günclleyemezsiniz.</p>
+                                            <%}%>
+                                            
+                                            
+                                        </div>
+                                    </div>            
+                                </div><!-- end col -->
+                            </div><!--end row-->
+                        </div> <!-- end row -->  
+                        
+                    </div>    
+                </div>
+            <%}else if( admin.role=='editor'){%>
+                <div class="wrapper">
+                    <div class="container-fluid">
+
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="btn-group pull-right">
+                                        <ol class="breadcrumb hide-phone p-0 m-0">
+                                            <li class="breadcrumb-item"><a href="#">Panel</a></li>
+                                            <li class="breadcrumb-item active">Profil</li>
+                                        </ol>
+                                    </div>
+                                    <h4 class="page-title">Profil </h4>
+                                </div>
+                            </div>
+                            </div> 
+                            <!-- end page title end breadcrumb -->  
+    
+                        <!-- admin alanı -->  
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">            
+                                    <!-- Simple card -->
+                                    <div class="card">
+                                        <img class="card-img-top img-fluid" src="/images/small/img-2.jpg" alt="user image">
+                                        <div class="card-body">
+                                            <div class="card-avatar">
+                                                <a class="card-thumbnail card-inner">
+                                                    <img class="rounded-circle img-thumbnail img-fluid" src="/images/users/avatar-1.jpg" alt="Teddy Wilson">
+                                                </a>
+                                            </div>
+                                            <h6 class="card-title"><%= admin.name  %></h6>
+
+                                            <%if(admin.role == 'super'){%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Tam yetkiye sahipsiniz</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylandığınzda tam yetkiye sahip olacaksınız.</p>
+                                                <%}%>
+
+                                            <%}else if(admin.role =='editor'){%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Editör yetkisine sahipsiniz</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylandığınzda editör yetkisine sahip olacaksınız.</p>
+                                                <%}%>
+                                                
+                                            <%}else{%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Hesabınız henüz yetkilendirilmemiş</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylanmamış ve herhangi bir yetkiye sahip değilsiniz</p>
+                                                <%}%>
+                                                
+                                            <%}%>
+
+                                            <%if(admin.confirmation == true){%>
+                                                <form method="post" action="/auth/profile?_method=PUT">
+                                                    <div class="row">
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Kullanıcı Rolü</label>
+                                                                <%if(admin.role == 'super'){%>
+                                                                    <input type="text"  value="Full Access" disabled class="form-control">
+                                                                <%}else if(admin.role =='editor'){%>
+                                                                    <input type="text"  value="Editör" disabled class="form-control">
+                                                                <%}else{%>
+                                                                    <input type="text"  value="Yetkisiz" disabled class="form-control">
+                                                                <%}%>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Onay Durumu</label>
+                                                                <%if(admin.confirmation == true){%>
+                                                                    <input type="text" value="Onaylı" disabled class="form-control">
+                                                                <%}else{%>
+                                                                    <input type="text" value="Onaysız" disabled class="form-control">
+                                                                <%}%>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Kullanıcı Adı</label>
+                                                                <input type="text" value="<%= admin.username%>" name="username" placeholder="Kullanıcı adı giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Ad Soyad</label>
+                                                                <input type="text" value="<%= admin.name%>" name="name" placeholder="Ad soyad giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">E-Mail</label>
+                                                                <input type="text" value="<%= admin.email%>" name="email" placeholder="E-Mail adresi giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div style="text-align: center" class="form-group mb-0 mt-5">
+                                                        <div class="">
+                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                                Gönder
+                                                            </button>
+                                                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                                İptal
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            <%}else{%>
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Rolü</label>
+                                                            <%if(admin.role == 'super'){%>
+                                                                <input type="text"  value="Full Access" disabled class="form-control">
+                                                            <%}else if(admin.role =='editor'){%>
+                                                                <input type="text"  value="Editör" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text"  value="Yetkisiz" disabled class="form-control">
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Onay Durumu</label>
+                                                            <%if(admin.confirmation == true){%>
+                                                                <input type="text" value="Onaylı" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text" value="Onaysız" disabled class="form-control">
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Adı</label>
+                                                            <input type="text" value="<%= admin.username%>" disabled placeholder="Kullanıcı adı giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Ad Soyad</label>
+                                                            <input type="text" value="<%= admin.name%>" disabled  placeholder="Ad soyad giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">E-Mail</label>
+                                                            <input type="text" value="<%= admin.email%>" disabled placeholder="E-Mail adresi giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                </div> 
+                                                <p class="font-16 mt-3">Hesabınız onaylı olmadığı için bilgilerinizi günclleyemezsiniz.</p>
+                                            <%}%>
+                                            
+                                        </div>
+                                    </div>            
+                                </div><!-- end col -->
+                            </div><!--end row-->
+                        </div> <!-- end row -->  
+
+                    </div>    
+                </div> 
+            <%}else if( admin.role=='pending'){%>
+                <div class="wrapper">
+                    <div class="container-fluid">
+
+                        <!-- admin alanı -->  
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12 col-xl-12">            
+                                    <!-- Simple card -->
+                                    <div class="card">
+                                        <img class="card-img-top img-fluid" src="/images/small/img-2.jpg" alt="user image">
+                                        <div class="card-body">
+                                            <div class="card-avatar">
+                                                <a class="card-thumbnail card-inner">
+                                                    <img class="rounded-circle img-thumbnail img-fluid" src="/images/users/avatar-1.jpg" alt="Teddy Wilson">
+                                                </a>
+                                            </div>
+                                            <h6 class="card-title"><%= admin.name  %></h6>
+
+                                            <%if(admin.role == 'super'){%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Tam yetkiye sahipsiniz</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylandığınzda tam yetkiye sahip olacaksınız.</p>
+                                                <%}%>
+
+                                            <%}else if(admin.role =='editor'){%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Editör yetkisine sahipsiniz</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylandığınzda editör yetkisine sahip olacaksınız.</p>
+                                                <%}%>
+                                                
+                                            <%}else{%>
+                                                <%if(admin.confirmation == true){%>
+                                                    <p class="font-16">Hesabınız henüz yetkilendirilmemiş</p>
+                                                <%}else{%>
+                                                    <p class="font-16">Hesabınız onaylanmamış ve herhangi bir yetkiye sahip değilsiniz</p>
+                                                <%}%>
+                                                
+                                            <%}%>
+
+                                            <%if(admin.confirmation == true){%>
+                                                <form method="post" action="/auth/profile?_method=PUT">
+                                                    <div class="row">
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Kullanıcı Rolü</label>
+                                                                <%if(admin.role == 'super'){%>
+                                                                    <input type="text"  value="Full Access" disabled class="form-control">
+                                                                <%}else if(admin.role =='editor'){%>
+                                                                    <input type="text"  value="Editör" disabled class="form-control">
+                                                                <%}else{%>
+                                                                    <input type="text"  value="Yetkisiz" disabled class="form-control">
+                                                                <%}%>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Onay Durumu</label>
+                                                                <%if(admin.confirmation == true){%>
+                                                                    <input type="text" value="Onaylı" disabled class="form-control">
+                                                                <%}else{%>
+                                                                    <input type="text" value="Onaysız" disabled class="form-control">
+                                                                <%}%>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Kullanıcı Adı</label>
+                                                                <input type="text" value="<%= admin.username%>" name="username" placeholder="Kullanıcı adı giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">Ad Soyad</label>
+                                                                <input type="text" value="<%= admin.name%>" name="name" placeholder="Ad soyad giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group mb-0">
+                                                                <label class="my-2 py-1">E-Mail</label>
+                                                                <input type="text" value="<%= admin.email%>" name="email" placeholder="E-Mail adresi giriniz" class="form-control">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div style="text-align: center" class="form-group mb-0 mt-5">
+                                                        <div class="">
+                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                                Gönder
+                                                            </button>
+                                                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                                İptal
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            <%}else{%>
+                                                <div class="row">
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Rolü</label>
+                                                            <%if(admin.role == 'super'){%>
+                                                                <input type="text"  value="Full Access" disabled class="form-control">
+                                                            <%}else if(admin.role =='editor'){%>
+                                                                <input type="text"  value="Editör" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text"  value="Yetkisiz" disabled class="form-control">
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Onay Durumu</label>
+                                                            <%if(admin.confirmation == true){%>
+                                                                <input type="text" value="Onaylı" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text" value="Onaysız" disabled class="form-control">
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Adı</label>
+                                                            <input type="text" value="<%= admin.username%>" disabled placeholder="Kullanıcı adı giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Ad Soyad</label>
+                                                            <input type="text" value="<%= admin.name%>" disabled  placeholder="Ad soyad giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">E-Mail</label>
+                                                            <input type="text" value="<%= admin.email%>" disabled placeholder="E-Mail adresi giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                </div>   
+                                            <%}%>
+                                        </div>
+                                    </div>            
+                                </div><!-- end col -->
+                            </div><!--end row-->
+                        </div> <!-- end row -->  
+
+                    </div>    
+                </div>  
+            <%}else{%>
+                <div class="wrapper">
+                    <div class="container-fluid pt-5 pb-5">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="offset-1 col-md-10">
+                                                <div class="p-20">
+                                                    <div class="ex-page-content text-center">
+                                                        <h1 class="">404!</h1>
+                                                        <h3 class="">Bu alana erişim yetkiniz yok</h3><br>
+                                
+                                                        <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                        
+                                                        <div id="uyari"></div>   
+                                                    </div>
+                                                </div>
+                                            </div> <!-- end col -->
+                                            
+                                        </div> <!-- end row --> 
+                                    </div>
+                                </div>
+                            </div> <!-- end col -->
+                        </div> <!-- end row -->   
+                    </div>
+                </div>
+            <%}%>
+        <%}%>
+
+   <!-- Footer -->
+   <%- include('partials/_footer')%>
+   <!-- End Footer -->
+
+   <script>
+    function Yonlendir(ID, adres, saniye) {
+        if (saniye == 0) {
+            window.location.href = adres;
+        return;
+        }
+        document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
+        saniye--;
+        setTimeout(function() {
+            Yonlendir(ID, adres, saniye);
+        }, 1000);
+    }
+    </script>
+    <script>
+        Yonlendir("uyari", "/", 10);
+    </script>
+    
+    </body>
+</html>
+
+
+
+
+
+
+

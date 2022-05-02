@@ -21,80 +21,112 @@
             <% if(admin && ('role' in admin)){ %>
 
                 <%if(admin.role=='super'){%>
-                    <div class="wrapper">
-                        <div class="container-fluid">
 
-                            <!-- Page-Title -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="page-title-box">
-                                        <div class="btn-group pull-right">
-                                            <ol class="breadcrumb hide-phone p-0 m-0">
-                                                <li class="breadcrumb-item"><a href="/">Panel</a></li>
-                                                <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
-                                                <li class="breadcrumb-item active">Onaylanmayan Adminler</li>
-                                            </ol>
+                    <%if(admin.confirmation ==true){%>
+                        <div class="wrapper">
+                            <div class="container-fluid">
+
+                                <!-- Page-Title -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="page-title-box">
+                                            <div class="btn-group pull-right">
+                                                <ol class="breadcrumb hide-phone p-0 m-0">
+                                                    <li class="breadcrumb-item"><a href="/">Panel</a></li>
+                                                    <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
+                                                    <li class="breadcrumb-item active">Onaylanmayan Yöneticiler</li>
+                                                </ol>
+                                            </div>
+                                            <h4 class="page-title">Onaylanmayan Yöneticiler</h4>
                                         </div>
-                                        <h4 class="page-title">Onaylanmayan Adminler</h4>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- end page title end breadcrumb -->
-                            
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-body">
+                                <!-- end page title end breadcrumb -->
+                                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
 
-                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                <thead>
-                                                <tr>
-                                                    <th>Kullanıcı Adı</th>
-                                                    <th>Ad Soyad</th>
-                                                    <th>E-Mail</th>
-                                                    <th>Yetki</th>
-                                                    <th>İşlem</th>
-                                                </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <%for(let i =0; i< onaysiz.length; i++){%>
+                                                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
                                                     <tr>
-                                                        
-                                                        <td><%= onaysiz[i].username %></td>
-                                                        <td><%= onaysiz[i].name %></td>
-                                                        <td><%= onaysiz[i].email %></td>
+                                                        <th>Kullanıcı Adı</th>
+                                                        <th>Ad Soyad</th>
+                                                        <th>E-Mail</th>
+                                                        <th>Yetki</th>
+                                                        <th>İşlem</th>
+                                                    </tr>
+                                                    </thead>
 
-                                                        <% if(onaysiz[i].role=='super'){%>
-                                                            <td>Full Access</td>
-                                                        <%}else if(onaysiz[i].role=='editor'){%>
-                                                            <td>Editor</td>
-                                                        <%}else{%>
-                                                            <td>Yetkisiz</td>
+                                                    <tbody>
+                                                        <%for(let i =0; i< onaysiz.length; i++){%>
+                                                        <tr>
+                                                            
+                                                            <td><%= onaysiz[i].username %></td>
+                                                            <td><%= onaysiz[i].name %></td>
+                                                            <td><%= onaysiz[i].email %></td>
+
+                                                            <% if(onaysiz[i].role=='super'){%>
+                                                                <td>Full Access</td>
+                                                            <%}else if(onaysiz[i].role=='editor'){%>
+                                                                <td>Editor</td>
+                                                            <%}else{%>
+                                                                <td>Yetkisiz</td>
+                                                            <%}%>
+
+                                                            <td>
+                                                                <a href="/auth/edit/<%= onaysiz[i]._id %>">
+                                                                    <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                                </a>
+                                                                <form style="display: inline" method="post" action="/auth/admin-ok/<%= onaysiz[i]._id %>?_method=PUT">                                                  
+                                                                    <input type="hidden" name="confirmation" value="true">
+                                                                    <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                                </form>
+                                                                <a href="/auth/edit/<%= onaysiz[i]._id%>?_method=DELETE">
+                                                                    <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>                                 
                                                         <%}%>
-
-                                                        <td>
-                                                            <a href="/auth/edit/<%= onaysiz[i]._id %>">
-                                                                <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                                            </a>
-                                                            <form style="display: inline" method="post" action="/auth/admin-ok/<%= onaysiz[i]._id %>?_method=PUT">                                                  
-                                                                <input type="hidden" name="confirmation" value="true">
-                                                                <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                            </form>
-                                                            <a href="/auth/edit/<%= onaysiz[i]._id%>?_method=DELETE">
-                                                                <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                            </a>
-                                                        </td>
-                                                    </tr>                                 
-                                                    <%}%>
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-                        </div>    
-                    </div>   
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                            </div>    
+                        </div>                   
+                    <%}else{%>
+                        <div class="wrapper">
+                            <div class="container-fluid pt-5 pb-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="offset-1 col-md-10">
+                                                        <div class="p-20">
+                                                            <div class="ex-page-content text-center">
+                                                                <h1 class="">Onaysız Hesap</h1>
+                                                                <h3 class="">Bu alana erişimek için Hesabınızın Onaylanması gerekiyor.</h3><br>
+                                        
+                                                                <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                                
+                                                                <div id="uyari"></div>   
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- end col -->
+                                                    
+                                                </div> <!-- end row --> 
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->   
+                            </div>
+                        </div>
+                    <%}%>
+                    
                 <%}else{%>
                     <div class="wrapper">
                         <div class="container-fluid pt-5 pb-5">
@@ -131,80 +163,112 @@
             <% if(admin && ('role' in admin)){ %>
 
                 <%if(admin.role=='super'){%>
-                    <div class="wrapper">
-                        <div class="container-fluid">
 
-                            <!-- Page-Title -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="page-title-box">
-                                        <div class="btn-group pull-right">
-                                            <ol class="breadcrumb hide-phone p-0 m-0">
-                                                <li class="breadcrumb-item"><a href="/">Panel</a></li>
-                                                <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
-                                                <li class="breadcrumb-item active">Onaylı Adminler</li>
-                                            </ol>
+                    <%if(admin.confirmation ==true){%>
+                        <div class="wrapper">
+                            <div class="container-fluid">
+
+                                <!-- Page-Title -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="page-title-box">
+                                            <div class="btn-group pull-right">
+                                                <ol class="breadcrumb hide-phone p-0 m-0">
+                                                    <li class="breadcrumb-item"><a href="/">Panel</a></li>
+                                                    <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
+                                                    <li class="breadcrumb-item active">Onaylı Yöneticiler</li>
+                                                </ol>
+                                            </div>
+                                            <h4 class="page-title">Onaylı Yöneticiler </h4>
                                         </div>
-                                        <h4 class="page-title">Onaylı Adminler </h4>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- end page title end breadcrumb -->
-                            
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-body">
+                                <!-- end page title end breadcrumb -->
+                                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
 
-                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                <thead>
-                                                <tr>
-                                                    <th>Kullanıcı Adı</th>
-                                                    <th>Ad Soyad</th>
-                                                    <th>E-Mail</th>
-                                                    <th>Yetki</th>
-                                                    <th>İşlem</th>
-                                                </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <%for(let i =0; i< onayli.length; i++){%>
+                                                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
                                                     <tr>
-                                                        
-                                                        <td><%= onayli[i].username %></td>
-                                                        <td><%= onayli[i].name %></td>
-                                                        <td><%= onayli[i].email %></td>
+                                                        <th>Kullanıcı Adı</th>
+                                                        <th>Ad Soyad</th>
+                                                        <th>E-Mail</th>
+                                                        <th>Yetki</th>
+                                                        <th>İşlem</th>
+                                                    </tr>
+                                                    </thead>
 
-                                                        <% if(onayli[i].role=='super'){%>
-                                                            <td>Full Access</td>
-                                                        <%}else if(onayli[i].role=='editor'){%>
-                                                            <td>Editor</td>
-                                                        <%}else{%>
-                                                            <td>Yetkisiz</td>
+                                                    <tbody>
+                                                        <%for(let i =0; i< onayli.length; i++){%>
+                                                        <tr>
+                                                            
+                                                            <td><%= onayli[i].username %></td>
+                                                            <td><%= onayli[i].name %></td>
+                                                            <td><%= onayli[i].email %></td>
+
+                                                            <% if(onayli[i].role=='super'){%>
+                                                                <td>Full Access</td>
+                                                            <%}else if(onayli[i].role=='editor'){%>
+                                                                <td>Editor</td>
+                                                            <%}else{%>
+                                                                <td>Yetkisiz</td>
+                                                            <%}%>
+
+                                                            <td>
+                                                                <a href="/auth/edit/<%= onayli[i]._id %>">
+                                                                    <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                                </a>
+                                                                <form style="display: inline" method="post" action="/auth/admin-ok/<%= onayli[i]._id %>?_method=PUT">                                                  
+                                                                    <input type="hidden" name="confirmation" value="true">
+                                                                    <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                                </form>
+                                                                <a href="/auth/edit/<%= onayli[i]._id%>?_method=DELETE">
+                                                                    <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>                                 
                                                         <%}%>
-
-                                                        <td>
-                                                            <a href="/auth/edit/<%= onayli[i]._id %>">
-                                                                <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                                            </a>
-                                                            <form style="display: inline" method="post" action="/auth/admin-ok/<%= onayli[i]._id %>?_method=PUT">                                                  
-                                                                <input type="hidden" name="confirmation" value="true">
-                                                                <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                            </form>
-                                                            <a href="/auth/edit/<%= onayli[i]._id%>?_method=DELETE">
-                                                                <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                            </a>
-                                                        </td>
-                                                    </tr>                                 
-                                                    <%}%>
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-                        </div>    
-                    </div>   
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                            </div>    
+                        </div>   
+                    <%}else{%>
+                        <div class="wrapper">
+                            <div class="container-fluid pt-5 pb-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="offset-1 col-md-10">
+                                                        <div class="p-20">
+                                                            <div class="ex-page-content text-center">
+                                                                <h1 class="">Onaysız Hesap</h1>
+                                                                <h3 class="">Bu alana erişimek için Hesabınızın Onaylanması gerekiyor.</h3><br>
+                                        
+                                                                <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                                
+                                                                <div id="uyari"></div>   
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- end col -->
+                                                    
+                                                </div> <!-- end row --> 
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->   
+                            </div>
+                        </div>
+                    <%}%>
+
                 <%}else{%>
                     <div class="wrapper">
                         <div class="container-fluid pt-5 pb-5">
@@ -240,86 +304,116 @@
             <% if(admin && ('role' in admin)){ %>
 
                 <%if(admin.role=='super'){%>
-                    <div class="wrapper">
-                        <div class="container-fluid">
+                    <%if(admin.confirmation ==true){%>
+                        <div class="wrapper">
+                            <div class="container-fluid">
 
-                            <!-- Page-Title -->
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="page-title-box">
-                                        <div class="btn-group pull-right">
-                                            <ol class="breadcrumb hide-phone p-0 m-0">
-                                                <li class="breadcrumb-item"><a href="/">Panel</a></li>
-                                                <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
-                                                <li class="breadcrumb-item active">Adminler</li>
-                                            </ol>
+                                <!-- Page-Title -->
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="page-title-box">
+                                            <div class="btn-group pull-right">
+                                                <ol class="breadcrumb hide-phone p-0 m-0">
+                                                    <li class="breadcrumb-item"><a href="/">Panel</a></li>
+                                                    <li class="breadcrumb-item"><a href="#">Kullanıcı İşlemleri</a></li>
+                                                    <li class="breadcrumb-item active">Yöneticiler</li>
+                                                </ol>
+                                            </div>
+                                            <h4 class="page-title">Yöneticiler </h4>
                                         </div>
-                                        <h4 class="page-title">Adminler </h4>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- end page title end breadcrumb -->
-                            
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="card">
-                                        <div class="card-body">
+                                <!-- end page title end breadcrumb -->
+                                
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
 
-                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                                <thead>
-                                                <tr>
-                                                    <th>Kullanıcı Adı</th>
-                                                    <th>Ad Soyad</th>
-                                                    <th>E-Mail</th>
-                                                    <th>Yetki</th>
-                                                    <th>Onay Durumu</th>
-                                                    <th>İşlem</th>
-                                                </tr>
-                                                </thead>
-
-                                                <tbody>
-                                                    <%for(let i =0; i< user.length; i++){%>
+                                                <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
                                                     <tr>
-                                                        
-                                                        <td><%= user[i].username %></td>
-                                                        <td><%= user[i].name %></td>
-                                                        <td><%= user[i].email %></td>
+                                                        <th>Kullanıcı Adı</th>
+                                                        <th>Ad Soyad</th>
+                                                        <th>E-Mail</th>
+                                                        <th>Yetki</th>
+                                                        <th>Onay Durumu</th>
+                                                        <th>İşlem</th>
+                                                    </tr>
+                                                    </thead>
 
-                                                        <% if(user[i].role=='super'){%>
-                                                            <td>Full Access</td>
-                                                        <%}else if(user[i].role=='editor'){%>
-                                                            <td>Editor</td>
-                                                        <%}else{%>
-                                                            <td>Yetkisiz</td>
-                                                        <%}%>
+                                                    <tbody>
+                                                        <%for(let i =0; i< user.length; i++){%>
+                                                        <tr>
+                                                            
+                                                            <td><%= user[i].username %></td>
+                                                            <td><%= user[i].name %></td>
+                                                            <td><%= user[i].email %></td>
 
-                                                        <% if(user[i].confirmation==true){%>
-                                                            <td>Onaylı</td>
-                                                        <%}else{%>
-                                                            <td>Onaysız</td>
+                                                            <% if(user[i].role=='super'){%>
+                                                                <td>Full Access</td>
+                                                            <%}else if(user[i].role=='editor'){%>
+                                                                <td>Editor</td>
+                                                            <%}else{%>
+                                                                <td>Yetkisiz</td>
+                                                            <%}%>
+
+                                                            <% if(user[i].confirmation==true){%>
+                                                                <td>Onaylı</td>
+                                                            <%}else{%>
+                                                                <td>Onaysız</td>
+                                                            <%}%>
+                                                            <td>
+                                                                <a href="/auth/edit/<%= user[i]._id %>">
+                                                                    <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                                </a>
+                                                                <form style="display: inline" method="post" action="/auth/admin-ok/<%= user[i]._id %>?_method=PUT">                                                  
+                                                                    <input type="hidden" name="confirmation" value="true">
+                                                                    <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                                </form>
+                                                                <a href="/auth/edit/<%= user[i]._id%>?_method=DELETE">
+                                                                    <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                                </a>
+                                                            </td>
+                                                        </tr>                                 
                                                         <%}%>
-                                                        <td>
-                                                            <a href="/auth/edit/<%= user[i]._id %>">
-                                                                <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                                            </a>
-                                                            <form style="display: inline" method="post" action="/auth/admin-ok/<%= user[i]._id %>?_method=PUT">                                                  
-                                                                <input type="hidden" name="confirmation" value="true">
-                                                                <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                            </form>
-                                                            <a href="/auth/edit/<%= user[i]._id%>?_method=DELETE">
-                                                                <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                            </a>
-                                                        </td>
-                                                    </tr>                                 
-                                                    <%}%>
-                                                </tbody>
-                                            </table>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div> <!-- end col -->
-                            </div> <!-- end row -->
-                        </div>    
-                    </div>   
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                            </div>    
+                        </div>
+                    <%}else{%>
+                        <div class="wrapper">
+                            <div class="container-fluid pt-5 pb-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="offset-1 col-md-10">
+                                                        <div class="p-20">
+                                                            <div class="ex-page-content text-center">
+                                                                <h1 class="">Onaysız Hesap</h1>
+                                                                <h3 class="">Bu alana erişimek için Hesabınızın Onaylanması gerekiyor.</h3><br>
+                                        
+                                                                <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                                
+                                                                <div id="uyari"></div>   
+                                                            </div>
+                                                        </div>
+                                                    </div> <!-- end col -->
+                                                    
+                                                </div> <!-- end row --> 
+                                            </div>
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->   
+                            </div>
+                        </div>
+                    <%}%>
                 <%}else{%>
                     <div class="wrapper">
                         <div class="container-fluid pt-5 pb-5">

@@ -2,7 +2,7 @@ const QRCode = require('qrcode');
 const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
 const Admin = require('../models/administration');
-
+const Pharmacy = require('../models/pharmacy');
 
 exports.getIndexPage = async (req, res) => {
 
@@ -28,8 +28,6 @@ exports.getIndexPage = async (req, res) => {
   const odenmisOran = (odenmis * 100) / toplam;
   const odenmemisOran = (odenmemis * 100) / toplam;
   const borcAlanOran = ((odenmemis - odenmis) / toplam) * 100;
-
-  const user = req.session.userID;
 
   res.status(200).render('index', {
     page_name: "Eczane Otomasyonu",
@@ -88,7 +86,7 @@ exports.getDebtAddPage = async (req, res) => {
 
 exports.getEditDebtPage = async (req, res) => {
 
-  const admin = await Admin.findById(req.session.userID);
+  const admin = await Admin.findById(req.session.userID);  // ilacı ekleyenin admin olup olmadığını kontrol etmek için gönderiyoruz
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
   const medicine = await Medicine.find({});
   const id = req.param.id;
@@ -123,7 +121,7 @@ exports.getEditMedicinePage = async (req, res) => {
 exports.getNotesPage = async (req, res) => {
 
   const debt = await Debt.find({admin: req.session.userID});
-  const admin = await Admin.findById(req.session.userID);
+  const admin = await Admin.findById(req.session.userID); // giriş yapan adminin rolünü kontrol etmek için gönderiyoruz.
   const debtAdmin = await Debt.find({});
 
   res.status(200).render('note', {
@@ -141,7 +139,7 @@ exports.getProforma = async (req, res) => {
   const date = new Date();
   const tarih = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
   const admin = await Admin.findById(req.session.userID);
-
+  const pharmacy = await Pharmacy.findOne({select:true});
 
   const url = req.protocol + '://' + req.get('host') + '/invoice/' + req.params.id;
   if (url == 0) return res.send('Url adresi bulunamadı.');
@@ -161,6 +159,7 @@ exports.getProforma = async (req, res) => {
     tarih,
     admin,
     qr: qrcode,
+    pharmacy
   });
 };
 
@@ -209,7 +208,7 @@ exports.getAllAdmin = async (req, res) => {
   const onayli = await Admin.where({ confirmation: true });
 
   res.status(200).render('admin-list', {
-    page_name: 'Tüm Adminler',
+    page_name: 'Tüm Yöneticiler',
     admin,
     user,
     status,
@@ -221,10 +220,10 @@ exports.getAllAdmin = async (req, res) => {
 
 exports.getAdminAddPage = async (req, res) => {
 
-  const admin = await Admin.findById(req.session.userID);
+  const admin = await Admin.findById(req.session.userID); // giriş yapan adminin rolünü kontrol etmek için gönderiyoruz.
 
   res.status(200).render('user-add', {
-    page_name: 'Admin Ekle',
+    page_name: 'Yönetici Ekle',
     admin,
   })
 
@@ -236,7 +235,7 @@ exports.getEditAdminPage = async (req, res) => {
   const user = await Admin.findOne({ _id: req.params.id });
 
   res.status(200).render('user-edit', {
-    page_name: 'Adminler',
+    page_name: `${admin.name} - Yönetici Düzenle`,
     admin,
     user,
   })
@@ -249,7 +248,7 @@ exports.getPublicProforma = async (req, res) => {
   const kdv = Number(parseFloat((Number(debt.total) * 8) / 100)).toFixed(2); // virgülden sonra 2 basamak aldı.
   const date = new Date();
   const tarih = date.getDate() + '/' + date.getMonth() + '/' + date.getFullYear();
-  const admin = await Admin.findById(req.session.userID);
+  const admin = await Admin.findById(req.session.userID); // giriş yapan adminin rolünü kontrol etmek için gönderiyoruz.
   const tc =  debt.tc.replace(debt.tc.substring(4,9),"*****"); // kimlik numarasını sansürledik.
 
 
@@ -275,3 +274,34 @@ exports.getPublicProforma = async (req, res) => {
   });
 };
 
+exports.getProfile = async (req, res) => {
+
+  const admin = await Admin.findById(req.session.userID); // giriş yapan adminin rolünü kontrol etmek için gönderiyoruz.
+
+  res.status(200).render('profile', {
+    page_name: `${admin.name} - Profil`,
+    admin,
+  });
+};
+
+exports.getPharmacyPage = async (req, res) => { 
+
+  const admin = await Admin.findById(req.session.userID); // giriş yapan adminin rolünü kontrol etmek için gönderiyoruz.
+  const adminCount = await Admin.find().count(); // tüm çalışanları listelemek için gönderiyoruz.
+  
+  const selectPharmacy = await Pharmacy.findOne({ select: true }); // true olan bir tane var zaten direk onu çağırır
+
+  const pharmacy = await Pharmacy.find({}).sort('-createdAt'); // tablodaki tüm eczaneleri listeler 
+
+  const status = req.query.status;
+  
+ 
+  res.status(200).render('pharmacy', {
+    page_name: `Eczane Bilgileri`,
+    admin,
+    pharmacy,
+    adminCount,
+    status,
+    selectPharmacy,
+  });
+};
