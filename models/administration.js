@@ -11,6 +11,7 @@ const AdminSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+    lowercase: true,
   },
   password: {
     type: String,
@@ -35,10 +36,19 @@ const AdminSchema = new Schema({
 AdminSchema.pre('save', function (next) {
   // şifreyi hash ediyoruz.
   const user = this;
-  if (!user.isModified('password')) return next();
+  if (!user.isModified('password')) return next(); // şifre her seferinde değişmesin dedik.
   bcrypt.hash(user.password, 10, (err, hash) => {
     // 10 yazan yer  şifrenin zorluğunu arttırıyor.
     user.password = hash;
+
+    // kullanıcı adının türkçe karakter olmaması için.
+    user.username = user.username.replace(/ /g, "")
+    .replace(/\ğ/g, "g")
+    .replace(/\ü/g, "u")
+    .replace(/\ş/g, "s")
+    .replace(/\ı/g, "i")
+    .replace(/\ö/g, "o")
+    .replace(/\ç/g, "c");
     next();
   });
 

@@ -14,7 +14,7 @@ const adminRoute = require('./routes/administrationRoute');
 const app = express();
 
 //connect db
-mongoose.connect('mongodb://localhost/eczane', {
+mongoose.connect('mongodb+srv://admin:1kLeJSaqB4czME2D@cluster0.n8q8e.mongodb.net/eczane?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
@@ -44,7 +44,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost/eczane',clear_interval: 3600 })
+    store: MongoStore.create({ mongoUrl: 'mongodb+srv://admin:1kLeJSaqB4czME2D@cluster0.n8q8e.mongodb.net/eczane?retryWrites=true&w=majority',clear_interval: 3600 })
   })
 );
 
