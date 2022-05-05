@@ -19,146 +19,178 @@
 
         <% if(admin && ('role' in admin)){ %>
 
-            <%if(admin.role=='super'){%>
-                <div class="wrapper">
-                    <div class="container-fluid">
+            <%if(debtAdmin || debt ){%>
+               
+                <%if(admin.role=='super'){%>
+                    <div class="wrapper">
+                        <div class="container-fluid">
 
-                        <!-- Page-Title -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="page-title-box">
-                                    <div class="btn-group pull-right">
-                                        <ol class="breadcrumb hide-phone p-0 m-0">
-                                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
-                                            <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
-                                            <li class="breadcrumb-item active">Kişiler</li>
-                                        </ol>
+                            <!-- Page-Title -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group pull-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                                                <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
+                                                <li class="breadcrumb-item active">Kişiler</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Kişiler</h4>
                                     </div>
-                                    <h4 class="page-title">Kişiler</h4>
                                 </div>
                             </div>
-                        </div>
-                        <!-- end page title end breadcrumb -->
-                        
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
+                            <!-- end page title end breadcrumb -->
+                            
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                            <thead>
-                                            <tr>
-                                                <th>TC</th>
-                                                <th>İsim</th>
-                                                <th>Borç Miktarı</th>
-                                                <th>Borç Durumu</th>
-                                                <th>İşlem</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody>
-                                            <% for(let i=0; i< debtAdmin.length; i++) {%>
+                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <thead>
                                                 <tr>
-                                                    
-                                                    <td><%= debtAdmin[i].tc %></td>
-                                                    <td><%= debtAdmin[i].name %></td>
-                                                    <td><%= debtAdmin[i].total %>₺</td>
-                                                    <td><%= debtAdmin[i].status %></td>
-                                                    <td>
-                                                        <a href="/kisiler/edit/<%= debtAdmin[i]._id%>">
-                                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                                        </a>
-                                                        <a href="/kisiler/<%= debtAdmin[i]._id%>?_method=DELETE">
-                                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
-                                                        </a>
-                                                        <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debtAdmin[i]._id %>?_method=PUT">                                                  
-                                                            <input type="hidden" name="status" value="Ödendi">
-                                                            <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                        </form>
-                                                        <a target="_blank" href="/yazdir/<%= debtAdmin[i]._id%>">
-                                                            <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
-                                                        </a>
+                                                    <th>TC</th>
+                                                    <th>İsim</th>
+                                                    <th>Borç Miktarı</th>
+                                                    <th>Borç Durumu</th>
+                                                    <th>İşlem</th>
+                                                </tr>
+                                                </thead>
 
-                                                    </td>
-                                                </tr>                                 
-                                            <% } %>
-                                            </tbody>
-                                        </table>
+                                                <tbody>
+                                                <% for(let i=0; i< debtAdmin.length; i++) {%>
+                                                    <tr>
+                                                        
+                                                        <td><%= debtAdmin[i].tc %></td>
+                                                        <td><%= debtAdmin[i].name %></td>
+                                                        <td><%= debtAdmin[i].total %>₺</td>
+                                                        <td><%= debtAdmin[i].status %></td>
+                                                        <td>
+                                                            <a href="/kisiler/edit/<%= debtAdmin[i]._id%>">
+                                                                <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                            </a>
+                                                            <a onclick="deleteUser(`<%= debtAdmin[i]._id%>`,`<%= debtAdmin[i].name%>`)" >
+                                                                <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+                                                            </a>
+                                                            <form style="display: inline" method="post" onsubmit="okUser(`<%= debtAdmin[i].name%>`)" action="/kisiler/debt-ok/<%= debtAdmin[i]._id %>?_method=PUT">
+                                                                <input type="hidden" name="status" value="Ödendi">
+                                                                <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                            </form>
+                                                            <a target="_blank" href="/yazdir/<%= debtAdmin[i]._id%>">
+                                                                <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
+                                                            </a>
+
+                                                        </td>
+                                                    </tr>                                 
+                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> <!-- end col -->
-                        </div> <!-- end row -->
-                    </div> <!-- end container -->
-                </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                        </div> <!-- end container -->
+                    </div>
 
-            <%}else if(admin.role=='editor'){%>
-                <div class="wrapper">
-                    <div class="container-fluid">
+                <%}else if(admin.role=='editor'){%>
+                    <div class="wrapper">
+                        <div class="container-fluid">
 
-                        <!-- Page-Title -->
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="page-title-box">
-                                    <div class="btn-group pull-right">
-                                        <ol class="breadcrumb hide-phone p-0 m-0">
-                                            <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
-                                            <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
-                                            <li class="breadcrumb-item active">Kişiler</li>
-                                        </ol>
+                            <!-- Page-Title -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="page-title-box">
+                                        <div class="btn-group pull-right">
+                                            <ol class="breadcrumb hide-phone p-0 m-0">
+                                                <li class="breadcrumb-item"><a href="#">Anasayfa</a></li>
+                                                <li class="breadcrumb-item"><a href="#">Sayfalar</a></li>
+                                                <li class="breadcrumb-item active">Kişiler</li>
+                                            </ol>
+                                        </div>
+                                        <h4 class="page-title">Kişiler</h4>
                                     </div>
-                                    <h4 class="page-title">Kişiler</h4>
                                 </div>
                             </div>
-                        </div>
-                        <!-- end page title end breadcrumb -->
-                        
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
-                                    <div class="card-body">
+                            <!-- end page title end breadcrumb -->
+                            
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
 
-                                        <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-                                            <thead>
-                                            <tr>
-                                                <th>TC</th>
-                                                <th>İsim</th>
-                                                <th>Borç Miktarı</th>
-                                                <th>Borç Durumu</th>
-                                                <th>İşlem</th>
-                                            </tr>
-                                            </thead>
-
-                                            <tbody>
-                                            <% for(let i=0; i< debt.length; i++) {%>
+                                            <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <thead>
                                                 <tr>
-                                                    
-                                                    <td><%= debt[i].tc %></td>
-                                                    <td><%= debt[i].name %></td>
-                                                    <td><%= debt[i].total %>₺</td>
-                                                    <td><%= debt[i].status %></td>
-                                                    <td>
-                                                        <a href="/kisiler/edit/<%= debt[i]._id%>">
-                                                            <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
-                                                        </a>
-                                                        <form style="display: inline" method="post" action="/kisiler/debt-ok/<%= debt[i]._id %>?_method=PUT">                                                  
-                                                            <input type="hidden" name="status" value="Ödendi">
-                                                            <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
-                                                        </form>
-                                                        <a target="_blank" href="/yazdir/<%= debt[i]._id%>">
-                                                            <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
-                                                        </a>
+                                                    <th>TC</th>
+                                                    <th>İsim</th>
+                                                    <th>Borç Miktarı</th>
+                                                    <th>Borç Durumu</th>
+                                                    <th>İşlem</th>
+                                                </tr>
+                                                </thead>
 
-                                                    </td>
-                                                </tr>                                 
-                                            <% } %>
-                                            </tbody>
-                                        </table>
+                                                <tbody>
+                                                <% for(let i=0; i< debt.length; i++) {%>
+                                                    <tr>
+                                                        
+                                                        <td><%= debt[i].tc %></td>
+                                                        <td><%= debt[i].name %></td>
+                                                        <td><%= debt[i].total %>₺</td>
+                                                        <td><%= debt[i].status %></td>
+                                                        <td>
+                                                            <a href="/kisiler/edit/<%= debt[i]._id%>">
+                                                                <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
+                                                            </a>
+                                                            <form style="display: inline" method="post" onsubmit="okUser(`<%= debt[i].name%>`)" action="/kisiler/debt-ok/<%= debt[i]._id %>?_method=PUT">
+                                                                <input type="hidden" name="status" value="Ödendi">
+                                                                <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
+                                                            </form>
+                                                            <a target="_blank" href="/yazdir/<%= debt[i]._id%>">
+                                                                <button type="button" class="btn btn-secondary btn-sm"><i class="mdi mdi-printer"></i></button>
+                                                            </a>
+
+                                                        </td>
+                                                    </tr>                                 
+                                                <% } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </div> <!-- end col -->
-                        </div> <!-- end row -->
-                    </div> <!-- end container -->
-                </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->
+                        </div> <!-- end container -->
+                    </div>
+                <%}else{%>
+                    <div class="wrapper">
+                        <div class="container-fluid pt-5 pb-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="offset-1 col-md-10">
+                                                    <div class="p-20">
+                                                        <div class="ex-page-content text-center">
+                                                            <h1 class="">404!</h1>
+                                                            <h3 class="">Bu alana erişim yetkiniz yok</h3><br>
+                                    
+                                                            <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
+                                                            
+                                                            <div id="uyari"></div>   
+                                                        </div>
+                                                    </div>
+                                                </div> <!-- end col -->
+                                                
+                                            </div> <!-- end row --> 
+                                        </div>
+                                    </div>
+                                </div> <!-- end col -->
+                            </div> <!-- end row -->   
+                        </div>
+                    </div>
+                <%}%> 
+
             <%}else{%>
                 <div class="wrapper">
                     <div class="container-fluid pt-5 pb-5">
@@ -170,8 +202,8 @@
                                             <div class="offset-1 col-md-10">
                                                 <div class="p-20">
                                                     <div class="ex-page-content text-center">
-                                                        <h1 class="">404!</h1>
-                                                        <h3 class="">Bu alana erişim yetkiniz yok</h3><br>
+                                                        <h1 class="">Borçlu Yok</h1>
+                                                        <h3 class="">Borçlu Eklenmemiş veya bir hata var</h3><br>
                                 
                                                         <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele Dönmek için Tıklayın</a>
                                                         
@@ -188,6 +220,7 @@
                     </div>
                 </div>
             <%}%> 
+
 
         <%}%>
 
@@ -214,6 +247,8 @@
 
     <!-- Datatable init js -->
     <script src="/pages/datatables.init.js"></script> 
+    <!-- sweet alert  init js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.all.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -236,8 +271,64 @@
             }, 1000);
         }
     </script>
+
     <script>
-        Yonlendir("uyari", "/", 10);
+        Yonlendir("uyari", "/", 10);        
+    </script>
+
+    <script>
+       function deleteUser(id,name){
+       
+            Swal.fire({
+            title: `${name} kişisini silmek istediğinize emin misiniz ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonColor: '#28A745',
+            cancelButtonColor: '#6E7881',
+            denyButtonColor: `#DC3545`,
+            confirmButtonText: 'Evet',
+            denyButtonText: `Hayır`,
+            cancelButtonText: 'İptal',
+            
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                   
+                    Swal.fire({
+                        title: "Silindi!",
+                        text: `${name} kişisi silindi.`,
+                        type: "success",
+                        timer: 3000
+                    }).then(() => {
+                       window.location = `/kisiler/${id}?_method=DELETE`;
+                    })
+                }else if(result.isDenied) {
+                    Swal.fire({
+                        title: "Silinmedi!",
+                        text: `${name} kişisi silinmedi.`,
+                        type: "info",
+                        timer: 3000
+                    });
+                }
+            });
+        };
+       function okUser(name){
+
+        Swal.fire(
+             "Onaylandı!",
+             `${name} kişisinin borcu onaylandı.`,
+             "success",
+
+        ).then((result) => {
+            window.location = `/kisiler`;
+
+        });
+
+        setTimeout(function() {
+            window.location = `/kisiler`;
+            }, 3000);
+        };
     </script>
 
     </body>

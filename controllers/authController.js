@@ -1,5 +1,7 @@
 const Admin = require('../models/administration');
 const Pharmacy = require('../models/pharmacy');
+const Debt = require('../models/debt');
+const Medicine = require('../models/medicine');
 const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
@@ -85,6 +87,36 @@ exports.addAdmin = async (req, res) => {
 exports.deleteAdmin = async (req, res) => {
   try {
 
+    // debt ve medicine içinde bulunan verileri güncelliyoruz bu alanda.
+    // yönetici bir editör veya admin siler ise sildiği admin veya editörün eklediği borçlu kişiler ve eklediği ilaçlar
+    // silen adminin hesabına yansıtılmasını sağladık.
+
+    const debt = await Debt.find({admin:req.params.id });
+    if(debt.length==1){
+      debt.admin = req.session.userID;
+      debt.save();  
+    }else{
+      for(let i=0; i<debt.length;i++){
+
+        debt[i].admin = req.session.userID;
+        debt[i].save();
+      }
+    }
+
+    const medicine = await Medicine.find({admin:req.params.id });
+
+    if(medicine.length==1){
+      medicine.admin = req.session.userID;
+      medicine.save();  
+    }else{
+      for(let i=0; i<medicine.length;i++){
+
+        medicine[i].admin = req.session.userID;
+        medicine[i].save();
+      }
+    }
+    
+
     const admin = await Admin.findByIdAndRemove({ _id: req.params.id });
 
     res.status(200).redirect('/auth/manager');
@@ -104,7 +136,7 @@ exports.adminOk = async (req, res) => {
     admin.save();
     console.log(req.body)
 
-    res.status(200).redirect('/auth/manager');
+    res.status(200);
 
   } catch (err) {
     res.status(404).json({
@@ -194,9 +226,17 @@ exports.selectPharmacy = async (req, res) => {
 exports.deletePharmacy = async (req, res) => {
   try {
 
-    await Pharmacy.findByIdAndRemove({ _id: req.params.id}); // seçili olanı çağırır
-   
-    res.status(200).redirect('/pharmacy');
+    const selectedPharmacy = req.body.selectedId; // seçili id
+    const deletePharmacy = req.body.deleteId; // silinecek id;
+
+    if(selectedPharmacy==deletePharmacy){
+      res.status(200).send('Seçili eczane silinemez');
+
+    }else{
+      await Pharmacy.findByIdAndRemove({ _id: req.params.id}); // seçili olanı çağırır
+      res.status(200).redirect('/pharmacy');
+    }
+
   } catch (error) {
     res.status(404).json({
       status: 'error',

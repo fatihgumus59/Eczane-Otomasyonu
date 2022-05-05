@@ -79,6 +79,7 @@
                                                                                 </div>
                                                                             </div>                               
                 
+                                                                            <input type="hidden"  name="select" value="false" >
                                                                         </div>
                 
                                                                         <div style="text-align: center" class="form-group mb-0 mt-5">
@@ -342,6 +343,15 @@
                                                                     
                                                                         <a href="/auth/pharmacy/<%= pharmacy[i]._id %>?_method=DELETE">
                                                                             <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
+
+                                                                            <%if(pharmacy[i].select == true ){%>
+                                                                                <!--eğer eczane seçili ise bir id gönder dedik.-->
+                                                                                <input type="hidden" name="selectedId" value="<%=pharmacy[i]._id%>">
+                                                                            <%}%>
+                                                                            <!--eğer eczane seçili değil ise bir id gönder dedik.-->
+                                                                            <input type="hidden" name="deleteId" value="<%=pharmacy[i]._id%>">
+
+                                                                            <!--yukarıdaki iki id eşleşirse silinmesine izin vermeyecek.-->
                                                                         </a>
                                                                         <form style="display: inline" method="post" action="/auth/pharmacy-select?_method=PUT">                                
                                                                             <input type="hidden" name="pharmacyId" value="<%=pharmacy[i]._id%>">

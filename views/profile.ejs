@@ -421,69 +421,57 @@
                                             <%}%>
 
                                             <%if(admin.confirmation == true){%>
-                                                <form method="post" action="/auth/profile?_method=PUT">
-                                                    <div class="row">
+                                               
+                                                <div class="row">
 
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-0">
-                                                                <label class="my-2 py-1">Kullanıcı Rolü</label>
-                                                                <%if(admin.role == 'super'){%>
-                                                                    <input type="text"  value="Full Access" disabled class="form-control">
-                                                                <%}else if(admin.role =='editor'){%>
-                                                                    <input type="text"  value="Editör" disabled class="form-control">
-                                                                <%}else{%>
-                                                                    <input type="text"  value="Yetkisiz" disabled class="form-control">
-                                                                <%}%>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6">
-                                                            <div class="form-group mb-0">
-                                                                <label class="my-2 py-1">Onay Durumu</label>
-                                                                <%if(admin.confirmation == true){%>
-                                                                    <input type="text" value="Onaylı" disabled class="form-control">
-                                                                <%}else{%>
-                                                                    <input type="text" value="Onaysız" disabled class="form-control">
-                                                                <%}%>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="col-md-4">
-                                                            <div class="form-group mb-0">
-                                                                <label class="my-2 py-1">Kullanıcı Adı</label>
-                                                                <input type="text" value="<%= admin.username%>" name="username" placeholder="Kullanıcı adı giriniz" class="form-control">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <div class="form-group mb-0">
-                                                                <label class="my-2 py-1">Ad Soyad</label>
-                                                                <input type="text" value="<%= admin.name%>" name="name" placeholder="Ad soyad giriniz" class="form-control">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-4">
-                                                            <div class="form-group mb-0">
-                                                                <label class="my-2 py-1">E-Mail</label>
-                                                                <input type="text" value="<%= admin.email%>" name="email" placeholder="E-Mail adresi giriniz" class="form-control">
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-
-                                                    <div style="text-align: center" class="form-group mb-0 mt-5">
-                                                        <div class="">
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                                Gönder
-                                                            </button>
-                                                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                                                İptal
-                                                            </button>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Rolü</label>
+                                                            <%if(admin.role == 'super'){%>
+                                                                <input type="text"  value="Full Access" disabled class="form-control">
+                                                            <%}else if(admin.role =='editor'){%>
+                                                                <input type="text"  value="Editör" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text"  value="Yetkisiz" disabled class="form-control">
+                                                            <%}%>
                                                         </div>
                                                     </div>
 
-                                                </form>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Onay Durumu</label>
+                                                            <%if(admin.confirmation == true){%>
+                                                                <input type="text" value="Onaylı" disabled class="form-control">
+                                                            <%}else{%>
+                                                                <input type="text" value="Onaysız" disabled class="form-control">
+                                                            <%}%>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Kullanıcı Adı</label>
+                                                            <input type="text" value="<%= admin.username%>" disabled placeholder="Kullanıcı adı giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">Ad Soyad</label>
+                                                            <input type="text" value="<%= admin.name%>" disabled placeholder="Ad soyad giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group mb-0">
+                                                            <label class="my-2 py-1">E-Mail</label>
+                                                            <input type="text" value="<%= admin.email%>"disabled placeholder="E-Mail adresi giriniz" class="form-control">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                   
                                             <%}else{%>
                                                 <div class="row">
 
