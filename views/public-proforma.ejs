@@ -118,19 +118,7 @@
 	</head>
 
 	<body onload="window.print()" >
-
-		<%if( debt.status =='Ödenmedi'){%>
-			<div style="border-width: 6px;border-style: solid; border-color: #e70707;border-radius: 8px; color: #e70707; opacity:0.2; position: absolute; z-index: 1; left:25%; top:40%; font-size: 60pt;-webkit-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg); font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
-				<%= debt.status %> </div>
-			<br><br>
-
-		<%}else{%>
-			<div style="border-width: 6px;border-style: solid; border-color: #008000;border-radius: 8px; color: #008000; opacity:0.2; position: absolute; z-index: 1; left:35%; top:40%; font-size: 60pt;-webkit-transform: rotate(-45deg);-ms-transform: rotate(-45deg);transform: rotate(-45deg); font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;">
-				<%= debt.status %> </div>
-			<br><br>
-		<%}%>
-        
-		     
+  
 		<p>Eczanemizi tercih ettiğiniz için teşekkür ederiz.</p>
 		<%if(debt){%>
 			<div class="invoice-box">	
