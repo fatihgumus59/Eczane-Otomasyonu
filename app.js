@@ -15,7 +15,7 @@ const apiRoute = require('./routes/apiRoute');
 const app = express();
 
 //connect db
-mongoose.connect(process.env.MONGO_LOCAL, {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
@@ -45,7 +45,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
-    store: MongoStore.create({ mongoUrl: process.env.MONGO_LOCAL,clear_interval: 3600 })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL,clear_interval: 3600 })
   })
 );
 
