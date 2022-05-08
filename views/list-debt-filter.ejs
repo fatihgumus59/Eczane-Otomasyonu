@@ -389,43 +389,43 @@
     </script>
 
     <script>
-    function deleteUser(id,name){
-    
-         Swal.fire({
-         title: `${name} kişisini silmek istediğinize emin misiniz ?`,
-         icon: 'warning',
-         showCancelButton: true,
-         showDenyButton: true,
-         confirmButtonColor: '#28A745',
-         cancelButtonColor: '#6E7881',
-         denyButtonColor: `#DC3545`,
-         confirmButtonText: 'Evet',
-         denyButtonText: `Hayır`,
-         cancelButtonText: 'İptal',
-         
-         }).then((result) => {
+        function deleteUser(id,name){
+        
+            Swal.fire({
+            title: `${name} kişisini silmek istediğinize emin misiniz ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonColor: '#28A745',
+            cancelButtonColor: '#6E7881',
+            denyButtonColor: `#DC3545`,
+            confirmButtonText: 'Evet',
+            denyButtonText: `Hayır`,
+            cancelButtonText: 'İptal',
+            
+            }).then((result) => {
 
-             if (result.isConfirmed) {
-                
-                 Swal.fire({
-                     title: "Silindi!",
-                     text: `${name} kişisi silindi.`,
-                     type: "success",
-                     timer: 3000
-                 }).then(() => {
-                    window.location = `/kisiler/${id}?_method=DELETE`;
-                 })
-             }else if(result.isDenied) {
-                 Swal.fire({
-                     title: "Silinmedi!",
-                     text: `${name} kişisi silinmedi.`,
-                     type: "info",
-                     timer: 3000
-                 });
-             }
-         });
-     };
-    function okUser(name){
+                if (result.isConfirmed) {
+                    
+                    Swal.fire({
+                        title: "Silindi!",
+                        text: `${name} kişisi silindi.`,
+                        type: "success",
+                        timer: 3000
+                    }).then(() => {
+                        window.location = `/kisiler/${id}?_method=DELETE`;
+                    })
+                }else if(result.isDenied) {
+                    Swal.fire({
+                        title: "Silinmedi!",
+                        text: `${name} kişisi silinmedi.`,
+                        type: "info",
+                        timer: 3000
+                    });
+                }
+            });
+        };
+        function okUser(name){
 
      Swal.fire(
           "Onaylandı!",

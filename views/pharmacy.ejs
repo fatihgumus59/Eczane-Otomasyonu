@@ -40,66 +40,64 @@
                                         <div class="card">
                                             <div class="card-body">
                                                 <%if(admin.confirmation == true){%>
-                                                    <form method="post" action="/auth/pharmacy">
-                                                        <div class="row">
-                                                            <div class="offset-1 col-md-10">
-                                                                <div class="p-20">
-                                                                    
-                                                                    <h4 class="mt-0 header-title">Eczane Bilgileri</h4>
-                                                                    <p class="text-muted mb-4 font-14">Lütfen eczane bilgilerini eksiksiz doldurunuz.</p>
-
-                                                                    <form method="post" action="/auth/pharmacy">
-                                                                        <div class="row">
-                
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group mb-0">
-                                                                                    <label class="my-2 py-1">Eczane Ad</label>
-                                                                                    <input type="text" name="name"  class="form-control">
-                                                                                </div>
-                                                                            </div>
-                
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group mb-0">
-                                                                                    <label class="my-2 py-1">Eczane Mail</label>
-                                                                                    <input type="text"   name="email"  class="form-control">
-                                                                                </div>
-                                                                            </div>
-                
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group mb-0">
-                                                                                    <label class="my-2 py-1">Eczane Adres</label>
-                                                                                    <input type="text"  name="address"  class="form-control">
-                                                                                </div>
-                                                                            </div>
-                
-                                                                            <div class="col-md-6">
-                                                                                <div class="form-group mb-0">
-                                                                                    <label class="my-2 py-1">Eczane Şehir</label>
-                                                                                    <input type="text"  name="city" class="form-control">
-                                                                                </div>
-                                                                            </div>                               
-                
-                                                                            <input type="hidden"  name="select" value="false" >
-                                                                        </div>
-                
-                                                                        <div style="text-align: center" class="form-group mb-0 mt-5">
-                                                                            <div class="">
-                                                                                <button type="submit" class="btn btn-primary waves-effect waves-light">
-                                                                                    Gönder
-                                                                                </button>
-                                                                                <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                                                                    İptal
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                
-                                                                    </form> 
+                                                    <div class="row">
+                                                        <div class="offset-1 col-md-10">
+                                                            <div class="p-20">
                                                                 
-                                                                </div>
-                                                            </div> <!-- end col -->
+                                                                <h4 class="mt-0 header-title">Eczane Bilgileri</h4>
+                                                                <p class="text-muted mb-4 font-14">Lütfen eczane bilgilerini eksiksiz doldurunuz.</p>
+
+                                                                <form method="post" action="/auth/pharmacy">
+                                                                    <div class="row">
+            
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group mb-0">
+                                                                                <label class="my-2 py-1">Eczane Ad</label>
+                                                                                <input type="text" name="name"  class="form-control">
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group mb-0">
+                                                                                <label class="my-2 py-1">Eczane Mail</label>
+                                                                                <input type="text"   name="email"  class="form-control">
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group mb-0">
+                                                                                <label class="my-2 py-1">Eczane Adres</label>
+                                                                                <input type="text"  name="address"  class="form-control">
+                                                                            </div>
+                                                                        </div>
+            
+                                                                        <div class="col-md-6">
+                                                                            <div class="form-group mb-0">
+                                                                                <label class="my-2 py-1">Eczane Şehir</label>
+                                                                                <input type="text"  name="city" class="form-control">
+                                                                            </div>
+                                                                        </div>                               
+            
+                                                                        <input type="hidden"  name="select" value="false" >
+                                                                    </div>
+            
+                                                                    <div style="text-align: center" class="form-group mb-0 mt-5">
+                                                                        <div class="">
+                                                                            <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                                                Gönder
+                                                                            </button>
+                                                                            <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                                                İptal
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+            
+                                                                </form> 
                                                             
-                                                        </div> <!-- end row -->
-                                                    </form>
+                                                            </div>
+                                                        </div> <!-- end col -->
+                                                        
+                                                    </div> <!-- end row -->
                                                 <%}else{%>
                                                    
                                                     <div class="card-body">
@@ -340,20 +338,12 @@
                                                                     <td><%= pharmacy[i].city %></td>
                                                                     <td><%= pharmacy[i].createdAt.toISOString().slice(0,10) %></td>
                                                                     <td>
-                                                                    
-                                                                        <a href="/auth/pharmacy/<%= pharmacy[i]._id %>?_method=DELETE">
-                                                                            <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
 
-                                                                            <%if(pharmacy[i].select == true ){%>
-                                                                                <!--eğer eczane seçili ise bir id gönder dedik.-->
-                                                                                <input type="hidden" name="selectedId" value="<%=pharmacy[i]._id%>">
-                                                                            <%}%>
-                                                                            <!--eğer eczane seçili değil ise bir id gönder dedik.-->
-                                                                            <input type="hidden" name="deleteId" value="<%=pharmacy[i]._id%>">
-
-                                                                            <!--yukarıdaki iki id eşleşirse silinmesine izin vermeyecek.-->
+                                                                        <a onclick="deletePharmacy(`<%=pharmacy[i]._id%>`,`<%=pharmacy[i].name %>`,`<%=pharmacy[i].select %>`)">
+                                                                            <button class="btn btn-lg btn-danger btn-sm "><i class="mdi mdi-delete-forever"></i></button>
                                                                         </a>
-                                                                        <form style="display: inline" method="post" action="/auth/pharmacy-select?_method=PUT">                                
+                         
+                                                                        <form style="display: inline" method="post" onsubmit="okUser(`<%= pharmacy[i].name%>`)" action="/auth/pharmacy-select?_method=PUT">
                                                                             <input type="hidden" name="pharmacyId" value="<%=pharmacy[i]._id%>">
                                                                             <input type="hidden" name="oldPharmacyId" value="<%=selectPharmacy._id%>">
                                                                             <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
@@ -535,30 +525,101 @@
    <!-- Footer -->
    <%- include('partials/_footer')%>
    <!-- End Footer -->
+    <!-- sweet alert  init js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.all.min.js"></script>
 
-   <script>
-    function Yonlendir(ID, adres, saniye) {
-        if (saniye == 0) {
-            window.location.href = adres;
-        return;
-        }
-        document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
-        saniye--;
-        setTimeout(function() {
-            Yonlendir(ID, adres, saniye);
-        }, 1000);
-    }
-    </script>
     <script>
-        Yonlendir("uyari", "/", 10);
+        function Yonlendir(ID, adres, saniye) {
+            if (saniye == 0) {
+                 window.location.href = adres;
+            return;
+            }
+            document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
+            saniye--;
+            setTimeout(function() {
+                Yonlendir(ID, adres, saniye);
+            }, 1000);
+        }
     </script>
-    
+
+    <script>
+    Yonlendir("uyari", "/", 10);
+    </script>
+
+    <script>
+        function deletePharmacy(id,name,pharmacy){
+            console.log('eczane ',pharmacy);
+            Swal.fire({
+            title: `${name}'ni silmek istediğinize emin misiniz ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonColor: '#28A745',
+            cancelButtonColor: '#6E7881',
+            denyButtonColor: `#DC3545`,
+            confirmButtonText: 'Evet',
+            denyButtonText: `Hayır`,
+            cancelButtonText: 'İptal',
+            
+            }).then((result) => {
+
+                if(pharmacy == 'true'){
+
+                    if (result.isConfirmed) {
+                        Swal.fire(
+                            "Seçili Eczane!",
+                            `${name} aktif olduğu için silinemedi.`,
+                            "error",
+                        );       
+                    
+                    }else if(result.isDenied) {
+                        Swal.fire(
+                            "Silinmedi!",
+                            `${name} istediğiniz üzerine silinmedi`,
+                            "error",
+                        );
+                    }
+                }else{
+
+                    if (result.isConfirmed) {
+
+                        Swal.fire(
+                            "Silindi!",
+                            `${name} silindi`,
+                            "success",
+                        ).then(() => {
+                            window.location = `/auth/pharmacy/${id}?_method=DELETE`;
+                        })
+                    }else if(result.isDenied){
+                        Swal.fire(
+                            "Silinmedi!",
+                            `${name} istediğiniz üzerine silinmedi`,
+                            "error",
+                        );
+
+                    }
+                    
+                }
+                
+            });
+        };
+        function okUser(name){
+
+        Swal.fire(
+            "Eczane Aktif!",
+            `${name} aktif hale getirildi.`,
+            "success",
+
+        ).then((result) => {
+            window.location = `/pharmacy`;
+
+        });
+
+        setTimeout(function() {
+            window.location = `/pharmacy`;
+            }, 3000);
+        };
+   </script>
+
     </body>
 </html>
-
-
-
-
-
-
-

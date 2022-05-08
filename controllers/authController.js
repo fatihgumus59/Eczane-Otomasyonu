@@ -91,31 +91,31 @@ exports.deleteAdmin = async (req, res) => {
     // yönetici bir editör veya admin siler ise sildiği admin veya editörün eklediği borçlu kişiler ve eklediği ilaçlar
     // silen adminin hesabına yansıtılmasını sağladık.
 
-    const debt = await Debt.find({admin:req.params.id });
-    if(debt.length==1){
+    const debt = await Debt.find({ admin: req.params.id });
+    if (debt.length == 1) {
       debt.admin = req.session.userID;
-      debt.save();  
-    }else{
-      for(let i=0; i<debt.length;i++){
+      debt.save();
+    } else {
+      for (let i = 0; i < debt.length; i++) {
 
         debt[i].admin = req.session.userID;
         debt[i].save();
       }
     }
 
-    const medicine = await Medicine.find({admin:req.params.id });
+    const medicine = await Medicine.find({ admin: req.params.id });
 
-    if(medicine.length==1){
+    if (medicine.length == 1) {
       medicine.admin = req.session.userID;
-      medicine.save();  
-    }else{
-      for(let i=0; i<medicine.length;i++){
+      medicine.save();
+    } else {
+      for (let i = 0; i < medicine.length; i++) {
 
         medicine[i].admin = req.session.userID;
         medicine[i].save();
       }
     }
-    
+
 
     const admin = await Admin.findByIdAndRemove({ _id: req.params.id });
 
@@ -205,16 +205,16 @@ exports.editPharmacy = async (req, res) => {
 exports.selectPharmacy = async (req, res) => {
   try {
 
-    const selectPharmacy = await Pharmacy.findOne({ _id: req.body.oldPharmacyId}); // seçili olanı çağırır
-    selectPharmacy.select=false;
+    const selectPharmacy = await Pharmacy.findOne({ _id: req.body.oldPharmacyId }); // seçili olanı çağırır
+    selectPharmacy.select = false;
     selectPharmacy.save();
 
     const pharmacy = await Pharmacy.findOne({ _id: req.body.pharmacyId });
-    pharmacy.select=true;
+    pharmacy.select = true;
     pharmacy.save();
 
 
-    res.status(200).redirect('/pharmacy');
+    res.status(200);
   } catch (error) {
     res.status(404).json({
       status: 'error',
@@ -226,14 +226,15 @@ exports.selectPharmacy = async (req, res) => {
 exports.deletePharmacy = async (req, res) => {
   try {
 
-    const selectedPharmacy = req.body.selectedId; // seçili id
-    const deletePharmacy = req.body.deleteId; // silinecek id;
+    const selectedPharmacy = await Pharmacy.findOne({select:true}).select('_id'); // seçili eczane
+    const deletePharmacy = req.params.id; // silinecek eczane
 
-    if(selectedPharmacy==deletePharmacy){
+
+    if (selectedPharmacy._id == deletePharmacy) { // seçili eczane ile silinecek eczane id'leri eşit ise silinmesin
       res.status(200).send('Seçili eczane silinemez');
 
-    }else{
-      await Pharmacy.findByIdAndRemove({ _id: req.params.id}); // seçili olanı çağırır
+    } else {
+      await Pharmacy.findByIdAndRemove({ _id: req.params.id }); // seçili olanı çağırır ve sil
       res.status(200).redirect('/pharmacy');
     }
 

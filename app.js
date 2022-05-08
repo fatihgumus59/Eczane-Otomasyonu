@@ -10,11 +10,12 @@ const pageRoute = require('./routes/pageRoute');
 const medicineRoute = require('./routes/medicineRoute');
 const debtRoute = require('./routes/debtRoute');
 const adminRoute = require('./routes/administrationRoute');
+const apiRoute = require('./routes/apiRoute');
 
 const app = express();
 
 //connect db
-mongoose.connect('mongodb+srv://admin:1kLeJSaqB4czME2D@cluster0.n8q8e.mongodb.net/eczane?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_LOCAL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
@@ -44,7 +45,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://admin:1kLeJSaqB4czME2D@cluster0.n8q8e.mongodb.net/eczane?retryWrites=true&w=majority',clear_interval: 3600 })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_LOCAL,clear_interval: 3600 })
   })
 );
 
@@ -59,6 +60,7 @@ app.use('/', pageRoute);
 app.use('/ilaclar', medicineRoute);
 app.use('/kisiler', debtRoute);
 app.use('/auth', adminRoute);
+app.use('/api',apiRoute);
 
 const port = process.env.PORT || 5000;
 

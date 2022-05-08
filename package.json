@@ -4,7 +4,7 @@
   "description": "eczane otomasyonu",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "keywords": [
     "eczane"
@@ -23,7 +23,8 @@
     "method-override": "^3.0.0",
     "mongoose": "^6.2.9",
     "multer": "^1.4.4",
-    "qrcode": "^1.5.0"
+    "qrcode": "^1.5.0",
+    "rand-token": "^1.0.1"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",

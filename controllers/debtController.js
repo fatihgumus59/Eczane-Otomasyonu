@@ -151,7 +151,6 @@ exports.debtOk = async (req, res) => {
     const debt = await Debt.findOne({ _id: req.params.id });
     debt.status = req.body.status;
     debt.save();
-    console.log(req.body)
 
     res.status(200);
 
