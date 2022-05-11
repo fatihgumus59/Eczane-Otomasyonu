@@ -153,7 +153,7 @@ exports.debtOk = async (req, res) => {
     debt.save();
     console.log(req.body)
 
-    res.status(200);
+    res.status(200).redirect('/kisiler');
 
   } catch (err) {
     res.status(404).json({
