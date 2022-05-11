@@ -353,6 +353,64 @@
         Yonlendir("uyari", "/", 10);
     </script>
 
+<<<<<<< HEAD
+=======
+    <script>
+        function deleteUser(id,name){
+        
+            Swal.fire({
+            title: `${name} kişisini silmek istediğinize emin misiniz ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonColor: '#28A745',
+            cancelButtonColor: '#6E7881',
+            denyButtonColor: `#DC3545`,
+            confirmButtonText: 'Evet',
+            denyButtonText: `Hayır`,
+            cancelButtonText: 'İptal',
+            
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    
+                    Swal.fire({
+                        title: "Silindi!",
+                        text: `${name} kişisi silindi.`,
+                        type: "success",
+                        timer: 3000
+                    }).then(() => {
+                        window.location = `/kisiler/${id}?_method=DELETE`;
+                    })
+                }else if(result.isDenied) {
+                    Swal.fire({
+                        title: "Silinmedi!",
+                        text: `${name} kişisi silinmedi.`,
+                        type: "info",
+                        timer: 3000
+                    });
+                }
+            });
+        };
+        function okUser(name){
+
+     Swal.fire(
+          "Onaylandı!",
+          `${name} kişisinin borcu onaylandı.`,
+          "success",
+
+     ).then((result) => {
+         window.location = `/kisiler`;
+
+     });
+
+     setTimeout(function() {
+         window.location = `/kisiler`;
+         }, 3000);
+     };
+    </script>
+
+>>>>>>> 26932577ab9b68929037ab1a3fc8b5cd04f43e71
     </body>
 </html>
 

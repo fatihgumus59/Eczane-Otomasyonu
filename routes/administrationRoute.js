@@ -9,7 +9,7 @@ const validateMiddleware = require('../middlewares/validateMiddleware'); // vali
 const router = express.Router();
 
 router.route('/register').post(validateMiddleware(authValidation.createUserValidation),authController.createUser);
-router.route('/login').post(authController.loginUser);
+router.route('/login').post(validateMiddleware(authValidation.loginUserValidation),authController.loginUser);
 router.route('/logout').get(authMiddleware,authController.logoutUser);
 
 // get admin

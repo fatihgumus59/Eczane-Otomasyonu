@@ -12,14 +12,13 @@ exports.createDebt = async (req, res) => {
       admin:req.session.userID,
     });
     
-      console.log(req.body.body);
+    console.log(req.body.body);
+    req.flash('success',`Borçlu kişi başarılı bir şekilde oluşturuldu.`);
     res.status(201).redirect('/kisiler');
 
   } catch (err) {
-    res.status(404).json({
-      status: 'error',
-      err,
-    });
+    req.flash('error',`Borçlu kişi eklenemedi.`);
+    res.status(400).redirect('/kisiler');
   }
 };
 
@@ -74,14 +73,12 @@ exports.editDebt = async (req, res) => {
       note: req.body.note,
     }).populate('medicine.ilac');
 
-
+    req.flash('info',`Borçlu kişi başarılı bir şekilde güncellendi.`);
     res.status(200).redirect('/kisiler');
 
   } catch (err) {
-    res.status(404).json({
-      status: 'failed',
-      err,
-    });
+    req.flash('error',`Borçlu kişi güncellenemedi.`);
+    res.status(400).redirect('/kisiler');
   }
 };
 
@@ -89,13 +86,12 @@ exports.deleteDebt = async (req, res) => {
   try {
     const debt = await Debt.findOneAndDelete({ _id: req.params.id });
 
+    req.flash('delete',`Borçlu kişi başarılı bir şekilde silindi.`);
     res.status(200).redirect('/kisiler')
 
   } catch (err) {
-    res.status(404).json({
-      status: 'failed',
-      err,
-    });
+    req.flash('error',`Borçlu kişi silinemedi.`);
+    res.status(200).redirect('/kisiler');
   }
 };
 
@@ -151,7 +147,6 @@ exports.debtOk = async (req, res) => {
     const debt = await Debt.findOne({ _id: req.params.id });
     debt.status = req.body.status;
     debt.save();
-    console.log(req.body)
 
     res.status(200).redirect('/kisiler');
 

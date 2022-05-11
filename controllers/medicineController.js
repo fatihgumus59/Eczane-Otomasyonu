@@ -18,14 +18,13 @@ exports.createMedicine = async (req, res) => {
       admin:req.session.userID,
 
     });
+    req.flash('success',`İlaç başarılı bir şekilde eklendi.`);
     res.status(201).redirect('/ilaclar');
 
 
   } catch (err) {
-    res.status(404).json({
-      status: 'error',
-      err,
-    });
+    req.flash('error',`İlaç eklenemedi.`);
+    res.status(400).redirect('/ilaclar');
   }
 };
 
@@ -70,13 +69,12 @@ exports.editMedicine = async (req, res) => {
 
     medicine.save();
 
+    req.flash('info',`İlaç başarılı bir şekilde güncellendi.`);
     res.status(200).redirect('/ilaclar');
 
   } catch (err) {
-    res.status(404).json({
-      status: 'failed',
-      err,
-    });
+    req.flash('error',`İlaç güncellemesi başarısız.`);
+    res.status(400).redirect('/ilaclar');
   }
 }
 
@@ -95,12 +93,11 @@ exports.deleteMedicine = async (req, res) => {
       //file removed
     })
 
+    req.flash('delete',`İlaç başarılı bir şekilde silindi.`);
     res.status(200).redirect('/ilaclar');
 
   } catch (err) {
-    res.status(404).json({
-      status: 'failed',
-      err,
-    });
+    req.flash('error',`İlaç silme işlemi başarısız.`);
+    res.status(400).redirect('/ilaclar');
   }
 }
