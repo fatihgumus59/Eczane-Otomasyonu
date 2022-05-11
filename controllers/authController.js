@@ -2,14 +2,17 @@ const Admin = require('../models/administration');
 const Pharmacy = require('../models/pharmacy');
 const Debt = require('../models/debt');
 const Medicine = require('../models/medicine');
+
 const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
   try {
     const admin = await Admin.create(req.body);
-
+    
     res.status(201).redirect('/');
   } catch (error) {
+
+    // hataları burada tutup flash message ile ileteceğiz.
     res.status(404).json({
       status: 'error',
       error: error.message,
@@ -60,13 +63,12 @@ exports.editAdmin = async (req, res) => {
       confirmation: req.body.confirmation
     });
 
-
+    req.flash('info',`${req.body.name} kişisi başarılı olarak güncellendi.`);
     res.status(200).redirect('/auth/manager');
+
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`Yönetici güncellemesi başarısız.`);
+    res.status(400).redirect('/auth/manager');
   }
 };
 
@@ -75,12 +77,14 @@ exports.addAdmin = async (req, res) => {
 
     const user = await Admin.create(req.body);
 
-    res.status(200).redirect('/auth/manager');
+    req.flash('success',`${req.body.name} kişisi başarılı olarak eklendi.`);
+
+    res.status(201).redirect('/auth/manager');
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    
+    req.flash('error',`Yönetici eklenemedi.`);
+
+    res.status(400).redirect('/auth/manager');
   }
 };
 
@@ -119,13 +123,12 @@ exports.deleteAdmin = async (req, res) => {
 
     const admin = await Admin.findByIdAndRemove({ _id: req.params.id });
 
+    req.flash('delete',`Kişi başarılı olarak silindi.`);
     res.status(200).redirect('/auth/manager');
 
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`Kişi silinemedi.`);
+    res.status(400).redirect('/auth/manager');
   }
 };
 
@@ -139,10 +142,8 @@ exports.adminOk = async (req, res) => {
     res.status(200);
 
   } catch (err) {
-    res.status(404).json({
-      status: 'failed',
-      err,
-    });
+    req.flash('error',`Yönetici onaylanamadı.`);
+    res.status(400).redirect('/auth/manager');
   }
 };
 
@@ -156,12 +157,12 @@ exports.editProfile = async (req, res) => {
     });
 
 
+    req.flash('success',`Bilgileriniz başarılı olarak güncellendi.`);
     res.status(200).redirect('/profile');
+
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`Bilgi güncellenemesi başarısız.`);
+    res.status(200).redirect('/profile');
   }
 };
 
@@ -171,13 +172,12 @@ exports.addPharmacy = async (req, res) => { // eczane bilgisi ekleme
     await Admin.findById(req.session.userID); // giriş yapan adminin rolünü kontrol etmek için gönderiyoruz.
     await Pharmacy.create(req.body);
 
+    req.flash('success',`${req.body.name} başarılı olarak eklendi.`);
     res.status(201).redirect('/pharmacy');
 
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`Eczane eklenemedi.`);
+    res.status(400).redirect('/pharmacy');
   }
 };
 
@@ -191,14 +191,12 @@ exports.editPharmacy = async (req, res) => {
       city: req.body.city,
     });
 
-
+    req.flash('info',`${req.body.name} başarılı olarak güncellendi.`);
     res.status(200).redirect('/pharmacy');
 
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`Eczane güncellemesi başarısız.`);
+    res.status(200).redirect('/pharmacy');
   }
 };
 
@@ -231,17 +229,18 @@ exports.deletePharmacy = async (req, res) => {
 
 
     if (selectedPharmacy._id == deletePharmacy) { // seçili eczane ile silinecek eczane id'leri eşit ise silinmesin
-      res.status(200).send('Seçili eczane silinemez');
+      req.flash('error',`Seçili eczane silinemez..`);
+      res.status(200).redirect('/pharmacy');
 
     } else {
       await Pharmacy.findByIdAndRemove({ _id: req.params.id }); // seçili olanı çağırır ve sil
+
+      req.flash('delete',`Eczane başarılı bir şekilde silindi.`);
       res.status(200).redirect('/pharmacy');
     }
 
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`Eczane silinemedi.`);
+    res.status(400).redirect('/pharmacy');
   }
 };

@@ -1,4 +1,5 @@
 const QRCode = require('qrcode');
+
 const Medicine = require('../models/medicine');
 const Debt = require('../models/debt');
 const Admin = require('../models/administration');

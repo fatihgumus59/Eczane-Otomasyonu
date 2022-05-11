@@ -10,12 +10,13 @@ exports.createApi = async (req, res) => {
 
     });
 
+    req.flash('success',`API başarılı bir şekilde oluşturuldu.`);
     res.status(201).redirect('/api');
+
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`API oluşturulamadı.`);
+    res.status(400).redirect('/api');
+    
   }
 };
 
@@ -28,13 +29,12 @@ exports.editApi = async (req, res) => {
       status: req.body.status,
     });
 
+    req.flash('info',`API başarılı bir şekilde güncellendi.`);
     res.status(200).redirect('/api');
 
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('error',`API güncellemesi başarısız.`);
+    res.status(400).redirect('/api');
   }
 };
 
@@ -82,12 +82,12 @@ exports.deleteApi = async (req, res) => {
   try {
     const api = await Api.findOneAndDelete({ _id: req.params.id });
 
+    req.flash('delete',`API başarılı bir şekilde silindi.`);
     res.status(200).redirect('/api');
+
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    req.flash('delete',`API silme isteği başarısız.`);
+    res.status(400).redirect('/api');
   }
 };
 

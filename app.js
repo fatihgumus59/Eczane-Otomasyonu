@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const session = require('express-session')
 const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
 require('dotenv').config();
 
 
@@ -35,9 +36,10 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(methodOverride('_method', { methods: ['GET', 'POST'] }));
 
-
 app.use(express.json())  //req.body'den gelen verileri yakalamak için
 app.use(express.urlencoded({ extended: true })) //req.body'den gelen verileri yakalamak için
+app.use(flash());
+
 
 app.use(
   session({
@@ -55,6 +57,10 @@ app.use('*', (req, res, next) => {
   next();
 })
 
+app.use((req, res, next)=> {
+  res.locals.flashMessages = req.flash();
+  next();
+})
 
 app.use('/', pageRoute);
 app.use('/ilaclar', medicineRoute);

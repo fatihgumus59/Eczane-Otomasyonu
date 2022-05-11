@@ -177,6 +177,34 @@
                             </div>
                             </div> 
                             <!-- end page title end breadcrumb -->  
+                            
+                            <% if (flashMessages) { %>
+
+                                <% if (flashMessages.success) { %>
+    
+                                    <div class="alert alert-success alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Başarılı! </strong><%= flashMessages.success %>
+                                    </div>
+    
+                                <% } else if (flashMessages.error) { %>
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Başarısız! </strong> <%= flashMessages.error %>
+                                    </div>
+                                <% } else if (flashMessages.info) { %>
+                                    <div class="alert alert-info alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Güncellendi! </strong> <%= flashMessages.info %>
+                                    </div>
+                                <% } else if (flashMessages.delete) { %>
+                                    <div class="alert alert-info alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Silindi! </strong> <%= flashMessages.delete %>
+                                    </div>
+                                <% } %>
+    
+                            <% } %>
 
                             <!-- eczane alanı -->  
                             <div class="col-12">
