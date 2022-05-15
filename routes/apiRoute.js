@@ -13,6 +13,8 @@ router.route('/create').post(authMiddleware,apiController.createApi);
 // get
 router.route('/debts').get(ApiMiddleware,apiController.getDebtPage);
 router.route('/medicine').get(ApiMiddleware,apiController.getMedicinePage);
+router.route('/debts-details').get(ApiMiddleware,apiController.getDebtDetailsPage);
+router.route('/medicine-details').get(ApiMiddleware,apiController.getMedicineDetailPage);
 router.route('/edit/:id').get(authMiddleware,pageController.getEditApiPage);
 
 // put 

@@ -10,13 +10,13 @@ exports.createApi = async (req, res) => {
 
     });
 
-    req.flash('success',`API başarılı bir şekilde oluşturuldu.`);
+    req.flash('success', `API başarılı bir şekilde oluşturuldu.`);
     res.status(201).redirect('/api');
 
   } catch (error) {
-    req.flash('error',`API oluşturulamadı.`);
+    req.flash('error', `API oluşturulamadı.`);
     res.status(400).redirect('/api');
-    
+
   }
 };
 
@@ -29,16 +29,16 @@ exports.editApi = async (req, res) => {
       status: req.body.status,
     });
 
-    req.flash('info',`API başarılı bir şekilde güncellendi.`);
+    req.flash('info', `API başarılı bir şekilde güncellendi.`);
     res.status(200).redirect('/api');
 
   } catch (error) {
-    req.flash('error',`API güncellemesi başarısız.`);
+    req.flash('error', `API güncellemesi başarısız.`);
     res.status(400).redirect('/api');
   }
 };
 
-exports.getDebtPage = async (req, res) => {
+exports.getDebtDetailsPage = async (req, res) => { // apiyi detaylı göstermek için
   try {
     const debt = await Debt.find().select('-password -admin -medicine._id') // başına - konulunca onu tablodan çıkarıyor.
 
@@ -46,9 +46,43 @@ exports.getDebtPage = async (req, res) => {
       request_status: 'success',
       api_status: 'active',
       method: 'GET',
-      json:true,
+      json: true,
       api: req.query.api_key,
-      debts:debt,
+      debts: debt,
+    });
+  } catch (error) {
+    res.status(404).json({
+      status: 'error',
+      error: error.message,
+    });
+  }
+};
+
+exports.getDebtPage = async (req, res) => {
+  try {
+    const debt = await Debt.find().select('-password -admin -medicine._id') // başına - konulunca onu tablodan çıkarıyor.
+
+    res.status(200).json(debt);
+    
+  } catch (error) {
+    res.status(404).json({
+      status: 'error',
+      error: error.message,
+    });
+  }
+};// mobil uygulama için dizi olarak gönderiliyor
+
+exports.getMedicineDetailPage = async (req, res) => { // apiyi detaylı göstermek için
+  try {
+    const medicine = await Medicine.find().select('-admin -image -createdAt -updatedAt')
+
+    res.status(200).json({
+      request_status: 'success',
+      api_status: 'active',
+      method: 'GET',
+      json: true,
+      api: req.query.api_key,
+      medicines: medicine
     });
   } catch (error) {
     res.status(404).json({
@@ -62,31 +96,24 @@ exports.getMedicinePage = async (req, res) => {
   try {
     const medicine = await Medicine.find().select('-admin -image -createdAt -updatedAt')
 
-    res.status(200).json({
-      request_status: 'success',
-      api_status: 'active',
-      method: 'GET',
-      json:true,
-      api: req.query.api_key,
-      medicines:medicine
-    });
+    res.status(200).json(medicine);
   } catch (error) {
     res.status(404).json({
       status: 'error',
       error: error.message,
     });
   }
-};
+};// mobil uygulama için dizi olarak gönderiliyor
 
 exports.deleteApi = async (req, res) => {
   try {
     const api = await Api.findOneAndDelete({ _id: req.params.id });
 
-    req.flash('delete',`API başarılı bir şekilde silindi.`);
+    req.flash('delete', `API başarılı bir şekilde silindi.`);
     res.status(200).redirect('/api');
 
   } catch (error) {
-    req.flash('delete',`API silme isteği başarısız.`);
+    req.flash('delete', `API silme isteği başarısız.`);
     res.status(400).redirect('/api');
   }
 };

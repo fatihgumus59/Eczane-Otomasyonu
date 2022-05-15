@@ -1,11 +1,8 @@
 const Admin = require('../models/administration');
 const Pharmacy = require('../models/pharmacy');
-<<<<<<< HEAD
-=======
 const Debt = require('../models/debt');
 const Medicine = require('../models/medicine');
 
->>>>>>> 26932577ab9b68929037ab1a3fc8b5cd04f43e71
 const bcrypt = require('bcrypt');
 
 exports.createUser = async (req, res) => {
@@ -94,8 +91,6 @@ exports.addAdmin = async (req, res) => {
 exports.deleteAdmin = async (req, res) => {
   try {
 
-<<<<<<< HEAD
-=======
     // debt ve medicine içinde bulunan verileri güncelliyoruz bu alanda.
     // yönetici bir editör veya admin siler ise sildiği admin veya editörün eklediği borçlu kişiler ve eklediği ilaçlar
     // silen adminin hesabına yansıtılmasını sağladık.
@@ -126,7 +121,6 @@ exports.deleteAdmin = async (req, res) => {
     }
 
 
->>>>>>> 26932577ab9b68929037ab1a3fc8b5cd04f43e71
     const admin = await Admin.findByIdAndRemove({ _id: req.params.id });
 
     req.flash('delete',`Kişi başarılı olarak silindi.`);
@@ -145,7 +139,7 @@ exports.adminOk = async (req, res) => {
     admin.save();
     console.log(req.body)
 
-    res.status(200).redirect('/auth/manager');
+    res.status(200);
 
   } catch (err) {
     req.flash('error',`Yönetici onaylanamadı.`);
@@ -230,11 +224,6 @@ exports.selectPharmacy = async (req, res) => {
 exports.deletePharmacy = async (req, res) => {
   try {
 
-<<<<<<< HEAD
-    await Pharmacy.findByIdAndRemove({ _id: req.params.id}); // seçili olanı çağırır
-   
-    res.status(200).redirect('/pharmacy');
-=======
     const selectedPharmacy = await Pharmacy.findOne({select:true}).select('_id'); // seçili eczane
     const deletePharmacy = req.params.id; // silinecek eczane
 
@@ -250,7 +239,6 @@ exports.deletePharmacy = async (req, res) => {
       res.status(200).redirect('/pharmacy');
     }
 
->>>>>>> 26932577ab9b68929037ab1a3fc8b5cd04f43e71
   } catch (error) {
     req.flash('error',`Eczane silinemedi.`);
     res.status(400).redirect('/pharmacy');

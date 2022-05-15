@@ -148,7 +148,7 @@ exports.debtOk = async (req, res) => {
     debt.status = req.body.status;
     debt.save();
 
-    res.status(200).redirect('/kisiler');
+    res.status(200);
 
   } catch (err) {
     res.status(404).json({
