@@ -8,12 +8,11 @@ exports.createDebt = async (req, res) => {
       ...req.body.body,
       medicine: req.body.ilac,
       total: req.body.total,
-      password:req.body.body.tc,
       admin:req.session.userID,
     });
     
-    console.log(req.body.body);
-    req.flash('success',`Borçlu kişi başarılı bir şekilde oluşturuldu.`);
+    // console.log(req.body.body);
+    // req.flash('success',`Borçlu kişi başarılı bir şekilde oluşturuldu.`);
     res.status(201).redirect('/kisiler');
 
   } catch (err) {
