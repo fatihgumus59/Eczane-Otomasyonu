@@ -15,6 +15,25 @@
                     </div>
 
                     <div class="px-3 pb-3">
+                        <% if (flashMessages) { %>
+
+                            <% if (flashMessages.success) { %>
+
+                                <div class="alert alert-success alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Kayıt Başarılı! </strong><%= flashMessages.success %>
+                                </div>
+
+                            <% } else if (flashMessages.error) { %>
+                                <div class="alert alert-danger alert-dismissible">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <strong>Giriş Başarısız! </strong> <%= flashMessages.error %>
+                                </div>
+                                
+                            <% } %>
+
+                          <% } %>
+
                         <form class="form-horizontal m-t-20" method="post" action="/auth/login">
 
                             <div class="form-group row">

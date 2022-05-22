@@ -65,7 +65,7 @@ exports.getIndexPage = async (req, res) => {
         if (err) {
           res.send(err);
         }
-
+       
         return result;
       }
 
@@ -90,13 +90,14 @@ exports.getEditDebtPage = async (req, res) => {
 
   const admin = await Admin.findById(req.session.userID);  // ilacı ekleyenin admin olup olmadığını kontrol etmek için gönderiyoruz
   const debt = await Debt.findOne({ _id: req.params.id }).populate('medicine.ilac');
-  const medicine = await Medicine.find({});
+  const allMedicine = await Medicine.find({});
+
   const id = req.param.id;
 
   res.status(200).render('edit-debt', {
     page_name: `${debt.name} - Düzenle`,
     debt,
-    medicine,
+    medicine: allMedicine,
     id,
     admin,
   });

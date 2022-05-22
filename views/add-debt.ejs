@@ -21,7 +21,6 @@
 
                 <%if(admin.confirmation==true){%>    
                              
-                <div id="app">
                     <div class="wrapper">
                         <div class="container-fluid">
 
@@ -40,14 +39,43 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- end page title end breadcrumb -->
+
+                            <% if (flashMessages) { %>
+
+                                <% if (flashMessages.success) { %>
+
+                                    <div class="alert alert-success alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Kişi Eklenemedi! </strong><%= flashMessages.success %>
+                                    </div>
+
+                                <% } else if (flashMessages.error) { %>
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Kişi Eklendi! </strong> <%= flashMessages.error %>
+                                    </div>
+                                <% } else if (flashMessages.info) { %>
+                                    <div class="alert alert-info alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Kişi Güncellendi! </strong> <%= flashMessages.info %>
+                                    </div>
+                                <% } else if (flashMessages.delete) { %>
+                                    <div class="alert alert-info alert-dismissible">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <strong>Kişi Silindi! </strong> <%= flashMessages.delete %>
+                                    </div>
+                                <% } %>
+
+                            <% } %>
+
                             <div class="row">
                                 <div class="col-12">
                                     <div class="card">
                                         <div class="card-body">
 
                                             <h4 class="mt-0 header-title">Borç Ekle</h4>
-                                            
+
+                                            <form autocomplete="off" method="post" action="/kisiler/borc-ekle">
                                                 <div class="row">
                                                     <div class="col-md-3">
 
@@ -56,19 +84,22 @@
                                                                 <div class="col-md-12">
                                                                     <h4 class="mt-4 header-title">İLAÇ</h4>
                                                                     <p class="text-muted  font-14">İlaç adını aşağıdan seçiniz, aradığınız ilaç sistemde yoksa ilaç ekle butonuna tıklayarak ilacı ekleyiniz.</p>
-
-                                                                    <div class="medicine">
-
-                                                                        <div class="col-md-10">
                                                                     
-                                                                            <li  style="list-style-type:none;" v-for="opt in options">{{opt.name}}<input class="form-control" v-model="opt.quantity" type="number"/></li>
+                                                                    <%if(medicine){%>
+                                                                    <div class="medicine">
+                                                                        <% for(let i=0; i< medicine.length; i++) { %>
+                                                                           
+                                                                            <input type="checkbox" name="medicine" class="mr-2" value="<%= medicine[i]._id %>">
+                                                                            <input type="number" style="width: 60px; display: inline;" class="form-control mt-3" name="medicineAdet">
+                                                                            <label><%= medicine[i].name%></label><br>
                                                                             
-                                                                        </div>
-                                                                        
+                                                                            
+                                                                        <% } %>
+                                                                
                                                                     </div>
-                                                                    <a class="btn btn-primary waves-effect waves-light mt-4 mb-4" target="_blank" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
+                                                                    <%}%>
+                                                                    <a class="btn btn-primary waves-effect waves-light mt-4 mb-4" href="/ilaclar/ilac-ekle" role="button">İlaç Ekle</a>
                                                                 </div>
-                                                            
                                                                 
                                                             </div>  
                                                         </div>
@@ -76,66 +107,69 @@
 
                                                     <div class="col-md-9">
                                                         <div class="p-20">
+                                                            
                                                             <h4 class="mt-0 header-title">Kişi Bilgileri</h4>
                                                             <p class="text-muted mb-4 font-14">Lütfen kişi bilgilerini eksiksiz doldurunuz.</p>
+                                                                <div class="form-group mb-3">
+                                                                    <label>Borç Durumu</label>
+                                                                    <select name="status" class="form-control">
+                                                                        <option value="Ödendi">Ödendi</option>
+                                                                        <option value="Ödenmedi">Ödenmedi</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group mb-0">
+                                                                    <label>T.C Kimlik No</label>
+                                                                    <input type="text" name="tc" data-mask="99999999999"  class="form-control">
+                                                                </div>
+                            
+                                                                <div class="form-group mb-0">
+                                                                    <label class="my-2 py-1">İsim Soyisim</label>
+                                                                    <div>
+                                                                        <input type="text" name="name" class="form-control" />
+                                                                    </div>
+                                                                </div>
 
-                                                            <div class="form-group mb-3">
-                                                                <label>Borç Durumu</label>
-                                                                <select name="status" v-model="body.status" class="form-control">
-                                                                    <option hidden>Select</option>
-                                                                    <option value="Ödendi">Ödendi</option>
-                                                                    <option value="Ödenmedi">Ödenmedi</option>
-                                                                </select>
-                                                            </div>
+                                                                <div class="form-group mb-0">
+                                                                    <label class="my-2 py-1">Tarih (Girilmezse o günü seçer)</label>
+                                                                    <div>
+                                                                        <input type="date" name="createdAt"  class="form-control"/>
+                                                                    </div>
+                                                                </div>
 
-                                                            <div class="form-group mb-0">
-                                                                <label>T.C Kimlik No</label>
-                                                                <input type="text" v-model="body.tc" name="tc"  required class="form-control">
-                                                            </div>
-                        
-                                                            <div class="form-group mb-0">
-                                                                <label class="my-2 py-1">İsim Soyisim</label>
-                                                                <div>
-                                                                    <input type="text" name="name" v-model="body.name" class="form-control" required
-                                                                        placeholder="İsim Soyisim Giriniz"/>
+                                                                <div class="form-group mb-0">
+                                                                    <label class="my-2 py-1">Not</label>
+                                                                    <div>
+                                                                        <textarea id="textarea" name="note" class="form-control" maxlength="225" rows="3"></textarea>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group mb-0">
-                                                                <label class="my-2 py-1">Tarih</label>
-                                                                <div>
-                                                                    <input type="date" name="createdAt" v-model="body.createdAt" class="form-control" required/>
+                                                                
+
+                                                                <input type="hidden" name="role" value="<%= admin.role %>">
+
+                                                                <div class="form-group mt-5 mb-0">
+                                                                    <div>
+                                                                        <button type="submit" class="btn btn-primary waves-effect waves-light">
+                                                                            Gönder
+                                                                        </button>
+                                                                        <button type="reset" class="btn btn-secondary waves-effect m-l-5">
+                                                                            İptal
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <label class="my-2 py-1">Not</label>
-                                                                <div>
-                                                                    <textarea id="textarea" name="note" v-model="body.note" class="form-control" maxlength="225" rows="3" placeholder="Lütfen kişi hakkındaki notu giriniz"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group mb-0">
-                                                                <div>
-                                                                    <button type="submit" class="btn btn-primary waves-effect waves-light" @click="goster()">
-                                                                        Gönder
-                                                                    </button>
-                                                                    <button type="reset" class="btn btn-secondary waves-effect m-l-5">
-                                                                        İptal
-                                                                    </button>
-                                                                </div>
-                                                            </div>
-                                                                                        
-                    
+                                                        
                                                         </div>
                                                     </div> <!-- end col -->
                                                     
                                                 </div> <!-- end row -->
+                                            </form>
                                         </div>
                                     </div>
                                 </div> <!-- end col -->
-                            </div> <!-- end row -->                            
+                            </div> <!-- end row -->   
+
                         </div> <!-- end container -->
                     </div>
                     <!-- end wrapper -->
-                </div>  
 
                 <%}else{%>
                     <div class="wrapper">
@@ -216,107 +250,25 @@
     <script type="text/javascript" src="/plugins/parsleyjs/parsley.min.js"></script>
     <!-- Bootstrap inputmask js -->
     <script src="/plugins/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://unpkg.com/vue-multiselect@2.1.0"></script>
-    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <script type="text/javascript">
-            // register globally
-        $(document).ready(function() {
-            $('form').parsley();
-
-            var i = 0;
-        });
-        var vm = new Vue({
-           
-            components: { Multiselect: window.VueMultiselect.default },
-            el: '#app',
-            data: {
-                medicineData:[],
-                value: null,
-                options:[],
-                test:'asdas',
-                body:{},
-            },
-            mounted(){
-                this.getData()
-            },
-            methods:{
-                getData(){
-                    axios.get('/ilaclar/api')
-                    .then((res)=>{
-                        this.options=res.data
-                    })
-                },
-                goster()
-                {
-                    ilac=[]
-                    let role ="<%= admin.role %>";
-                    let total =0;
-                    let newData={}
-                    this.options.forEach((data)=>{
-                        
-                        if(data.quantity!=null)
-                        {
-                            newData = {
-                                ilac:data._id,quantity:data.quantity,
-                            }
-                            ilac.push(newData)
-                            total+= Number(Object.values(data.price)) * Number(data.quantity);
-                        }
-                       
-                    })
-                    let formData = new FormData();
-                    formData.append('ilac',ilac)
-                    formData.append('body',this.body)
-                    formData.append('total',total)
-                    formData.append('role',role)
-
-                    axios.post('/kisiler/borc-ekle',{'body':this.body,ilac:ilac,total:total,role:role})
-                    .then((response)=>{
-                        if(response.status==200){
-                            alert(`${this.body.name} başarıyla eklendi`)    
-                        }
-                    }).catch((err)=>{
-
-                        if(err){
-                            alert('Aynı bilgileri göndermeye çalışıyorsun.')
-                        }
-                        
-                    })
-
-                }
-
-            }
-        })
-
-    </script>
+  
 
     <script>
-    function Yonlendir(ID, adres, saniye) {
-        if (saniye == 0) {
-            window.location.href = adres;
-        return;
+        function Yonlendir(ID, adres, saniye) {
+            if (saniye == 0) {
+                window.location.href = adres;
+            return;
+            }
+            document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
+            saniye--;
+            setTimeout(function() {
+                Yonlendir(ID, adres, saniye);
+            }, 1000);
         }
-        document.getElementById(ID).innerHTML = saniye + " saniye sonra yönlendiriliyorsunuz.";
-        saniye--;
-        setTimeout(function() {
-            Yonlendir(ID, adres, saniye);
-        }, 1000);
-    }
     </script>
+
     <script>
         Yonlendir("uyari", "/", 10);
     </script>
-
+    
     </body>
 </html>
-
-
-
-
-
-
-

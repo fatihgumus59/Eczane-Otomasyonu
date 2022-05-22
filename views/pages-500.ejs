@@ -1,12 +1,24 @@
-<%- include('partials/_header') %>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+        <title><%= page_name %></title>
+        <meta content="Admin Dashboard" name="description" />
+        <meta content="Mannatthemes" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <link rel="shortcut icon" href="/images/favicon.ico">
+
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="/css/icons.css" rel="stylesheet" type="text/css">
+        <link href="/css/style.css" rel="stylesheet" type="text/css">
 
     </head>
 
 
     <body>
-
-       <!-- Begin page -->
-       <div class="accountbg"></div>
        <div class="wrapper-page">
 
            <div class="card">
@@ -14,9 +26,9 @@
 
                    <div class="ex-page-content text-center">
                        <h1 class="">500</h1>
-                       <h3 class="">Internal Server Error</h3><br>
+                       <h3 class=""><%= message %></h3><br>
 
-                       <a class="btn btn-danger mb-5 waves-effect waves-light" href="index.html">Back to Dashboard</a>
+                       <a class="btn btn-danger mb-5 waves-effect waves-light" href="/">Panele geri dön</a>
                    </div>
 
                </div>

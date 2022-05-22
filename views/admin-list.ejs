@@ -79,11 +79,11 @@
                                                                 <a href="/auth/edit/<%= onaysiz[i]._id %>">
                                                                     <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
                                                                 </a>
-                                                                <form style="display: inline" method="post" action="/auth/admin-ok/<%= onaysiz[i]._id %>?_method=PUT">                                                  
+                                                                <form style="display: inline" method="post" onsubmit="okUser(`<%= onaysiz[i].name%>`)" action="/auth/admin-ok/<%= onaysiz[i]._id %>?_method=PUT">
                                                                     <input type="hidden" name="confirmation" value="true">
                                                                     <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
                                                                 </form>
-                                                                <a href="/auth/edit/<%= onaysiz[i]._id%>?_method=DELETE">
+                                                                <a onclick="deleteUser(`<%= onaysiz[i]._id%>`,`<%= onaysiz[i].name%>`)" >
                                                                     <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                                 </a>
                                                             </td>
@@ -221,11 +221,11 @@
                                                                 <a href="/auth/edit/<%= onayli[i]._id %>">
                                                                     <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
                                                                 </a>
-                                                                <form style="display: inline" method="post" action="/auth/admin-ok/<%= onayli[i]._id %>?_method=PUT">                                                  
+                                                                <form style="display: inline" method="post" onsubmit="okUser(`<%= onayli[i].name%>`)" action="/auth/admin-ok/<%= onayli[i]._id %>?_method=PUT">
                                                                     <input type="hidden" name="confirmation" value="true">
                                                                     <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
                                                                 </form>
-                                                                <a href="/auth/edit/<%= onayli[i]._id%>?_method=DELETE">
+                                                                <a onclick="deleteUser(`<%= onayli[i]._id%>`,`<%= onayli[i].name%>`)" >
                                                                     <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                                 </a>
                                                             </td>
@@ -395,11 +395,11 @@
                                                                 <a href="/auth/edit/<%= user[i]._id %>">
                                                                     <button type="button" class="btn btn-lg btn-warning btn-sm "><i class="fas fa-user-edit"></i></button>
                                                                 </a>
-                                                                <form style="display: inline" method="post" action="/auth/admin-ok/<%= user[i]._id %>?_method=PUT">                                                  
+                                                                <form style="display: inline" method="post" onsubmit="okUser(`<%= user[i].name%>`)" action="/auth/admin-ok/<%= user[i]._id %>?_method=PUT">
                                                                     <input type="hidden" name="confirmation" value="true">
                                                                     <button class="btn btn-lg btn-success btn-sm "><i class="fas fa-user-check"></i></button>
                                                                 </form>
-                                                                <a href="/auth/edit/<%= user[i]._id%>?_method=DELETE">
+                                                                <a onclick="deleteUser(`<%= user[i]._id%>`,`<%= user[i].name%>`)" >
                                                                     <button type="button" class="btn btn-lg btn-danger btn-sm "><i class="fas fa-user-times"></i></button>
                                                                 </a>
                                                             </td>
@@ -498,6 +498,9 @@
     <!-- Datatable init js -->
     <script src="/pages/datatables.init.js"></script> 
 
+    <!-- sweet alert  init js -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.10/dist/sweetalert2.all.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('#datatable2').DataTable({
@@ -523,9 +526,63 @@
         Yonlendir("uyari", "/", 10);
     </script>
     
+    <script>
+        function deleteUser(id,name){
+        
+            Swal.fire({
+                title: `${name} kişisini silmek istediğinize emin misiniz ?`,
+                icon: 'warning',
+                showCancelButton: true,
+                showDenyButton: true,
+                confirmButtonColor: '#28A745',
+                cancelButtonColor: '#6E7881',
+                denyButtonColor: `#DC3545`,
+                confirmButtonText: 'Evet',
+                denyButtonText: `Hayır`,
+                cancelButtonText: 'İptal',
+            
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                
+                    Swal.fire(
+                        "Silindi!",
+                        `${name} kişisi silindi.`,
+                        "success",
+                    ).then(() => {
+
+                        window.location = `/auth/edit/${id}?_method=DELETE`;
+                    })
+
+                }else if(result.isDenied) {
+                    Swal.fire(
+                        "Silinmedi!",
+                        `${name} kişisi silinmedi.`,
+                        "info",
+
+                    );
+                }
+            });
+         };
+        function okUser(name){
+ 
+         Swal.fire(
+            "Onaylandı!",
+            `${name} kişisi onaylandı.`,
+            "success",
+ 
+         ).then((result) => {
+            window.location = `/auth/manager`; 
+ 
+         });
+ 
+         setTimeout(function() {
+             window.location = `/auth/manager`; 
+             }, 3000);
+        };
+     </script>
     </body>
 </html>
-
 
 
 

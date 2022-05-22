@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const debt = new Schema({
+
   name: {
     type: String,
     required: true,
@@ -16,18 +17,18 @@ const debt = new Schema({
   password: {
     type: String,
   },
-  medicine: [
-    {
-      ilac: {
-        type: Schema.Types.ObjectId,
-        ref: 'Medicine',
-        required: true,
-      },
-      quantity: {
-        type: Number,
-      }
+  medicine: [{
+
+    ilac: {
+      type: Schema.Types.ObjectId,
+      ref: 'Medicine',
+      required: true,
     },
-  ],
+    quantity: {
+      type: Number,
+    },
+
+  }],
   total: {
     type: Schema.Types.Decimal128,
     default: 0,
@@ -39,12 +40,12 @@ const debt = new Schema({
   note: {
     type: String,
   },
-  admin:{
+  admin: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Admin',
   },
-},{ versionKey: false, timestamps: true });
 
+}, { versionKey: false, timestamps: true });
 
 debt.pre('save', function (next) {
   // şifreyi hash ediyoruz.

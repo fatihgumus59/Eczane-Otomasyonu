@@ -16,7 +16,7 @@ const apiRoute = require('./routes/apiRoute');
 const app = express();
 
 //connect db
-mongoose.connect('mongodb+srv://eczane:lVJkXQQYmcj6Z41h@cluster0.v0svx.mongodb.net/eczane?retryWrites=true&w=majority', {
+mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 }).then(() => {
@@ -47,7 +47,7 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 24 * 60 * 60 * 1000 },
-    store: MongoStore.create({ mongoUrl: 'mongodb+srv://eczane:lVJkXQQYmcj6Z41h@cluster0.v0svx.mongodb.net/eczane?retryWrites=true&w=majority',clear_interval: 3600 })
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URL,clear_interval: 3600 })
   })
 );
 
@@ -67,6 +67,20 @@ app.use('/ilaclar', medicineRoute);
 app.use('/kisiler', debtRoute);
 app.use('/auth', adminRoute);
 app.use('/api',apiRoute);
+
+app.use(function(req, res, next) {
+  res.status(404).render('pages-404',{
+    page_name:'Sayfa Bulunamadı',
+    message:'Üzgünüz, sayfa bulunamadı.'
+  });
+});
+
+app.use(function(req, res, next) {
+  res.status(500).render('pages-500',{
+    page_name:'Sunucu Hatası',
+    message:'İç sunucu hatası'
+  });
+});
 
 const port = process.env.PORT || 5000;
 

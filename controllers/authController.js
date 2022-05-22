@@ -5,44 +5,88 @@ const Medicine = require('../models/medicine');
 
 const bcrypt = require('bcrypt');
 
+const authValidation = require('../validations/authValidation'); // validasyon işlemi için schema
+
 exports.createUser = async (req, res) => {
+
+  const createAdmin = authValidation.createUserValidation;
+  const validation = createAdmin.validate(req.body);
+
   try {
-    const admin = await Admin.create(req.body);
-    
-    res.status(201).redirect('/');
+
+    if (!validation.error) {
+
+      const admin = await Admin.create(req.body);
+      req.flash('success', `Başarıyla kayıt olundu.`);
+      res.status(201).redirect('/login');
+
+    } else {
+
+      const messageDetails = validation.error.details?.map(detail => detail.message);
+      req.flash('error', `${messageDetails}`);
+      res.status(404).redirect('/register');
+    }
+
   } catch (error) {
 
-    // hataları burada tutup flash message ile ileteceğiz.
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+    const username = await Admin.findOne({ username: req.body.username }).select('username');
+    const email = await Admin.findOne({ email: req.body.email }).select('email');
+
+    if(username){
+      req.flash('error', `Girilen kullanıcı adı sistemde kayıtlı`);
+      res.status(404).redirect('/register');
+    }else if(email){
+      req.flash('error', `Girilen E-Mail sistemde kayıtlı`);
+      res.status(404).redirect('/register');
+    }
   }
 };
 
 exports.loginUser = async (req, res) => {
+
+  const loginAmin = authValidation.loginUserValidation;
+  const validation = loginAmin.validate(req.body);
   try {
 
-    const { username, password } = req.body;
-    const admin = Admin.findOne({ username }, (err, user) => {
-      if (user) {
-        bcrypt.compare(password, user.password, (err, same) => {
-          if (same) {
-            //veriler eşleşiyor ise
-            req.session.userID = user._id;
-            req.session.userName = user.name;
-            res.status(200).redirect('/');
-          }
-        });
-      }
-    });
+    if (!validation.error) {
 
+      const { username, password } = req.body;
+      const admin = Admin.findOne({ username }, (err, user) => {
+        if (user) {
+          bcrypt.compare(password, user.password, (err, same) => {
+            if (same) {
+              //veriler eşleşiyor ise
+              req.session.userID = user._id;
+              req.session.userName = user.name;
+              
+              res.status(200).redirect('/');
+
+            }else{
+
+              req.flash('error', `Yanlış şifre`);
+              res.status(404).redirect('/login');
+
+            }
+          });
+        }else{
+          req.flash('error', `Girilen kullanıcı adı bulunamadı.`);
+          res.status(404).redirect('/login');
+        }
+      });
+      
+    } else {
+
+      const messageDetails = validation.error.details?.map(detail => detail.message);
+      req.flash('error', `${messageDetails}`);
+      res.status(404).redirect('/login');
+    }
 
   } catch (error) {
-    res.status(404).json({
-      status: 'error',
-      error: error.message,
-    });
+        
+    if(error){
+      req.flash('error', `Bir hata meydana geldi lütfen daha sonra tekrar deneyiniz.`);
+      res.status(404).redirect('/login');
+    }
   }
 };
 
@@ -63,11 +107,11 @@ exports.editAdmin = async (req, res) => {
       confirmation: req.body.confirmation
     });
 
-    req.flash('info',`${req.body.name} kişisi başarılı olarak güncellendi.`);
+    req.flash('info', `${req.body.name} kişisi başarılı olarak güncellendi.`);
     res.status(200).redirect('/auth/manager');
 
   } catch (error) {
-    req.flash('error',`Yönetici güncellemesi başarısız.`);
+    req.flash('error', `Yönetici güncellemesi başarısız.`);
     res.status(400).redirect('/auth/manager');
   }
 };
@@ -77,12 +121,12 @@ exports.addAdmin = async (req, res) => {
 
     const user = await Admin.create(req.body);
 
-    req.flash('success',`${req.body.name} kişisi başarılı olarak eklendi.`);
+    req.flash('success', `${req.body.name} kişisi başarılı olarak eklendi.`);
 
     res.status(201).redirect('/auth/manager');
   } catch (error) {
-    
-    req.flash('error',`Yönetici eklenemedi.`);
+
+    req.flash('error', `Yönetici eklenemedi.`);
 
     res.status(400).redirect('/auth/manager');
   }
@@ -123,11 +167,11 @@ exports.deleteAdmin = async (req, res) => {
 
     const admin = await Admin.findByIdAndRemove({ _id: req.params.id });
 
-    req.flash('delete',`Kişi başarılı olarak silindi.`);
+    req.flash('delete', `Kişi başarılı olarak silindi.`);
     res.status(200).redirect('/auth/manager');
 
   } catch (error) {
-    req.flash('error',`Kişi silinemedi.`);
+    req.flash('error', `Kişi silinemedi.`);
     res.status(400).redirect('/auth/manager');
   }
 };
@@ -142,7 +186,7 @@ exports.adminOk = async (req, res) => {
     res.status(200);
 
   } catch (err) {
-    req.flash('error',`Yönetici onaylanamadı.`);
+    req.flash('error', `Yönetici onaylanamadı.`);
     res.status(400).redirect('/auth/manager');
   }
 };
@@ -157,11 +201,11 @@ exports.editProfile = async (req, res) => {
     });
 
 
-    req.flash('success',`Bilgileriniz başarılı olarak güncellendi.`);
+    req.flash('success', `Bilgileriniz başarılı olarak güncellendi.`);
     res.status(200).redirect('/profile');
 
   } catch (error) {
-    req.flash('error',`Bilgi güncellenemesi başarısız.`);
+    req.flash('error', `Bilgi güncellenemesi başarısız.`);
     res.status(200).redirect('/profile');
   }
 };
@@ -172,11 +216,11 @@ exports.addPharmacy = async (req, res) => { // eczane bilgisi ekleme
     await Admin.findById(req.session.userID); // giriş yapan adminin rolünü kontrol etmek için gönderiyoruz.
     await Pharmacy.create(req.body);
 
-    req.flash('success',`${req.body.name} başarılı olarak eklendi.`);
+    req.flash('success', `${req.body.name} başarılı olarak eklendi.`);
     res.status(201).redirect('/pharmacy');
 
   } catch (error) {
-    req.flash('error',`Eczane eklenemedi.`);
+    req.flash('error', `Eczane eklenemedi.`);
     res.status(400).redirect('/pharmacy');
   }
 };
@@ -191,11 +235,11 @@ exports.editPharmacy = async (req, res) => {
       city: req.body.city,
     });
 
-    req.flash('info',`${req.body.name} başarılı olarak güncellendi.`);
+    req.flash('info', `${req.body.name} başarılı olarak güncellendi.`);
     res.status(200).redirect('/pharmacy');
 
   } catch (error) {
-    req.flash('error',`Eczane güncellemesi başarısız.`);
+    req.flash('error', `Eczane güncellemesi başarısız.`);
     res.status(200).redirect('/pharmacy');
   }
 };
@@ -224,23 +268,23 @@ exports.selectPharmacy = async (req, res) => {
 exports.deletePharmacy = async (req, res) => {
   try {
 
-    const selectedPharmacy = await Pharmacy.findOne({select:true}).select('_id'); // seçili eczane
+    const selectedPharmacy = await Pharmacy.findOne({ select: true }).select('_id'); // seçili eczane
     const deletePharmacy = req.params.id; // silinecek eczane
 
 
     if (selectedPharmacy._id == deletePharmacy) { // seçili eczane ile silinecek eczane id'leri eşit ise silinmesin
-      req.flash('error',`Seçili eczane silinemez..`);
+      req.flash('error', `Seçili eczane silinemez..`);
       res.status(200).redirect('/pharmacy');
 
     } else {
       await Pharmacy.findByIdAndRemove({ _id: req.params.id }); // seçili olanı çağırır ve sil
 
-      req.flash('delete',`Eczane başarılı bir şekilde silindi.`);
+      req.flash('delete', `Eczane başarılı bir şekilde silindi.`);
       res.status(200).redirect('/pharmacy');
     }
 
   } catch (error) {
-    req.flash('error',`Eczane silinemedi.`);
+    req.flash('error', `Eczane silinemedi.`);
     res.status(400).redirect('/pharmacy');
   }
 };

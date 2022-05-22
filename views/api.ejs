@@ -529,12 +529,12 @@
         var copyText = document.getElementById("token"+id);  
        
         var input = document.createElement("textarea");
-        //adding p tag text to textarea 
+      
         input.value = copyText.textContent;
         document.body.appendChild(input);
         input.select();
         document.execCommand("Copy");
-        // removing textarea after copy
+       
         input.remove();
     }
    
@@ -560,17 +560,15 @@
                         "success",
                     ).then(() => {
                         window.location = `/api/${id}?_method=DELETE`;
-                    })   
+                    });
                 
                 }else if(result.isDenied) {
                     Swal.fire(
                         "API Silinmedi!",
                         `${name} isteğiniz üzerine silinmedi`,
-                        "error",
+                        "info",
                     );
-                }
-
-                
+                }  
             });
         };
 
