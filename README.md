@@ -10,6 +10,9 @@ Burada belirleyici faktör TC Kimlik numarası olacaktır sistemde insanları di
 
 Projede **NodeJs** kullanılmıştır veritabanı olarak ise **MongoDb** tercih edilmiştir.
 
+## Tanıtım
+
+[![Watch the video](https://i.hizliresim.com/3z3cwyo.png)](https://youtu.be/E8d4P2p-hXs)
 
 # Paketler (NPM)
 
@@ -31,8 +34,13 @@ Projede **NodeJs** kullanılmıştır veritabanı olarak ise **MongoDb** tercih 
 
 ## Başlatma
 
-http://localhost:3000
-npm **start**
+http://localhost:3000<br>
+npm **start**<br>
+
+## Demo
+http://eczane-otomasyon.herokuapp.com<br>
+**Kullanıcı adı:** demo<br>
+**Şifre:** demo12345
 
 ## Veritabanı Modelleri
 
