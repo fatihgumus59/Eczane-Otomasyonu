@@ -1,20 +1,23 @@
-# Eczane Otomasyonu
+# Pharmacy Automation
 
-**PROJE ÖZETİ:**
+[Turkish Documentation](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/README-tr.md)
 
-Birçok eczanede halen veresiye sistemi kullanılmakta ilaç alıp parası yetmeyen kişiler ilaç ödemesinin bir kısmını yapıp kalanını borç olarak yazdırıyor ve daha sonra bu eczacılar tarafından unutulabiliyor bu da eczane kasasına eksi bakiye olarak yansıyor ve kasada açık meydana geliyor.
+**THE PROJECT SUMMARY:**
 
-Bu soruna çözüm olarak bu sistem geliştirildi, amacımız eczaneye gelip ilacını almış ama parasının tamamını ödeyememiş kişileri sistemde tutmak ve eczanenin kasasındaki açığı azaltmak.
+Many pharmacies still use the credit system, and people who buy medicine and cannot afford it, make a part of the medicine payment and write the rest as debt, and these can be forgotten by the pharmacists, which is reflected in the pharmacy cash register as a negative balance and a deficit occurs in the cash register.
 
-Burada belirleyici faktör TC Kimlik numarası olacaktır sistemde insanları diğer insanlardan ayıran faktör TC Kimlik numarasıdır zira aynı isimde aynı soy isimde onlarca insan olabilir ve bu karmaşıklığa sebep olabilir.
+This system was developed as a solution to this problem, our aim is to keep people who came to the pharmacy and bought their medicine but could not pay their full amount in the system and to reduce the deficit in the pharmacy's safe.
 
-Projede **NodeJs** kullanılmıştır veritabanı olarak ise **MongoDb** tercih edilmiştir.
+The determining factor here will be the TR Identity Number.
 
-## Tanıtım
+**NodeJs** was used in the project, and **MongoDb** was preferred as the database.
+
+
+## Promotion
 
 [![Watch the video](https://i.hizliresim.com/3z3cwyo.png)](https://youtu.be/E8d4P2p-hXs)
 
-# Paketler (NPM)
+# Packets (NPM)
 
     - bcrypt 
     - connect-flash
@@ -32,17 +35,17 @@ Projede **NodeJs** kullanılmıştır veritabanı olarak ise **MongoDb** tercih 
     - rand-token
     - nodemon
 
-## Başlatma
+## Start
 
 http://localhost:3000<br>
 npm **start**<br>
 
 ## Demo
 http://eczane-otomasyon.herokuapp.com<br>
-**Kullanıcı adı:** demo<br>
-**Şifre:** demo12345
+**Username:** demo<br>
+**Password:** demo12345
 
-## Veritabanı Modelleri
+## Database Models
 
 [administration.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/models/administration.js "administration.js")<br>
 [api.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/models/api.js "api.js")<br>
@@ -50,7 +53,7 @@ http://eczane-otomasyon.herokuapp.com<br>
 [medicine.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/models/medicine.js "medicine.js")<br>
 [pharmacy.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/models/pharmacy.js "pharmacy.js")<br>
 
-## Kontroller
+## Controllers
 
 [apiController.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/controllers/apiController.js "apiController.js")<br>
 [authController.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/controllers/authController.js "authController.js")<br>
@@ -58,7 +61,7 @@ http://eczane-otomasyon.herokuapp.com<br>
 [medicineController.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/controllers/medicineController.js "medicineController.js")<br>
 [pageController.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/controllers/pageController.js "pageController.js")<br>
 
-## Ara Katman
+## Middlewares
 
 [apiMiddleware.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/middlewares/apiMiddleware.js "apiMiddleware.js")<br>
 [authMiddleware.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/middlewares/authMiddleware.js "authMiddleware.js")<br>
@@ -66,7 +69,7 @@ http://eczane-otomasyon.herokuapp.com<br>
 [redirectMiddleware.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/middlewares/redirectMiddleware.js "redirectMiddleware.js")<br>
 [roleMiddleware.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/middlewares/roleMiddleware.js "roleMiddleware.js")<br>
 
-## Yönlendirmeler
+## Routes
 
 [administrationRoute.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/routes/administrationRoute.js "administrationRoute.js")<br>
 [apiRoute.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/routes/apiRoute.js "apiRoute.js")<br>
@@ -75,15 +78,15 @@ http://eczane-otomasyon.herokuapp.com<br>
 [pageRoute.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/routes/pageRoute.js "pageRoute.js")<br>
 
 
-# Kayıt/Giriş Doğrulama
+# Register/Login Validation
 
 [authValidation.js](https://github.com/fatihgumus59/Eczane-Otomasyonu/blob/master/validations/authValidation.js "authValidation.js")
 
-# Proje Hakkında
+# About the project
 
-Proje'de **Express** modülü kullanıldı, template engine kısmında ise **ejs** modülü kullanıldı. Proje **MVC** mimarisine göre yazıldı. Sistemde validasyon işlemleri **joi** ile sağlandı. İlaç resmini yüklemek için **multer** kütüphanesi kullanıldı. Qr işlemleri için **qrcode** kütüphanesi kullanıldı. Şifreleme işlemleri için **bcrypt** kullanıldı. Veritabanı olarak **MongoDB** veritabanına kayıt işlemleri için ise **mongoose** kütüphanesi kullanıldı. Rest API için 32 karakterlik alfanümerik bir token oluşturuldu, bu token sayesinde api güvenliği sağlandı **rand-token** kütüphanesi kullanıldı.
+The **Express** module was used in the project, and the **ejs** module was used in the template engine. The project was written according to the **MVC** architecture. Validation processes in the system were provided with **joi**. The **multer** library was used to load the drug image. The **qrcode** library was used for QR operations. **bcrypt** is used for encryption operations. The **mongoose** library was used for registration to the **MongoDB** database as the database. A 32-character alphanumeric token was created for the Rest API, api security was provided by this token, and the **rand-token** library was used.
 
-## Proje İçinden
+## From The Project
 
 ![enter image description here](https://i.hizliresim.com/fmarkrg.png)
 ![enter image description here](https://i.hizliresim.com/gzmi2np.png)
@@ -99,5 +102,5 @@ Proje'de **Express** modülü kullanıldı, template engine kısmında ise **ejs
 ![enter image description here](https://i.hizliresim.com/pvqhaxr.png)
 ![enter image description here](https://i.hizliresim.com/gzvhyyd.png)
 
-Projenin mobil tasarımına bu [link](https://www.behance.net/gallery/144389355/Eczane-Otomasyonu) üzerinden erişebilirsiniz.
+You can access the mobile design of the project via this [link](https://www.behance.net/gallery/144389355/Eczane-Otomasyonu)
 
